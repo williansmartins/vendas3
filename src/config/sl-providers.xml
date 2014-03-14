@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<providers>
+  <provider>
+    <name>jboss@localhost:18080</name>
+    <desc>Jboss</desc>
+    <properties>
+      <property>
+        <name>java.naming.factory.initial</name>
+        <value>org.jnp.interfaces.NamingContextFactory</value>
+      </property>
+      <property>
+        <name>java.naming.provider.url</name>
+        <value>jnp://localhost:1099</value>
+      </property>
+    </properties>
+  </provider>
+</providers>

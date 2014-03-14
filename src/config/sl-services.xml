@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<services>
+  <service>
+    <name>UsuarioBean/remote</name>
+    <jndi-name>UsuarioBean/remote</jndi-name>
+    <cacheable>true</cacheable>
+    <providers>
+        <provider>
+            <name>jboss@localhost:18080</name>
+        </provider>
+    </providers>
+  </service>
+  <service>
+    <name>RecebeRequisicaoBean/remote</name>
+    <jndi-name>RecebeRequisicaoBean/remote</jndi-name>
+    <cacheable>true</cacheable>
+    <providers>
+        <provider>
+            <name>jboss@localhost:18080</name>
+        </provider>
+    </providers>
+  </service>
+</services>
