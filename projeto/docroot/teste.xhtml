@@ -7,48 +7,30 @@
       xmlns:f="http://java.sun.com/jsf/core">
 	<h:head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <ui:insert name="titulo"></ui:insert>
 	    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
 	    <link href="css/estilos.css" rel="stylesheet" type="text/css" />
 	    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-	    <link rel="shortcut icon" href="img/icon.png" type="image/x-icon" />
+	    <link rel="shortcut icon" href="img/airplane.png" type="image/x-icon" />
 	</h:head>
 	<body> 
 		<div class="wrapper" >                  
 	        <div id="vitrine">
-	        	<div class="logo_clicavel" ></div>
-	      		<div class="menu">
-					<ul>
-						<li class="usuarios">
-							<span class="img"></span>
-							<a href="lista_usuarios.xhtml" ><span id="">Usuários</span></a>
-						</li>
-						<li class="produtos">
-							<span class="img"></span>
-							<a href="lista_produtos.xhtml"><span id="">Produtos</span></a>
-						</li>
-						<li class="compras">
-							<span class="img"></span>
-							<a href="lista_compras.xhtml"><span id="">Compras</span></a>
-						</li>
-					</ul>
-				</div>
+	        	<div class="logo_clicavel">
+		        	<a href="#">
+		        	</a> 
+	        	</div>
 	        </div>
 		    <div id="palco">
-		    	<ui:insert name="palco">
-   				    <h:messages styleClass="alert alert-danger">
-				    	<h:message for="all"></h:message>
-				    </h:messages>
-		    	</ui:insert>
 		  	</div>
+		    <h:messages styleClass="alert alert-danger">
+		    	<h:message></h:message>
+		    </h:messages>
 	  	</div>
        	<div id="footer">
-	    	<ui:insert name="rodape"></ui:insert>
       	</div>
     	<script src="js/jquery-2.0.0.min.js"></script>
     	<script src="js/bootstrap.min.js"></script>
     	<script src="js/scripts.js"></script>
     	<script src="js/jquery-ui.js"></script>
-    	<script src="js/jquery.maskedinput.js" type="text/javascript"></script>
 	</body>
 </html>

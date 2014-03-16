@@ -28,6 +28,11 @@ body{
 	background-image:url(../img/vitrine.jpg);/**/
 }
 
+.inicio{
+	margin-top: 25px;
+	margin-left: 8px;
+}
+
 /*-----------------------------------------------------------------------*/
 
 #palco{
@@ -38,6 +43,15 @@ body{
 	background-image:url(../img/bg-footer.png);/**/
 	background-repeat: repeat-x;
 	background-position: 136px 302px;
+}
+/*-----------------------------------------------------------------------*/
+#footer{
+	margin: 0 auto;
+	width: 950px;
+	text-align: center;
+	color: darkgray;
+	font-size: small;
+	margin-top: 4px;
 }
 /*-----------------------------------------------------------------------*/
 .floatLeft{
@@ -58,7 +72,7 @@ body{
 }
 /*-----------------------------------------------------------------------*/
 .menu{
-	padding-top: 72px;
+	padding-top: 56px;
 	padding-right: 155px;
 	float: right;
 	position: relative;
@@ -68,14 +82,13 @@ body{
 }
 .menu li{
 	width: 85px;
-	height: 50px;
+	height: 62px;
 /* 	outline: solid 1px green; */
 	float: left;
 	padding: 0px;
 	margin: 0px;	
 	list-style: none;
 	text-align: center;
-	padding-top: 14px;
 }
 .menu li a:hover{
 /* 	color: rgb(255, 124, 16); */
@@ -89,32 +102,28 @@ body{
 }
 .menu li a.active{
 	font-weight: bold;
-	color: rgb(255, 124, 16);
+/* 	color: rgb(255, 124, 16); */
 	text-decoration: none;
-	font-size: 12px;
+/* 	font-size: 12px; */
 	cursor: pointer;
 }
 .menu li .img{
-	height: 20px;
-	width: 20px;
+	height: 45px;
+	width: 45px;
 /* 	outline: solid 1px black; */
 	display: block;
-	margin-left: 33px;
+	margin: 0 auto;
 	background-image:url(../img/sprite-menu-superior.png);
 	cursor: pointer;
 }
-.menu .clientes .img{	background-position: -20px -100px;}
-.menu .clientes .img.active{	background-position: -0px -100px;}
-.menu .trechos .img{	background-position: -20px -20px;}
-.menu .trechos .img.active{	background-position: -1px -20px;}
-.menu .voos .img{	background-position: -20px -0px;}
-.menu .voos .img.active{	background-position: -0px -0px;}
-.menu .reservas .img{	background-position: -20px 0px;}
-.menu .reservas .img.active{	background-position: -0px 0px;}
-.menu .assentos .img{	background-position: -20px -156px;}
-.menu .assentos .img.active{	background-position: 1px -155px;}
-.menu .logout .img{	background-position: -24px -118px;}
-.menu .logout .img.active{	background-position: -3px -118px;}
+.menu .usuarios .img.active{	background-position: -0px -0px;}
+.menu .usuarios .img{	background-position: -45px -0px;}
+
+.menu .produtos .img.active{	background-position: -0px -45px;}
+.menu .produtos .img{	background-position: -45px -45px;}
+
+.menu .compras .img.active{	background-position: -0px -90px;}
+.menu .compras .img{	background-position: -45px -90px;}
 
 /*-----------------------------------------------------------------------*/
 .form1{
