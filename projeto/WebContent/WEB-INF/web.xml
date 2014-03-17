@@ -5,7 +5,7 @@
 
 	<servlet>
 		<servlet-name>controlador</servlet-name>
-		<servlet-class>br.com.exemplo.vendas.apresentacao.web.Controller</servlet-class>
+		<servlet-class>br.com.exemplo.vendas.apresentacao.web.ControllerX</servlet-class>
 	</servlet>
 
 	<servlet>
@@ -24,4 +24,7 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
+	<welcome-file-list>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
 </web-app>

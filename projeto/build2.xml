@@ -16,7 +16,7 @@
 				<include name="context.xml" />
 			</zipfileset>
 			<zipfileset dir="WebContent/WEB-INF/lib" prefix="WEB-INF/lib" includes="*.jar" />
-			<zipfileset dir="bin" prefix="WEB-INF/classes" includes="br/com/exemplo/vendas/apresentacao/web/*.class, br/com/exemplo/vendas/apresentacao/delegate/*.class, br/com/exemplo/vendas/apresentacao/service/*.class, br/com/exemplo/vendas/apresentacao/actions/*.class" />
+			<zipfileset dir="bin" prefix="WEB-INF/classes" includes="br/com/exemplo/vendas/util/*.class, br/com/exemplo/vendas/apresentacao/web/*.class, br/com/exemplo/vendas/negocio/model/vo/*.class, br/com/exemplo/vendas/apresentacao/delegate/*.class, br/com/exemplo/vendas/apresentacao/service/*.class, br/com/exemplo/vendas/apresentacao/actions/*.class" />
 			<zipfileset dir="docroot" />
 		</jar>
 		<copy file="${build.artifact.war}" todir="${tomcat.web}/webapps" />

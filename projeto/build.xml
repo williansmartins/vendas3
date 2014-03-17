@@ -3,7 +3,7 @@
 <project name="Projeto Exemplo - J2EE" default="_packaging_generation_">
 
 	<property name="jboss.home" value="c:/dev/jboss-5.1.0.GA/server/deploy" />
-	<property name="tomcat.web" value="C:\desenvolvimento\apache-tomcat-6.0.37" />
+	<property name="tomcat.web" value="C:/desenvolvimento/apache-tomcat-6.0.37" />
 	<property name="projeto.webservice" value="Vendas_3_0_WebService" />
 	<property name="jboss.server.config" value="default" />
 	<property name="build.artifact.ejb" value="VendaEJB.jar" />
