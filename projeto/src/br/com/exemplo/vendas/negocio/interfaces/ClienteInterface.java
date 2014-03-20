@@ -1,23 +1,15 @@
 package br.com.exemplo.vendas.negocio.interfaces ;
 
+import java.rmi.RemoteException;
+
+import br.com.exemplo.vendas.util.dto.ServiceDTO;
+import br.com.exemplo.vendas.util.exception.LayerException;
+
 public interface ClienteInterface {
-	public br.com.exemplo.vendas.util.dto.ServiceDTO inserirCliente(
-			br.com.exemplo.vendas.util.dto.ServiceDTO requestDTO )
-			throws br.com.exemplo.vendas.util.exception.LayerException, java.rmi.RemoteException ;
-
-	public br.com.exemplo.vendas.util.dto.ServiceDTO alterarCliente(
-			br.com.exemplo.vendas.util.dto.ServiceDTO requestDTO )
-			throws br.com.exemplo.vendas.util.exception.LayerException, java.rmi.RemoteException ;
-
-	public br.com.exemplo.vendas.util.dto.ServiceDTO excluirCliente(
-			br.com.exemplo.vendas.util.dto.ServiceDTO requestDTO )
-			throws br.com.exemplo.vendas.util.exception.LayerException, java.rmi.RemoteException ;
-
-	public br.com.exemplo.vendas.util.dto.ServiceDTO selecionarTodosCliente(
-			br.com.exemplo.vendas.util.dto.ServiceDTO requestDTO )
-			throws br.com.exemplo.vendas.util.exception.LayerException, java.rmi.RemoteException ;
-
-	public br.com.exemplo.vendas.util.dto.ServiceDTO getCliente(
-			br.com.exemplo.vendas.util.dto.ServiceDTO requestDTO, String login )
-			throws br.com.exemplo.vendas.util.exception.LayerException, java.rmi.RemoteException ;
+	
+	public ServiceDTO inserirCliente(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO alterarCliente(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO excluirCliente(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO selecionarTodosCliente(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO getCliente(ServiceDTO requestDTO, String login) throws LayerException, RemoteException;
 }

@@ -5,6 +5,6 @@ import javax.ejb.Local ;
 import br.com.exemplo.vendas.negocio.interfaces.UsuarioInterface ;
 
 @Local
-public interface UsuarioLocal extends UsuarioInterface
-{
+public interface UsuarioLocal extends UsuarioInterface {
+	
 }

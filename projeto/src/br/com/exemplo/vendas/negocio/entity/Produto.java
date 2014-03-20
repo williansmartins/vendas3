@@ -14,6 +14,14 @@ public class Produto {
 	private BigDecimal preco;
 	private String estoque;
 	
+	public Produto(){}
+	public Produto(Long codigo, String descricao, BigDecimal preco, String estoque) {
+		this.codigo = codigo;
+		this.descricao = descricao;
+		this.preco = preco;
+		this.estoque = estoque;
+	}
+	
 	public Long getCodigo() {
 		return codigo;
 	}
