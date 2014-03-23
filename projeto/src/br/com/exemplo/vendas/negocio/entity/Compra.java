@@ -3,6 +3,9 @@ package br.com.exemplo.vendas.negocio.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Compra {
 	
 	private Integer numero;
