@@ -4,8 +4,10 @@
 http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="Vendas">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <jta-data-source>java:/VendasDS</jta-data-source>
+        <jta-data-source>java:/Vendas</jta-data-source>
         <class>br.com.exemplo.vendas.negocio.entity.Usuario</class>
+        <class>br.com.exemplo.vendas.negocio.entity.Produto</class>
+        <class>br.com.exemplo.vendas.negocio.entity.Cliente</class>
          <properties>
              <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
              <property name="hibernate.hbm2ddl.auto" value="create"/>
