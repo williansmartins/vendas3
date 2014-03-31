@@ -138,6 +138,7 @@
 			</zipfileset>
 		</jar>
 
+		<!-- jboss -->
 		<copy file="VendaUtil.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
 		<copy file="VendaLog.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
 		<copy file="VendaLocator.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
@@ -145,11 +146,13 @@
 		<copy file="VendaDTO.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
 		<copy file="VendaDelegate.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
 		<copy file="VendaVO.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
-
+		<copy file="${build.artifact.ejb}" todir="${jboss.home}/server/${jboss.server.config}/lib" />
 		<copy file="${build.artifact.ejb}" todir="${jboss.home}/server/${jboss.server.config}/deploy" />
 
+		<!-- tomcat -->
 		<copy file="${build.artifact.war}" todir="${tomcat.web}/webapps" />
 
+		<!-- projeto -->
 		<copy file="VendaUtil.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaLog.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaLocator.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
@@ -159,6 +162,8 @@
 		<copy file="VendaVO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaEJB-client.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaDTO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
+		<copy file="${build.artifact.ejb}" todir="../${projeto.webservice}/WebContent/META-INF" />
+		<copy file="${build.artifact.war}" todir="../${projeto.webservice}/WebContent/META-INF" />
 	</target>
 
 </project>
