@@ -189,17 +189,16 @@
 		<copy file="VendaVO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaEJB-client.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaDTO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
-<<<<<<< Updated upstream
+
 		<copy file="${build.artifact.ejb}" todir="../${projeto.webservice}/WebContent/META-INF" />
 		<copy file="${build.artifact.war}" todir="../${projeto.webservice}/WebContent/META-INF" />
-=======
 
 		<copy file="VendaLocator.jar" todir="${tomcat.web}/lib" />
 		<copy file="VendaException.jar" todir="${tomcat.web}/lib" />
 		<copy file="VendaDTO.jar" todir="${tomcat.web}/lib" />
 		<copy file="VendaVO.jar" todir="${tomcat.web}/lib" />
 		<copy file="VendaEJB-client.jar" todir="${tomcat.web}/lib" />
->>>>>>> Stashed changes
+
 	</target>
 
 </project>
