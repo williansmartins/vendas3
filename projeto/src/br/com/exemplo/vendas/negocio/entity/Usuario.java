@@ -24,7 +24,7 @@ public class Usuario implements Serializable {
 	private String grupo;
 	private String perfil;
 	private String senha;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date ultimoAcesso;
 
 	public Usuario() {}

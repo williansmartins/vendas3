@@ -1,14 +1,14 @@
-#Compilados 
+# Compilados 
 *.class
-
-
 
 # Package Files
 *.jar
 *.war
 *.ear
- 
-
 
 # Folders
 target/
+
+# Extras
+projeto/build.xml
+projeto/build/
