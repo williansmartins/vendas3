@@ -30,75 +30,18 @@ public class UsuarioController implements Serializable
     private UsuarioVO vo;
     private List<UsuarioVO> lista;
 
-    public UsuarioController()
+    public UsuarioController() throws Exception
     {
 	vo = new UsuarioVO();
 	System.out.println( "Controller de Usuário" );
-	lista = getLista();
     }
 
     public void insertView( ) throws Exception
     {
-
-    }
-
-    public String save( ) throws Exception
-    {
-	System.out.println( "Salvando" );
-	Hashtable prop = new Hashtable();
-	prop.put( InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory" );
-	prop.put( InitialContext.PROVIDER_URL, "jnp://localhost:1099" );
-
-	Context ctx = new InitialContext( prop );
-
-	UsuarioInterface remoteUsuario = (UsuarioInterface) ctx.lookup( "UsuarioBean/remote" );
-
-
-	ServiceLocator serviceLocator = ServiceLocatorFactory.getServiceLocator( "serviceLocator" );
-	ServiceDTO requestDTO = new ServiceDTO();
-	ServiceDTO responseDTO = new ServiceDTO();
-
-
-	requestDTO.set( "usuarioVO", vo );
-	responseDTO = remoteUsuario.inserirUsuario( requestDTO );
-	Boolean sucesso = (Boolean) responseDTO.get( "resposta" );
-
-	vo = new UsuarioVO();
-	System.out.println( "Inseriu? " + sucesso);	
-	return listAll();
-    }
-
-    public String listAll( )
-    {
-	vo = new UsuarioVO();
-	lista = getLista();
-	new Redirecionador().redirecionar( "lista-usuarios.xhtml" );
-	return "";
-    }
-
-    public String remove( )
-    {
-	// dao.delete( entity.getId() );
-	System.out.println( "removendo" );
-	return listAll();
+	new Redirecionador().redirecionar( "inserir-usuario.xhtml" );
     }
 
     // GETTERS AND SETTERS
-
-
-
-    public List<UsuarioVO> getLista( )
-    {
-	List<UsuarioVO> lista2 = new ArrayList<UsuarioVO>();
-	lista2.add( new UsuarioVO( "login1", "senha1", "grupo1", "perfil1",
-		"sim", new Date() ) );
-	lista2.add( new UsuarioVO( "login1", "senha1", "grupo1", "perfil1",
-		"sim", new Date() ) );
-	lista2.add( new UsuarioVO( "login1", "senha1", "grupo1", "perfil1",
-		"sim", new Date() ) );
-
-	return lista2;
-    }
 
     public UsuarioVO getVo( )
     {
@@ -108,6 +51,40 @@ public class UsuarioController implements Serializable
     public void setVo( UsuarioVO vo )
     {
         this.vo = vo;
+    }
+
+    public List<UsuarioVO> getLista( ) throws Exception
+    {
+	Hashtable prop = new Hashtable( ) ;
+	prop.put( InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory" ) ;
+	prop.put( InitialContext.PROVIDER_URL, "jnp://localhost:1099" ) ;
+
+	Context ctx = new InitialContext( prop ) ;
+
+	UsuarioInterface remoteUsuario = ( UsuarioInterface ) ctx.lookup( "UsuarioBean/remote" ) ;
+	// ProdutoInterface remoteProduto = (ProdutoInterface)
+	// ctx.lookup("ProdutoBean/remote");
+
+	ServiceLocator serviceLocator = ServiceLocatorFactory.getServiceLocator( "serviceLocator" ) ;
+	ServiceDTO requestDTO = new ServiceDTO( ) ;
+	ServiceDTO responseDTO = new ServiceDTO( ) ;
+
+	/**
+	 * Consultar usuario
+	 */
+
+	responseDTO = remoteUsuario.selecionarTodosUsuario( requestDTO ) ;
+	UsuarioVO[ ] lista = ( UsuarioVO[ ] ) responseDTO.get( "listaUsuario" ) ;
+	if (lista != null)
+	{
+		for (int i = 0; i < lista.length; i++)
+		{
+			UsuarioVO usuarioVO = ( UsuarioVO ) lista[ i ] ;
+			System.out.println( usuarioVO ) ;
+		}
+	}
+	
+	return null;
     }
 
     public void setLista( List<UsuarioVO> lista )

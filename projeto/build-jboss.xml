@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="Projeto Exemplo - J2EE" default="_packaging_generation_">
+<project name="build-jboss" default="_packaging_generation_">
 
-	<property name="jboss.home" value="C:/opensource/jboss-5.1.0.GA" />
-	<property name="tomcat.web" value="C:/opensource/tomcat6" />
+	<property name="jboss.home" value="C:/dev/servidores/jboss-5.1.0.GA-jdk6/jboss-5.1.0.GA" />
+	<property name="tomcat.web" value="C:/dev/servidores/Tomcat 6.0" />
 	<property name="projeto.webservice" value="Vendas_3_0_WebService" />
 	<property name="jboss.server.config" value="default" />
 	<property name="build.artifact.ejb" value="VendaEJB.jar" />
@@ -11,7 +11,23 @@
 
 	<target name="_packaging_generation_" depends="delete, delegate, dto, vo, locator, exception, log, util, client, ejb, web, ear" />
 
-	<target name="delete">
+	<target name="tomcat-start">
+	    <java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
+	        <jvmarg value="-Dcatalina.home=${tomcat.home}"/>
+	    </java>
+	</target>
+	 
+	<target name="tomcat-stop">
+	    <java jar="${tomcat.web}/bin/bootstrap.jar" fork="true">
+	        <jvmarg value="-Dcatalina.home=${tomcat.web}"/>
+	        <arg line="stop"/>
+	    </java>
+	</target>
+	
+	<target name="delete" depends="">
+		<delete dir="${tomcat.web}/webapps/VendaWeb" />
+		<delete file="${tomcat.web}/webapps/VendaWeb.war" />
+		
 		<delete file="VendaDelegate.jar" />
 		<delete file="VendaDTO.jar" />
 		<delete file="VendaEJB-client.jar" />
@@ -23,6 +39,17 @@
 		<delete file="VendaVO.jar" />
 		<delete file="VendaWeb.jar" />
 		<delete file="../build/Venda-App.ear" />
+		
+		<delete file="${tomcat.web}/lib/VendaLocator.jar" />
+		<delete file="${tomcat.web}/lib/VendaException.jar" />
+		<delete file="${tomcat.web}/lib/VendaDTO.jar" />
+		<delete file="${tomcat.web}/lib/VendaVO.jar" />
+		<delete file="${tomcat.web}/lib/VendaEJB-client.jar" />
+		
+		<delete file="${jboss.home}/server/${jboss.server.config}/deploy/${build.artifact.ejb}" />
+		
+		
+	        	
 	</target>
 
 	<target name="delegate" description="VendaDelegate.jar">
@@ -162,8 +189,17 @@
 		<copy file="VendaVO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaEJB-client.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaDTO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
+<<<<<<< Updated upstream
 		<copy file="${build.artifact.ejb}" todir="../${projeto.webservice}/WebContent/META-INF" />
 		<copy file="${build.artifact.war}" todir="../${projeto.webservice}/WebContent/META-INF" />
+=======
+
+		<copy file="VendaLocator.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaException.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaDTO.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaVO.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaEJB-client.jar" todir="${tomcat.web}/lib" />
+>>>>>>> Stashed changes
 	</target>
 
 </project>

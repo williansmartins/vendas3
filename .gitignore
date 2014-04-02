@@ -6,9 +6,12 @@
 *.war
 *.ear
 
+
 # Folders
 target/
+
 
 # Extras
 projeto/build.xml
 projeto/build/
+projeto/src/META-INF/persistence.xml
