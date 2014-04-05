@@ -32,14 +32,7 @@ public class TesteReserva {
 		responseDTO = remoteReserva.inserirReserva(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
-			responseDTO = remoteReserva.selecionarTodosReserva(requestDTO);
-			ReservaVO[] lista = (ReservaVO[]) responseDTO.get("listaReserva");
-			if(lista != null){
-				for(int i = 0; i < lista.length; i++){
-					ReservaVO reservaVO = (ReservaVO) lista[i];
-					System.out.println(reservaVO);
-				}
-			}
+			System.out.println("Grava\u00e7\u00e3o realizada com sucesso.");
 		}else{
 			System.out.println("N\u00e3o foi possivel efetuar a grava\u00e7\u00e3o.");
 		}
@@ -76,7 +69,7 @@ public class TesteReserva {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteReserva.selecionarTodosReserva(requestDTO);
+		responseDTO = remoteReserva.selecionarTodasReservas(requestDTO);
 		ReservaVO[] lista = (ReservaVO[]) responseDTO.get("listaReserva");
 		if(lista != null){
 			for(int i = 0; i < lista.length; i++){

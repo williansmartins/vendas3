@@ -84,7 +84,7 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 		return responseDTO;
 	}
 
-	public ServiceDTO selecionarTodosCliente(ServiceDTO requestDTO) throws LayerException {
+	public ServiceDTO selecionarTodosClientes(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		Cliente cliente = null ;
 		List<Cliente> lista = DaoFactory.getClienteDAO(em).listar();

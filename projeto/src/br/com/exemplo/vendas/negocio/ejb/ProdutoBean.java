@@ -70,7 +70,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		return responseDTO;
 	}
 
-	public ServiceDTO selecionarTodosProduto(ServiceDTO requestDTO) throws LayerException {
+	public ServiceDTO selecionarTodosProdutos(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		Produto produto = null ;
 		List<Produto> lista = DaoFactory.getProdutoDAO(em).listar();

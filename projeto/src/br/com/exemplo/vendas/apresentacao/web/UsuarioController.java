@@ -73,7 +73,7 @@ public class UsuarioController implements Serializable
 	 * Consultar usuario
 	 */
 
-	responseDTO = remoteUsuario.selecionarTodosUsuario( requestDTO ) ;
+	responseDTO = remoteUsuario.selecionarTodosUsuarios( requestDTO ) ;
 	UsuarioVO[ ] lista = ( UsuarioVO[ ] ) responseDTO.get( "listaUsuario" ) ;
 	if (lista != null)
 	{

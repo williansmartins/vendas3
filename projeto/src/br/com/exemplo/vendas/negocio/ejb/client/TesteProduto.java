@@ -27,7 +27,7 @@ public class TesteProduto {
 		responseDTO = remoteProduto.inserirProduto(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
-			responseDTO = remoteProduto.selecionarTodosProduto(requestDTO);
+			responseDTO = remoteProduto.selecionarTodosProdutos(requestDTO);
 			ProdutoVO[] lista = (ProdutoVO[]) responseDTO.get("listaProduto");
 			if(lista != null){
 				for(int i = 0; i < lista.length; i++){

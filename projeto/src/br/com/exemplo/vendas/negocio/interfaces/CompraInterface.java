@@ -10,6 +10,6 @@ public interface CompraInterface {
 	public ServiceDTO inserirCompra(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO alterarCompra(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirCompra(ServiceDTO requestDTO) throws LayerException, RemoteException;
-	public ServiceDTO selecionarTodosCompra(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO selecionarTodosCompras(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO getCompra(ServiceDTO requestDTO, Integer numero) throws LayerException, RemoteException;
 }

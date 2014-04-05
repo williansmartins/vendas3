@@ -68,7 +68,7 @@ public class TesteCliente {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteCliente.selecionarTodosCliente(requestDTO);
+		responseDTO = remoteCliente.selecionarTodosClientes(requestDTO);
 		ClienteVO[] lista = (ClienteVO[]) responseDTO.get("listaCliente");
 		if(lista != null){
 			for(int i = 0; i < lista.length; i++){

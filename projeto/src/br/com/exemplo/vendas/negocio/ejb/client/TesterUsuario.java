@@ -30,7 +30,7 @@ public class TesterUsuario {
 		responseDTO = remoteUsuario.inserirUsuario(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
-			responseDTO = remoteUsuario.selecionarTodosUsuario(requestDTO);
+			responseDTO = remoteUsuario.selecionarTodosUsuarios(requestDTO);
 			UsuarioVO[] lista = (UsuarioVO[]) responseDTO.get("listaUsuario");
 			if(lista != null){
 				for(int i = 0; i < lista.length; i++){

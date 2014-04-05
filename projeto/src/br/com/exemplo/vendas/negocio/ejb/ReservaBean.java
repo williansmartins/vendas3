@@ -51,7 +51,7 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 		return null;
 	}
 	
-	public ServiceDTO selecionarTodosReserva(ServiceDTO requestDTO) throws LayerException {
+	public ServiceDTO selecionarTodasReservas(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		List<Reserva> lista = DaoFactory.getReservaDAO(em).listar();
 		if((lista != null) && (!lista.isEmpty())) {

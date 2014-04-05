@@ -63,7 +63,7 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 		return responseDTO ;
 	}
 
-	public ServiceDTO selecionarTodosUsuario( ServiceDTO requestDTO ) throws LayerException {
+	public ServiceDTO selecionarTodosUsuarios( ServiceDTO requestDTO ) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		Usuario usuario = null;
 		List<Usuario> lista = DaoFactory.getUsuarioDAO(em).listar();

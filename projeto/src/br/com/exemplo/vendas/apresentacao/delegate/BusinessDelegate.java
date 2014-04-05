@@ -70,7 +70,7 @@ public class BusinessDelegate {
 	public ServiceDTO selectionarTodosUsuarios(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
-			responseDTO = ((UsuarioInterface)serviceLocator.getService("UsuarioBean/remote")).selecionarTodosUsuario(requestDTO);
+			responseDTO = ((UsuarioInterface)serviceLocator.getService("UsuarioBean/remote")).selecionarTodosUsuarios(requestDTO);
 		}catch(RemoteException remoteException){
 			throw SysExceptionFactory.getException(remoteException);
 		}catch(ServiceLocatorException serviceLocatorException){
