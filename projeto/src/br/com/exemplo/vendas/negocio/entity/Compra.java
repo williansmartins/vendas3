@@ -17,6 +17,8 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
+
 @Entity
 @Table(name="TBL_COMPRA")
 public class Compra implements Serializable {
@@ -28,7 +30,7 @@ public class Compra implements Serializable {
 	private Long numero;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name="ultimo_acesso", nullable=false)
+	@Column(name="data", nullable=false)
 	private Date data;
 	
 	@Column(name="situacao", nullable=false)
@@ -114,5 +116,13 @@ public class Compra implements Serializable {
 		} else if (!numero.equals(other.numero))
 			return false;
 		return true;
+	}
+	public static Compra create(CompraVO compraVO) {
+		Compra compra = new Compra();
+		compra.setNumero(compraVO.getNumero());
+		compra.setData(compraVO.getData());
+		compra.setSituacao(compraVO.getSituacao());
+		compra.setValor(compraVO.getValor());
+		return compra;
 	}
 }

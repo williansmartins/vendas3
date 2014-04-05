@@ -48,6 +48,30 @@
 		</providers>
 	</service>
 	
+	<!-- Compra -->
+	<service>
+		<name>CompraBean/remote</name>
+		<jndi-name>CompraBean/remote</jndi-name>
+		<cacheable>true</cacheable>
+		<providers>
+			<provider>
+				<name>jboss@localhost:18080</name>
+			</provider>
+		</providers>
+	</service>
+	
+	<!-- Item -->
+	<service>
+		<name>ItemBean/remote</name>
+		<jndi-name>ItemBean/remote</jndi-name>
+		<cacheable>true</cacheable>
+		<providers>
+			<provider>
+				<name>jboss@localhost:18080</name>
+			</provider>
+		</providers>
+	</service>
+	
 	<service>
 		<name>RecebeRequisicaoBean/remote</name>
 		<jndi-name>RecebeRequisicaoBean/remote</jndi-name>

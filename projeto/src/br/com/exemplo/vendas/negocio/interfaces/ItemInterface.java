@@ -11,5 +11,5 @@ public interface ItemInterface {
 	public ServiceDTO alterarItem(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirItem(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO selecionarTodosItens(ServiceDTO requestDTO) throws LayerException, RemoteException;
-	public ServiceDTO getItem(ServiceDTO requestDTO, Long codigo) throws LayerException, RemoteException;
+	public ServiceDTO getItem(ServiceDTO requestDTO, Long codigoReserva, Long numeroCompra, Long codigoProduto) throws LayerException, RemoteException;
 }

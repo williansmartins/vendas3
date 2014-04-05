@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.*;
 import java.util.Date;
 
+import br.com.exemplo.vendas.negocio.entity.Reserva;
+
 public class ReservaVO implements Serializable {
 	
 	private static final long serialVersionUID = -7140384086126242064L;
@@ -92,5 +94,15 @@ public class ReservaVO implements Serializable {
 
 	public void setLoginCliente(String loginCliente) {
 		this.loginCliente = loginCliente;
+	}
+	
+	public static ReservaVO create(Reserva reserva){
+		ReservaVO reservaVO = new ReservaVO();
+		reservaVO.setCodigo(reserva.getCodigo());
+		reservaVO.setData(reserva.getData());
+		reservaVO.setAtendente(reserva.getAtendente());
+		reservaVO.setSituacao(reserva.getSituacao());
+		reservaVO.setValor(reserva.getValor());
+		return reservaVO;
 	}
 }

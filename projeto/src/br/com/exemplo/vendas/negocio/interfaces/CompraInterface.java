@@ -11,5 +11,5 @@ public interface CompraInterface {
 	public ServiceDTO alterarCompra(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirCompra(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO selecionarTodosCompras(ServiceDTO requestDTO) throws LayerException, RemoteException;
-	public ServiceDTO getCompra(ServiceDTO requestDTO, Integer numero) throws LayerException, RemoteException;
+	public ServiceDTO getCompra(ServiceDTO requestDTO, Long numero) throws LayerException, RemoteException;
 }

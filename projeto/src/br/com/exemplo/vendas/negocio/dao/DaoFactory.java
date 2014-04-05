@@ -11,6 +11,8 @@ public final class DaoFactory {
 	private static ClienteDAO clienteDAO_instance;
 	private static ProdutoDAO produtoDAO_instance;
 	private static ReservaDAO reservaDAO_instance;
+	private static CompraDAO compraDAO_instance;
+	private static ItemDAO itemDAO_instance;
 
 	private DaoFactory() throws SysException {}
 	private synchronized static void initialize() throws SysException {
@@ -49,5 +51,21 @@ public final class DaoFactory {
 			reservaDAO_instance = new ReservaDAO(em);
 		}
 		return reservaDAO_instance;
+	}
+	
+	public static CompraDAO getCompraDAO(EntityManager em) throws SysException {
+		initialize();
+		if(compraDAO_instance == null) {
+			compraDAO_instance = new CompraDAO(em);
+		}
+		return compraDAO_instance;
+	}
+	
+	public static ItemDAO getItemDAO(EntityManager em) throws SysException {
+		initialize();
+		if(itemDAO_instance == null) {
+			itemDAO_instance = new ItemDAO(em);
+		}
+		return itemDAO_instance;
 	}
 }

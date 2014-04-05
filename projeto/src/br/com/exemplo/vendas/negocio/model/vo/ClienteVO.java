@@ -13,13 +13,13 @@ public class ClienteVO extends UsuarioVO {
 	private Integer telefone;
 	private String situacao;
 	
+	@Override
 	public String toString() {
 		return this.getLogin() + ":" + this.getSenha() + ":" + this.getGrupo() + ":" + this.getPerfil() + ":" + this.getBloqueado() + ":" + this.getUltimoAcesso() + ":" + this.codigo + ":" + this.nome + ":" + this.endereco + ":" + this.telefone + ":" + this.situacao;
 	}
 	
 	public ClienteVO(){}
-	public ClienteVO(String login, String senha, String grupo, String perfil, Boolean bloqueado, Date ultimoAcesso, 
-			   		 Long codigo, String nome, String endereco, Integer telefone, String situacao){
+	public ClienteVO(String login, String senha, String grupo, String perfil, Boolean bloqueado, Date ultimoAcesso, Long codigo, String nome, String endereco, Integer telefone, String situacao){
 		this.setLogin(login);
 		this.setSenha(senha);
 		this.setGrupo(grupo);

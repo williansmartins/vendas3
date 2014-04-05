@@ -25,9 +25,8 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 		ServiceDTO responseDTO = new ServiceDTO();
 		ReservaVO vo = (ReservaVO) requestDTO.get("reservaVO");
 		if(vo != null) {
-			Cliente cliente = null;
 			try{
-				cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(vo.getLoginCliente());
+				Cliente cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(vo.getLoginCliente());
 				Reserva reserva = Reserva.create(vo);
 				reserva.setCliente(cliente);
 				if(DaoFactory.getReservaDAO(em).inserir(reserva)) {
