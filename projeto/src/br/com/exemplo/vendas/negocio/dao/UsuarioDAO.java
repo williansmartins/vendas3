@@ -1,26 +1,22 @@
 package br.com.exemplo.vendas.negocio.dao ;
 
-import javax.persistence.EntityManager ;
-import javax.persistence.NoResultException ;
-import javax.persistence.Persistence ;
-import javax.persistence.Query ;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
-import br.com.exemplo.vendas.negocio.entity.Usuario ;
+import br.com.exemplo.vendas.negocio.entity.Usuario;
 
-public class UsuarioDAO extends GenericDAO<Usuario>
-{
-	public UsuarioDAO( EntityManager em )
-	{
-		super( em ) ;
+public class UsuarioDAO extends GenericDAO<Usuario> {
+	
+	public UsuarioDAO(EntityManager em) {
+		super(em);
 	}
 
-	public UsuarioDAO( )
-	{
-		super( Persistence.createEntityManagerFactory( "Vendas" ).createEntityManager( ) ) ;
+	public UsuarioDAO() {
+		super(Persistence.createEntityManagerFactory("Vendas").createEntityManager());
 	}
 
-	public boolean inserir( Usuario usuario )
-	{
+	public boolean inserir(Usuario usuario) {
 		boolean result = false ;
 		Usuario existenteUsuario = null ;
 

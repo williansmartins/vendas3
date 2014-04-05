@@ -16,7 +16,7 @@ import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
-	@PersistenceContext( unitName = "Vendas" )
+	@PersistenceContext(unitName = "Vendas")
 	EntityManager em ;
 
 	public ServiceDTO inserirProduto(ServiceDTO requestDTO) throws LayerException {

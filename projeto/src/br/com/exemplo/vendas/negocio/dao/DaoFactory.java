@@ -10,6 +10,7 @@ public final class DaoFactory {
 	private static UsuarioDAO usuarioDAO_instance;
 	private static ClienteDAO clienteDAO_instance;
 	private static ProdutoDAO produtoDAO_instance;
+	private static ReservaDAO reservaDAO_instance;
 
 	private DaoFactory() throws SysException {}
 	private synchronized static void initialize() throws SysException {
@@ -40,5 +41,13 @@ public final class DaoFactory {
 			produtoDAO_instance = new ProdutoDAO(em);
 		}
 		return produtoDAO_instance;
+	}
+	
+	public static ReservaDAO getReservaDAO(EntityManager em) throws SysException {
+		initialize();
+		if(reservaDAO_instance == null) {
+			reservaDAO_instance = new ReservaDAO(em);
+		}
+		return reservaDAO_instance;
 	}
 }

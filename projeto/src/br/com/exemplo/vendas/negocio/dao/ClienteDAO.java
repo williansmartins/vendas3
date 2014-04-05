@@ -1,6 +1,9 @@
 package br.com.exemplo.vendas.negocio.dao ;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -18,29 +21,14 @@ public class ClienteDAO extends GenericDAO<Cliente> {
 
 	public boolean inserir(Cliente cliente) {
 		boolean result = false ;
-		Cliente existenteCliente = null ;
-
-		try {
-//			Query q = em.createQuery( "from Usuario where login like :login" ) ;
-//			q.setParameter( "login", usuario.getLogin( ) ) ;
-//
-//			try
-//			{
-//				existenteUsuario = ( Usuario ) q.getSingleResult( ) ;
-//			}
-//			catch (NoResultException e)
-//			{
-//				existenteUsuario = null ;
-//			}
-
-			if(existenteCliente == null) {
-				em.persist(cliente);
-			} else {
-				cliente.setLogin(existenteCliente.getLogin());
-			}
+		try{
+			//Nao precisa verificar existecia de cliente, pois
+			//todos os dados da tabelas poderam ser repetir, apenas
+			//o login nao e unico por usuario.
+			em.persist(cliente);
 			result = true;
-		} catch (Exception e) {
-			if(debugInfo) {
+		}catch(Exception e){
+			if(debugInfo){
 				e.printStackTrace();
 			}
 		}
@@ -101,6 +89,21 @@ public class ClienteDAO extends GenericDAO<Cliente> {
 		return obj ;
 	}
 
+	public Cliente localizarPorLogin(String login) throws Exception {
+		try{
+			Query query = em.createQuery("from Cliente where login like :login");
+			query.setParameter("login", login);
+			Cliente obj = (Cliente) query.getSingleResult();
+			return obj;
+		}catch(EntityNotFoundException e){
+			throw new Exception("Cliente n\u00e3o encontrado.");
+		}catch(NoResultException e){
+			throw new Exception("Cliente n\u00e3o encontrado.");
+		}catch(NonUniqueResultException e){
+			throw new Exception("Cliente n\u00e3o encontrado.");
+		}
+	}
+	
 	// public List<Usuario> localizarPorNome( Usuario usuario )
 	// {
 	// List<Usuario> result = new ArrayList<Usuario>();

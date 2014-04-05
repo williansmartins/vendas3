@@ -1,13 +1,20 @@
 package br.com.exemplo.vendas.negocio.model.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class ProdutoVO {
+public class ProdutoVO implements Serializable {
 	
+	private static final long serialVersionUID = 3717585905983816406L;
 	private Long codigo;
 	private String descricao;
 	private BigDecimal preco;
 	private String estoque;
+	
+	@Override
+	public String toString() {
+		return this.codigo + ":" + this.descricao + ":" + this.preco + ":" + this.estoque;
+	}
 	
 	public ProdutoVO(){}
 	public ProdutoVO(Long codigo, String descricao, BigDecimal preco, String estoque) {

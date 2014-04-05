@@ -1,36 +1,57 @@
 package br.com.exemplo.vendas.negocio.entity;
 
-import java.math.*;
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import br.com.exemplo.vendas.negocio.model.vo.ReservaVO;
 
 @Entity
-public class Reserva {
+@Table(name="TBL_RESERVA")
+public class Reserva implements Serializable {
+
+	private static final long serialVersionUID = -6722022398585105298L;
 
 	@Id
-	private int id;
-	private Integer codigo;
+	@Column(name="codigo", nullable=false)
+	private Long codigo;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="data", nullable=false)
 	private Date data;
+
+	@Column(name="atendente", nullable=false)
 	private String atendente;
+	
+	@Column(name="situacao", nullable=false)
 	private String situacao;
+	
+	@Column(name="valor", nullable=false)
 	private BigDecimal valor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="login_cliente")
+	@Fetch(FetchMode.JOIN)
 	private Cliente cliente;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public Integer getCodigo() {
+	public Long getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(Integer codigo) {
+	public void setCodigo(Long codigo) {
 		this.codigo = codigo;
 	}
 
@@ -72,5 +93,40 @@ public class Reserva {
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Reserva other = (Reserva) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
+	}
+	
+	public static Reserva create(ReservaVO vo){
+		Reserva reserva = new Reserva();
+		reserva.setCodigo(vo.getCodigo());
+		reserva.setData(vo.getData());
+		reserva.setAtendente(vo.getAtendente());
+		reserva.setSituacao(vo.getSituacao());
+		reserva.setValor(vo.getValor());
+		return reserva;
 	}
 }

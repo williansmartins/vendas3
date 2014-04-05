@@ -20,7 +20,7 @@ public class InserirUsuarioACT implements Action {
 		String bloqueado = request.getParameter("bloqueado");
 		String nome = request.getParameter("nome");
 
-		UsuarioVO vo = new UsuarioVO(login, senha, grupo, perfil, bloqueado, new Date(), nome);
+		UsuarioVO vo = new UsuarioVO(login, senha, grupo, perfil, true, new Date());
 		Service service = new Service();
 		Boolean sucesso = service.inserirUsuario(vo);
 		if(sucesso.booleanValue()){
