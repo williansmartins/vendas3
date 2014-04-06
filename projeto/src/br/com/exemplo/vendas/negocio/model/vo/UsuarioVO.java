@@ -28,6 +28,12 @@ public class UsuarioVO implements Serializable {
 		this.ultimoAcesso = ultimoAcesso;
 	}
 
+	public UsuarioVO( String string, String string2, String string3,
+		String string4, String string5, Date date )
+	{
+	    // TODO Auto-generated constructor stub
+	}
+
 	public Boolean getBloqueado() {
 		return bloqueado;
 	}

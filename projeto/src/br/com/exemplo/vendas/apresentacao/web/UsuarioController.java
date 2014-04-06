@@ -71,7 +71,7 @@ public class UsuarioController implements Serializable
     {
 	System.out.println("deveria remover um usuário aqui ...");
 	//(Devemos integar com o Jboss aqui)
-	System.out.println("Remover o usuário com ID: " + vo.getId());
+//	System.out.println("Remover o usuário com ID: " + vo.getId());
 	new Redirecionador().redirecionar( "lista-usuarios.xhtml" );
     }
 
