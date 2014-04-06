@@ -10,6 +10,6 @@ public interface ProdutoInterface {
 	public ServiceDTO inserirProduto(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO alterarProduto(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirProduto(ServiceDTO requestDTO) throws LayerException, RemoteException;
-	public ServiceDTO selecionarTodosProduto(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO selecionarTodosProdutos(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO getProduto(ServiceDTO requestDTO, Long codigo) throws LayerException, RemoteException;
 }

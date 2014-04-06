@@ -5,6 +5,6 @@ import javax.ejb.Remote ;
 import br.com.exemplo.vendas.negocio.interfaces.UsuarioInterface ;
 
 @Remote
-public interface UsuarioRemote extends UsuarioInterface
-{
+public interface UsuarioRemote extends UsuarioInterface {
+	
 }

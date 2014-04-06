@@ -1,6 +1,9 @@
 package br.com.exemplo.vendas.negocio.dao ;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -86,19 +89,19 @@ public class ProdutoDAO extends GenericDAO<Produto> {
 		return result;
 	}
 
-	public Produto localizarPorLogin(Produto produto) {
-		Produto obj = new Produto();
-
+	public Produto localizarPorCodigo(Long codigo) throws Exception {
 		try{
-			Query query = em.createQuery("from Produto where login like :login");
-			query.setParameter("login", produto.getCodigo());
-			obj = (Produto) query.getSingleResult();
-		}catch(Exception e){
-			if(debugInfo){
-				e.printStackTrace();
-			}
+			Query query = em.createQuery("from Produto where codigo = :codigo");
+			query.setParameter("codigo", codigo);
+			Produto obj = (Produto) query.getSingleResult();
+			return obj;
+		}catch(EntityNotFoundException e){
+			throw new Exception("Produto n\u00e3o encontrado.");
+		}catch(NoResultException e){
+			throw new Exception("Produto n\u00e3o encontrado.");
+		}catch(NonUniqueResultException e){
+			throw new Exception("Produto n\u00e3o encontrado.");
 		}
-		return obj;
 	}
 
 	// public List<Usuario> localizarPorNome( Usuario usuario )

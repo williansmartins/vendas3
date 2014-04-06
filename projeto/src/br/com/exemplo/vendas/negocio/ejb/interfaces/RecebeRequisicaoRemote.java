@@ -5,6 +5,6 @@ import javax.ejb.Remote ;
 import br.com.exemplo.vendas.negocio.interfaces.RecebeRequisicaoInterface ;
 
 @Remote
-public interface RecebeRequisicaoRemote extends RecebeRequisicaoInterface
-{
+public interface RecebeRequisicaoRemote extends RecebeRequisicaoInterface {
+	
 }

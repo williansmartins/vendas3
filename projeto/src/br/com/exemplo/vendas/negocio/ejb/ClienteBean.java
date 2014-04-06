@@ -16,7 +16,7 @@ import br.com.exemplo.vendas.util.exception.LayerException ;
 
 @Stateless
 public class ClienteBean implements ClienteRemote, ClienteLocal {
-	@PersistenceContext( unitName = "Vendas" )
+	@PersistenceContext(unitName = "Vendas")
 	EntityManager em ;
 
 	public ServiceDTO inserirCliente(ServiceDTO requestDTO) throws LayerException {
@@ -84,7 +84,7 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 		return responseDTO;
 	}
 
-	public ServiceDTO selecionarTodosCliente(ServiceDTO requestDTO) throws LayerException {
+	public ServiceDTO selecionarTodosClientes(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		Cliente cliente = null ;
 		List<Cliente> lista = DaoFactory.getClienteDAO(em).listar();
@@ -97,7 +97,7 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 				clienteVO.setSenha(cliente.getSenha());
 				clienteVO.setGrupo(cliente.getGrupo());
 				clienteVO.setPerfil(cliente.getPerfil());
-				clienteVO.setBloqueado(cliente.getBloqueado().toString());
+				clienteVO.setBloqueado(cliente.getBloqueado());
 				clienteVO.setUltimoAcesso(cliente.getUltimoAcesso());
 				clienteVO.setCodigo(cliente.getCodigo());
 				clienteVO.setNome(cliente.getNome());
@@ -123,14 +123,14 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 			clienteVO.setSenha(cliente.getSenha());
 			clienteVO.setGrupo(cliente.getGrupo());
 			clienteVO.setPerfil(cliente.getPerfil());
-			clienteVO.setBloqueado(cliente.getBloqueado().toString());
+			clienteVO.setBloqueado(cliente.getBloqueado());
 			clienteVO.setUltimoAcesso(cliente.getUltimoAcesso());
 			clienteVO.setCodigo(cliente.getCodigo());
 			clienteVO.setNome(cliente.getNome());
 			clienteVO.setEndereco(cliente.getEndereco());
 			clienteVO.setTelefone(cliente.getTelefone());
 			clienteVO.setSituacao(cliente.getSituacao());
-			responseDTO.set( "getCliente", clienteVO ) ;
+			responseDTO.set("getCliente", clienteVO);
 		}
 		return responseDTO;
 	}

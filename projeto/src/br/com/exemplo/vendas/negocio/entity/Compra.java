@@ -17,102 +17,90 @@ import javax.persistence.TemporalType;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-import br.com.exemplo.vendas.negocio.model.vo.ReservaVO;
+import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
 
 @Entity
-@Table(name="TBL_RESERVA")
-public class Reserva implements Serializable {
-
-	private static final long serialVersionUID = -6722022398585105298L;
+@Table(name="TBL_COMPRA")
+public class Compra implements Serializable {
+	
+	private static final long serialVersionUID = -721402309397612891L;
 
 	@Id
-	@Column(name="codigo", nullable=false)
-	private Long codigo;
+	@Column(name="numero", nullable=false)
+	private Long numero;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="data", nullable=false)
 	private Date data;
-
-	@Column(name="atendente", nullable=false)
-	private String atendente;
 	
 	@Column(name="situacao", nullable=false)
 	private String situacao;
 	
 	@Column(name="valor", nullable=false)
 	private BigDecimal valor;
-	
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="codigo_reserva")
+	@Fetch(FetchMode.JOIN)
+	private Reserva reserva;
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="login_cliente")
 	@Fetch(FetchMode.JOIN)
 	private Cliente cliente;
-
-	public Reserva(){}
-	public Reserva(Long codigo, Date data, String atendente, String situacao, BigDecimal valor, Cliente cliente){
-		this.codigo = codigo;
+	
+	public Compra(){}
+	public Compra(Long numero, Date data, String situacao, BigDecimal valor, Reserva reserva, Cliente cliente){
+		this.numero = numero;
 		this.data = data;
-		this.atendente = atendente;
 		this.situacao = situacao;
 		this.valor = valor;
+		this.reserva = reserva;
 		this.cliente = cliente;
 	}
-	
-	public Long getCodigo() {
-		return codigo;
+	public Long getNumero() {
+		return numero;
 	}
-
-	public void setCodigo(Long codigo) {
-		this.codigo = codigo;
+	public void setNumero(Long numero) {
+		this.numero = numero;
 	}
-
 	public Date getData() {
 		return data;
 	}
-
 	public void setData(Date data) {
 		this.data = data;
 	}
-
-	public String getAtendente() {
-		return atendente;
-	}
-
-	public void setAtendente(String atendente) {
-		this.atendente = atendente;
-	}
-
 	public String getSituacao() {
 		return situacao;
 	}
-
 	public void setSituacao(String situacao) {
 		this.situacao = situacao;
 	}
-
 	public BigDecimal getValor() {
 		return valor;
 	}
-
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
-
+	public Reserva getReserva() {
+		return reserva;
+	}
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
 	public Cliente getCliente() {
 		return cliente;
 	}
-
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		result = prime * result + ((numero == null) ? 0 : numero.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -121,22 +109,20 @@ public class Reserva implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Reserva other = (Reserva) obj;
-		if (codigo == null) {
-			if (other.codigo != null)
+		Compra other = (Compra) obj;
+		if (numero == null) {
+			if (other.numero != null)
 				return false;
-		} else if (!codigo.equals(other.codigo))
+		} else if (!numero.equals(other.numero))
 			return false;
 		return true;
 	}
-	
-	public static Reserva create(ReservaVO vo){
-		Reserva reserva = new Reserva();
-		reserva.setCodigo(vo.getCodigo());
-		reserva.setData(vo.getData());
-		reserva.setAtendente(vo.getAtendente());
-		reserva.setSituacao(vo.getSituacao());
-		reserva.setValor(vo.getValor());
-		return reserva;
+	public static Compra create(CompraVO compraVO) {
+		Compra compra = new Compra();
+		compra.setNumero(compraVO.getNumero());
+		compra.setData(compraVO.getData());
+		compra.setSituacao(compraVO.getSituacao());
+		compra.setValor(compraVO.getValor());
+		return compra;
 	}
 }

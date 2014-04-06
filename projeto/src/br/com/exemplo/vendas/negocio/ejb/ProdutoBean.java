@@ -16,7 +16,7 @@ import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
-	@PersistenceContext( unitName = "Vendas" )
+	@PersistenceContext(unitName = "Vendas")
 	EntityManager em ;
 
 	public ServiceDTO inserirProduto(ServiceDTO requestDTO) throws LayerException {
@@ -70,39 +70,31 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		return responseDTO;
 	}
 
-	public ServiceDTO selecionarTodosProduto(ServiceDTO requestDTO) throws LayerException {
+	public ServiceDTO selecionarTodosProdutos(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
-		Produto produto = null ;
 		List<Produto> lista = DaoFactory.getProdutoDAO(em).listar();
 		if((lista != null) && (!lista.isEmpty())) {
 			ProdutoVO[] produtos = new ProdutoVO[lista.size()];
 			for(int i = 0; i < lista.size(); i++) {
-				produto = (Produto) lista.get(i);
-				ProdutoVO produtoVO = new ProdutoVO();
-				produtoVO.setCodigo(produto.getCodigo());
-				produtoVO.setDescricao(produto.getDescricao());
-				produtoVO.setPreco(produto.getPreco());
-				produtoVO.setEstoque(produto.getEstoque());
-				produtos[i] = produtoVO ;
+				Produto produto = (Produto) lista.get(i);
+				ProdutoVO produtoVO = ProdutoVO.create(produto);
+				produtos[i] = produtoVO;
 			}
 			responseDTO.set("listaProduto", produtos);
+		}else{
+			responseDTO.set("listaProduto", new ProdutoVO[0]);
 		}
 		return responseDTO ;
 	}
 
 	public ServiceDTO getProduto(ServiceDTO requestDTO, Long codigo) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
-		Produto produto = new Produto();
-		produto.setCodigo(codigo);
-		Produto lista = DaoFactory.getProdutoDAO(em).localizarPorLogin(produto);
-		if(lista != null) {
-			produto = (Produto) lista;
-			ProdutoVO produtoVO = new ProdutoVO();
-			produtoVO.setCodigo(produto.getCodigo());
-			produtoVO.setDescricao(produto.getDescricao());
-			produtoVO.setPreco(produto.getPreco());
-			produtoVO.setEstoque(produto.getEstoque());
-			responseDTO.set( "getProduto", produtoVO ) ;
+		try{
+			Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(codigo);
+			ProdutoVO produtoVO = ProdutoVO.create(produto);
+			responseDTO.set( "getProduto", produtoVO);
+		}catch(Exception e){
+			responseDTO.set( "getProduto", null);
 		}
 		return responseDTO;
 	}
