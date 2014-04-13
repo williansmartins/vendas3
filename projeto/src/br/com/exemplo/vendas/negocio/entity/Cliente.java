@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import br.com.exemplo.vendas.negocio.model.vo.ClienteVO;
+
 @Entity
 @Table(name="TBL_CLIENTE")
 @PrimaryKeyJoinColumn(name="LOGIN")
@@ -73,6 +75,7 @@ public class Cliente extends Usuario {
 	public void setSituacao(String situacao) {
 		this.situacao = situacao;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,6 +83,7 @@ public class Cliente extends Usuario {
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -95,5 +99,21 @@ public class Cliente extends Usuario {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+	
+	public static Cliente create(ClienteVO clienteVO) {
+		Cliente cliente = new Cliente();
+		cliente.setLogin(clienteVO.getLogin());
+		cliente.setSenha(clienteVO.getSenha());
+		cliente.setGrupo(clienteVO.getGrupo());
+		cliente.setPerfil(clienteVO.getPerfil());
+		cliente.setBloqueado(clienteVO.getBloqueado());
+		cliente.setUltimoAcesso(clienteVO.getUltimoAcesso());
+		cliente.setCodigo(clienteVO.getCodigo());
+		cliente.setNome(clienteVO.getNome());
+		cliente.setEndereco(clienteVO.getEndereco());
+		cliente.setTelefone(clienteVO.getTelefone());
+		cliente.setSituacao(clienteVO.getSituacao());
+		return cliente;
 	}
 }

@@ -1,21 +1,20 @@
 package br.com.exemplo.vendas.negocio.ejb.client;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import br.com.exemplo.vendas.negocio.interfaces.ReservaInterface;
-import br.com.exemplo.vendas.negocio.model.vo.ReservaVO;
+import br.com.exemplo.vendas.negocio.interfaces.ClienteJuridicoInterface;
+import br.com.exemplo.vendas.negocio.model.vo.ClienteJuridicoVO;
 import br.com.exemplo.vendas.util.dto.ServiceDTO;
 
-public class TesteReserva {
+public class TesteClienteJuridico {
 
 	/**
-	 * Inserir Reserva.java
-	 * TBL_RESERVA
+	 * Inserir ClienteJuridico.java
+	 * TBL_CLIENTE_JURIDICO
 	 * 
 	 * 1
 	 */
@@ -25,13 +24,13 @@ public class TesteReserva {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ReservaInterface remoteReserva = (ReservaInterface) ctx.lookup("ReservaBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		ReservaVO vo = new ReservaVO(new Long(1), new Date(), "fidalgo", "aberto", new BigDecimal(100), "alberto");
-		requestDTO.set("reservaVO", vo);
-		responseDTO = remoteReserva.inserirReserva(requestDTO);
+		ClienteJuridicoVO vo = new ClienteJuridicoVO("albertojuridico", "alberto123", "Fiap", "Legal", true, new Date(), new Long(1), "Alberto Cerqueira", "Diadema", 12345678, "Sei la", "123123133213", "Rua da Empresa", "002");
+		requestDTO.set("clienteJuridicoVO", vo);
+		responseDTO = remoteClienteJuridico.inserirClienteJuridico(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
 			System.out.println("Grava\u00e7\u00e3o realizada com sucesso.");
@@ -41,7 +40,7 @@ public class TesteReserva {
 	}
 	
 	/**
-	 * Buscar Reserva.java por codigo
+	 * Buscar ClienteJuridico.java por login
 	 * 
 	 * 2
 	 */
@@ -51,17 +50,17 @@ public class TesteReserva {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ReservaInterface remoteReserva = (ReservaInterface) ctx.lookup("ReservaBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteReserva.getReserva(requestDTO, new Long(1));
-		ReservaVO reservaVO = (ReservaVO) responseDTO.get("getReserva");
-		System.out.println(reservaVO);
+		responseDTO = remoteClienteJuridico.getClienteJuridico(requestDTO, "alberto");
+		ClienteJuridicoVO clienteJuridicoVO = (ClienteJuridicoVO) responseDTO.get("getClienteJuridico");
+		System.out.println(clienteJuridicoVO);
 	}
 	
 	/**
-	 * Listas todas Reserva.java
+	 * Listas todos ClienteJuridico.java
 	 * 
 	 * 3
 	 */
@@ -71,23 +70,23 @@ public class TesteReserva {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ReservaInterface remoteReserva = (ReservaInterface) ctx.lookup("ReservaBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteReserva.selecionarTodasReservas(requestDTO);
-		ReservaVO[] lista = (ReservaVO[]) responseDTO.get("listaReserva");
+		responseDTO = remoteClienteJuridico.selecionarTodosClientesJuridicos(requestDTO);
+		ClienteJuridicoVO[] lista = (ClienteJuridicoVO[]) responseDTO.get("listaClienteJuridico");
 		if(lista != null){
 			for(int i = 0; i < lista.length; i++){
-				ReservaVO reservaVO = (ReservaVO) lista[i];
-				System.out.println(reservaVO);
+				ClienteJuridicoVO clienteJuridicoVO = (ClienteJuridicoVO) lista[i];
+				System.out.println(clienteJuridicoVO);
 			}
 		}
 	}
 	
 	/**
-	 * Excluir Reserva.java
-	 * TBL_RESERVA
+	 * Excluir ClienteJuridico.java
+	 * TBL_CLIENTE_JURIDICO
 	 * 
 	 * 4
 	 */
@@ -97,12 +96,12 @@ public class TesteReserva {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ReservaInterface remoteReserva = (ReservaInterface) ctx.lookup("ReservaBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		requestDTO.set("codigoReserva", new Long(1));
-		responseDTO = remoteReserva.excluirReservaPorCodigo(requestDTO);
+		requestDTO.set("loginClienteJuridico", "alberto");
+		responseDTO = remoteClienteJuridico.excluirClienteJuridicoPorLogin(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
 			System.out.println("Exclus\u00e3o realizada com sucesso.");

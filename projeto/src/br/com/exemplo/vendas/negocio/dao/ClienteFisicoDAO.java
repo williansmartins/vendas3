@@ -1,7 +1,5 @@
 package br.com.exemplo.vendas.negocio.dao ;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
@@ -10,31 +8,32 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import br.com.exemplo.vendas.negocio.entity.Cliente;
+import br.com.exemplo.vendas.negocio.entity.ClienteFisico;
 
-public class ClienteDAO extends GenericDAO<Cliente> {
+public class ClienteFisicoDAO extends GenericDAO<ClienteFisico> {
 	
-	public ClienteDAO(EntityManager em) {
+	public ClienteFisicoDAO(EntityManager em) {
 		super(em);
 	}
 
-	public ClienteDAO() {
+	public ClienteFisicoDAO() {
 		super(Persistence.createEntityManagerFactory("Vendas").createEntityManager());
 	}
 
 	/**
-	 * Metodo reponsavel por inserir um Cliente.java (TBL_CLIENTE)
+	 * Metodo reponsavel por inserir um ClienteFisico.java (TBL_CLIENTE_FISICO)
 	 * no sistema.
-	 * @param Cliente recebe o cliente que sera inserido.
+	 * @param ClienteFisico recebe o cliente fisico que sera inserido.
 	 * @return boolean 
 	 * 		true: Para sucesso na insercao.
 	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
 	 */
-	public boolean inserir(Cliente cliente) {
+	public boolean inserir(ClienteFisico clienteFisico) {
 		try{
 			//Nao precisa verificar existecia de cliente, pois
 			//todos os dados da tabelas poderam ser repetir, apenas
 			//o login nao, e unico por usuario e PK.
-			em.persist(cliente);
+			em.persist(clienteFisico);
 			return true;
 		}catch(Exception e){
 			if(debugInfo){
@@ -66,16 +65,16 @@ public class ClienteDAO extends GenericDAO<Cliente> {
 	}
 
 	/**
-	 * Metodo reponsavel por excluir um Cliente.java (TBL_CLIENTE)
+	 * Metodo reponsavel por excluir um ClienteFisico.java (TBL_CLIENTE_FISICO)
 	 * no sistema.
-	 * @param Cliente recebe o cliente que sera excluido.
+	 * @param ClienteFisico recebe o cliente fisico que sera excluido.
 	 * @return boolean 
 	 * 		true: Para sucesso na exclusao.
 	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
 	 */
-	public boolean excluir(Cliente cliente) {
+	public boolean excluir(ClienteFisico clienteFisico) {
 		try{
-			em.remove(cliente);
+			em.remove(clienteFisico);
 			return true;
 		}catch(Exception e){
 			if(debugInfo){
@@ -86,64 +85,47 @@ public class ClienteDAO extends GenericDAO<Cliente> {
 	}
 
 	/**
-	 * Metodo reponsavel por excluir um Cliente.java (TBL_CLIENTE)
+	 * Metodo reponsavel por excluir um ClienteFisico.java (TBL_CLIENTE_FISICO)
 	 * no sistema.
-	 * @param String recebe o login do cliente que sera excluido.
+	 * @param String recebe o login do cliente fisico que sera excluido.
 	 * @return boolean 
 	 * 		true: Para sucesso na exclusao.
 	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
 	 */
 	public boolean excluir(String login) {
 		try{
-			Cliente cliente = localizarPorLogin(login);
-			return excluir(cliente);
+			ClienteFisico clienteFisico = localizarPorLogin(login);
+			return excluir(clienteFisico);
 		}catch(Exception e){
 			return false;
 		}
 	}
 	
-	public Cliente localizarPorLogin(Cliente cliente) throws Exception {
+	public ClienteFisico localizarPorLogin(ClienteFisico clienteFisico) throws Exception {
 		try{
-			Query query = em.createQuery("from Cliente where login like :login");
-			query.setParameter("login", cliente.getLogin());
-			return (Cliente) query.getSingleResult();
+			Query query = em.createQuery("from ClienteFisico where login like :login");
+			query.setParameter("login", clienteFisico.getLogin());
+			return (ClienteFisico) query.getSingleResult();
 		}catch(EntityNotFoundException e){
-			throw new Exception("Cliente n\u00e3o encontrado.");
+			throw new Exception("Cliente F\u00edsico n\u00e3o encontrado.");
 		}catch(NoResultException e){
-			throw new Exception("Cliente n\u00e3o encontrado.");
+			throw new Exception("Cliente F\u00edsico n\u00e3o encontrado.");
 		}catch(NonUniqueResultException e){
-			throw new Exception("Cliente n\u00e3o encontrado.");
+			throw new Exception("Cliente F\u00edsico n\u00e3o encontrado.");
 		}
 	}
 
-	public Cliente localizarPorLogin(String login) throws Exception {
+	public ClienteFisico localizarPorLogin(String login) throws Exception {
 		try{
-			Query query = em.createQuery("from Cliente where login like :login");
+			Query query = em.createQuery("from ClienteFisico where login like :login");
 			query.setParameter("login", login);
-			return (Cliente) query.getSingleResult();
+			return (ClienteFisico) query.getSingleResult();
 		}catch(EntityNotFoundException e){
-			throw new Exception("Cliente n\u00e3o encontrado.");
+			throw new Exception("Cliente F\u00edsico n\u00e3o encontrado.");
 		}catch(NoResultException e){
-			throw new Exception("Cliente n\u00e3o encontrado.");
+			throw new Exception("Cliente F\u00edsico n\u00e3o encontrado.");
 		}catch(NonUniqueResultException e){
-			throw new Exception("Cliente n\u00e3o encontrado.");
-		}
-	}
-	
-	/**
-	 * Busca Cliente.java (TBL_CLIENTE) que sera usado no webservices.
-	 */
-	@SuppressWarnings("unchecked")
-	public List<Cliente> localizarPorCompra() throws Exception {
-		try{
-			Query query = em.createQuery("Select Distinct(c.cliente) from Compra c");
-			return (List<Cliente>) query.getResultList();
-		}catch(EntityNotFoundException e){
-			throw new Exception("Cliente n\u00e3o realizou nenhuma compra.");
-		}catch(NoResultException e){
-			throw new Exception("Cliente n\u00e3o realizou nenhuma compra.");
-		}catch(NonUniqueResultException e){
-			throw new Exception("Cliente n\u00e3o realizou nenhuma compra.");
+			throw new Exception("Cliente F\u00edsico n\u00e3o encontrado.");
 		}
 	}
 }

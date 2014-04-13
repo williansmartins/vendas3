@@ -114,12 +114,14 @@ public class UsuarioController implements Serializable
     public List<UsuarioVO> listaFake( )
     {
 	List<UsuarioVO> lista2 = new ArrayList<UsuarioVO>();
+	/*
 	lista2.add( new UsuarioVO( "login1", "senha1", "grupo1", "perfil1",
 		"sim", new Date() ) );
 	lista2.add( new UsuarioVO( "login1", "senha1", "grupo1", "perfil1",
 		"sim", new Date() ) );
 	lista2.add( new UsuarioVO( "login1", "senha1", "grupo1", "perfil1",
 		"sim", new Date() ) );
+	*/
 
 	return lista2;
     }

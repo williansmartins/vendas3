@@ -58,22 +58,41 @@ public class ReservaDAO extends GenericDAO<Reserva> {
 		return result;
 	}
 
-	public boolean excluir(Produto produto) {
-		Produto obj = null ;
-		boolean result = false ;
-
-		try {
-			Query q = em.createQuery("from Produto where login = :login");
-			q.setParameter("login", produto.getCodigo());
-			obj = (Produto) q.getSingleResult();
-			em.remove(obj);
-			result = true;
-		}catch(Exception e) {
-			if(debugInfo) {
+	/**
+	 * Metodo reponsavel por excluir uma Reserva.java (TBL_RESERVA)
+	 * no sistema.
+	 * @param Reserva recebe a reserva que sera excluida.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(Reserva reserva) {
+		try{
+			em.remove(reserva);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
 				e.printStackTrace();
 			}
+			return false;
 		}
-		return result;
+	}
+	
+	/**
+	 * Metodo reponsavel por excluir uma Reserva.java (TBL_RESERVA)
+	 * no sistema.
+	 * @param Long recebe o codigo da reserva que sera excluida.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(Long codigo) {
+		try{
+			Reserva reserva = localizarPorCodigo(codigo);
+			return excluir(reserva);
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 	public Reserva localizarPorCodigo(Long codigo) throws Exception {

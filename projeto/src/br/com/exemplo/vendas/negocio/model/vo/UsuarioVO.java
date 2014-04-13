@@ -1,7 +1,9 @@
 package br.com.exemplo.vendas.negocio.model.vo ;
 
-import java.io.Serializable ;
-import java.util.Date ;
+import java.io.Serializable;
+import java.util.Date;
+
+import br.com.exemplo.vendas.negocio.entity.Usuario;
 
 public class UsuarioVO implements Serializable {
 	
@@ -26,12 +28,6 @@ public class UsuarioVO implements Serializable {
 		this.perfil = perfil;
 		this.bloqueado = bloqueado;
 		this.ultimoAcesso = ultimoAcesso;
-	}
-
-	public UsuarioVO( String string, String string2, String string3,
-		String string4, String string5, Date date )
-	{
-	    // TODO Auto-generated constructor stub
 	}
 
 	public Boolean getBloqueado() {
@@ -80,5 +76,16 @@ public class UsuarioVO implements Serializable {
 
 	public void setUltimoAcesso(Date ultimoAcesso) {
 		this.ultimoAcesso = ultimoAcesso;
+	}
+	
+	public static UsuarioVO create(Usuario usuario) {
+		UsuarioVO usuarioVO = new UsuarioVO();
+		usuarioVO.setLogin(usuario.getLogin());
+		usuarioVO.setSenha(usuario.getSenha());
+		usuarioVO.setGrupo(usuario.getGrupo());
+		usuarioVO.setPerfil(usuario.getPerfil());
+		usuarioVO.setBloqueado(usuario.getBloqueado());
+		usuarioVO.setUltimoAcesso(usuario.getUltimoAcesso());
+		return usuarioVO;
 	}
 }

@@ -36,6 +36,30 @@
 		</providers>
 	</service>
 	
+	<!-- Cliente Fisico -->
+	<service>
+		<name>ClienteFisicoBean/remote</name>
+		<jndi-name>ClienteFisicoBean/remote</jndi-name>
+		<cacheable>true</cacheable>
+		<providers>
+			<provider>
+				<name>jboss@localhost:18080</name>
+			</provider>
+		</providers>
+	</service>
+	
+	<!-- Cliente Juridico -->
+	<service>
+		<name>ClienteJuridicoBean/remote</name>
+		<jndi-name>ClienteJuridicoBean/remote</jndi-name>
+		<cacheable>true</cacheable>
+		<providers>
+			<provider>
+				<name>jboss@localhost:18080</name>
+			</provider>
+		</providers>
+	</service>
+	
 	<!-- Reserva -->
 	<service>
 		<name>ReservaBean/remote</name>

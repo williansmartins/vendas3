@@ -1,22 +1,24 @@
 package br.com.exemplo.vendas.negocio.ejb ;
 
-import java.util.List ;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.List;
 
-import javax.ejb.Stateless ;
-import javax.persistence.EntityManager ;
-import javax.persistence.PersistenceContext ;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import br.com.exemplo.vendas.negocio.dao.DaoFactory ;
-import br.com.exemplo.vendas.negocio.ejb.interfaces.CompraLocal ;
-import br.com.exemplo.vendas.negocio.ejb.interfaces.CompraRemote ;
+import br.com.exemplo.vendas.negocio.dao.DaoFactory;
+import br.com.exemplo.vendas.negocio.ejb.interfaces.CompraLocal;
+import br.com.exemplo.vendas.negocio.ejb.interfaces.CompraRemote;
 import br.com.exemplo.vendas.negocio.entity.Cliente;
-import br.com.exemplo.vendas.negocio.entity.Compra ;
+import br.com.exemplo.vendas.negocio.entity.Compra;
 import br.com.exemplo.vendas.negocio.entity.Reserva;
 import br.com.exemplo.vendas.negocio.model.vo.ClienteVO;
-import br.com.exemplo.vendas.negocio.model.vo.CompraVO ;
+import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
 import br.com.exemplo.vendas.negocio.model.vo.ReservaVO;
-import br.com.exemplo.vendas.util.dto.ServiceDTO ;
-import br.com.exemplo.vendas.util.exception.LayerException ;
+import br.com.exemplo.vendas.util.dto.ServiceDTO;
+import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class CompraBean implements CompraRemote, CompraLocal {
@@ -39,9 +41,10 @@ public class CompraBean implements CompraRemote, CompraLocal {
 					responseDTO.set("resposta", new Boolean(false));
 				}
 			}catch(Exception e){
-				e.printStackTrace();
 				responseDTO.set("resposta", new Boolean(false));
 			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
 		}
 		return responseDTO;
 	}
@@ -75,29 +78,46 @@ public class CompraBean implements CompraRemote, CompraLocal {
 	}
 
 	public ServiceDTO excluirCompra( ServiceDTO requestDTO ) throws LayerException {
-		/*
 		ServiceDTO responseDTO = new ServiceDTO();
 		CompraVO vo = (CompraVO) requestDTO.get("compraVO");
-		if(vo != null) {
-			Compra compra = new Compra();
-			compra.setLogin(vo.getLogin());
-			if(DaoFactory.getCompraDAO(em).excluir(compra)) {
+		if(vo != null){
+			try{
+				Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(vo.getNumero());
+				if(DaoFactory.getCompraDAO(em).excluir(compra)) {
+					responseDTO.set("resposta", new Boolean(true));
+				}else{
+					responseDTO.set("resposta", new Boolean(false));
+				}
+			}catch(Exception e){
+				responseDTO.set("resposta", new Boolean(false));
+			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO excluirCompraPorNumero(ServiceDTO requestDTO) throws LayerException, RemoteException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		Long numero = (Long) requestDTO.get("numeroCompra");
+		if(numero != null){
+			if(DaoFactory.getCompraDAO(em).excluir(numero)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
 				responseDTO.set("resposta", new Boolean(false));
 			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
 		}
 		return responseDTO;
-		*/
-		return null;
 	}
 
 	public ServiceDTO selecionarTodosCompras(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		List<Compra> lista = DaoFactory.getCompraDAO(em).listar();
-		if((lista != null) && (!lista.isEmpty())) {
+		if((lista != null) && (!lista.isEmpty())){
 			CompraVO[] compras = new CompraVO[lista.size()];
-			for(int i = 0; i < lista.size(); i++) {
+			for(int i = 0; i < lista.size(); i++){
 				Compra compra = (Compra) lista.get(i);
 				CompraVO compraVO = CompraVO.create(compra);
 				compraVO.setCodigoReserva(compra.getReserva().getCodigo());
@@ -129,6 +149,33 @@ public class CompraBean implements CompraRemote, CompraLocal {
 			responseDTO.set("getCompra", compraVO);
 		}catch(Exception e){
 			responseDTO.set("getCompra", null);
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO localizarComprasPorValorAbaixoDe(ServiceDTO requestDTO, BigDecimal valor) throws LayerException, RemoteException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			List<Compra> compras = DaoFactory.getCompraDAO(em).localizarPorValorAbaixoDe(valor);
+			if((compras != null) && (!compras.isEmpty())) {
+				CompraVO[] compraVOs = new CompraVO[compras.size()];
+				for(int i = 0; i < compras.size(); i++) {
+					Compra compra = (Compra) compras.get(i);
+					CompraVO compraVO = CompraVO.create(compra);
+					compraVO.setCodigoReserva(compra.getReserva().getCodigo());
+					ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
+					compraVO.setReservaVO(reservaVO);
+					compraVO.setLoginCliente(compra.getCliente().getLogin());
+					ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
+					compraVO.setClienteVO(clienteVO);
+					compraVOs[i] = compraVO;
+				}
+				responseDTO.set("comprasPorValorAbaixoDe", compraVOs);
+			}else{
+				responseDTO.set("comprasPorValorAbaixoDe", new CompraVO[0]);
+			}
+		}catch(Exception e){
+			responseDTO.set("comprasPorValorAbaixoDe", new CompraVO[0]);
 		}
 		return responseDTO;
 	}

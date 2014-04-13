@@ -1,6 +1,9 @@
 package br.com.exemplo.vendas.negocio.dao ;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -16,47 +19,31 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		super(Persistence.createEntityManagerFactory("Vendas").createEntityManager());
 	}
 
+	/**
+	 * Metodo reponsavel por inserir um Usuario.java (TBL_USUARIO)
+	 * no sistema.
+	 * @param Usuario recebe o usuario que sera inserido.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean inserir(Usuario usuario) {
-		boolean result = false ;
-		Usuario existenteUsuario = null ;
-
-		try
-		{
-//			Query q = em.createQuery( "from Usuario where login like :login" ) ;
-//			q.setParameter( "login", usuario.getLogin( ) ) ;
-//
-//			try
-//			{
-//				existenteUsuario = ( Usuario ) q.getSingleResult( ) ;
-//			}
-//			catch (NoResultException e)
-//			{
-//				existenteUsuario = null ;
-//			}
-
-			if (existenteUsuario == null)
-			{
-				em.persist( usuario ) ;
+		try{
+			//Nao precisa verificar existecia de cliente, pois
+			//todos os dados da tabelas poderam ser repetir, apenas
+			//o login nao, e unico por usuario e PK.
+			em.persist(usuario);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
+				e.printStackTrace();
 			}
-			else
-			{
-				usuario.setLogin( existenteUsuario.getLogin( ) ) ;
-			}
-			result = true ;
-
+			return false;
 		}
-		catch (Exception e)
-		{
-			if (debugInfo)
-			{
-				e.printStackTrace( ) ;
-			}
-		}
-		return result ;
 	}
 
-	public boolean alterar( Usuario usuario )
-	{
+	public boolean alterar( Usuario usuario ) {
+		/*
 		boolean result = false ;
 		Usuario existenteUsuario = null ;
 
@@ -82,68 +69,73 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 			result = false ;
 		}
 		return result ;
+		*/
+		return false;
 	}
 
-	public boolean excluir( Usuario usuario )
-	{
-		Usuario obj = null ;
-		boolean result = false ;
-
-		try
-		{
-			Query q = em.createQuery( "from Usuario where login = :login" ) ;
-			q.setParameter( "login", usuario.getLogin( ) ) ;
-			obj = ( Usuario ) q.getSingleResult( ) ;
-			em.remove( obj ) ;
-			result = true ;
-		}
-		catch (Exception e)
-		{
-			if (debugInfo)
-			{
-				e.printStackTrace( ) ;
+	/**
+	 * Metodo reponsavel por excluir um Usuario.java (TBL_USUARIO)
+	 * no sistema.
+	 * @param Usuario recebe o usuario que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(Usuario usuario) {
+		try{
+			em.remove(usuario);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
+				e.printStackTrace();
 			}
+			return false;
 		}
-		return result ;
 	}
 
-	public Usuario localizarPorLogin( Usuario usuario )
-	{
-		Usuario obj = new Usuario( ) ;
-
-		try
-		{
-			Query query = em.createQuery( "from Usuario where login like :login" ) ;
-			query.setParameter( "login", usuario.getLogin( ) ) ;
-			obj = ( Usuario ) query.getSingleResult( ) ;
+	/**
+	 * Metodo reponsavel por excluir um Usuario.java (TBL_USUARIO)
+	 * no sistema.
+	 * @param String recebe o login do usuario que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(String login) {
+		try{
+			Usuario usuario = localizarPorLogin(login);
+			return excluir(usuario);
+		}catch(Exception e){
+			return false;
 		}
-		catch (Exception e)
-		{
-			if (debugInfo)
-			{
-				e.printStackTrace( ) ;
-			}
-		}
-		return obj ;
 	}
 
-	// public List<Usuario> localizarPorNome( Usuario usuario )
-	// {
-	// List<Usuario> result = new ArrayList<Usuario>();
-	//
-	// try
-	// {
-	// Query q = em.createQuery( "from Usuario where nome like :nome");
-	// q.setParameter( "nome", usuario.getNome() );
-	// result = (List<Usuario>)q.getResultList();
-	// }
-	// catch (Exception e )
-	// {
-	// if (debugInfo )
-	// {
-	// e.printStackTrace();
-	// }
-	// }
-	// return result;
-	// }
+	public Usuario localizarPorLogin(String login) throws Exception {
+		try{
+			Query query = em.createQuery("from Usuario where login like :login");
+			query.setParameter("login", login);
+			return (Usuario) query.getSingleResult();
+		}catch(EntityNotFoundException e){
+			throw new Exception("Usuario n\u00e3o encontrado.");
+		}catch(NoResultException e){
+			throw new Exception("Usuario n\u00e3o encontrado.");
+		}catch(NonUniqueResultException e){
+			throw new Exception("Usuario n\u00e3o encontrado.");
+		}
+	}
+	
+	
+	public Usuario localizarPorLogin(Usuario usuario) throws Exception {
+		try{
+			Query query = em.createQuery("from Usuario where login like :login");
+			query.setParameter("login", usuario.getLogin());
+			return (Usuario) query.getSingleResult();
+		}catch(EntityNotFoundException e){
+			throw new Exception("Usuario n\u00e3o encontrado.");
+		}catch(NoResultException e){
+			throw new Exception("Usuario n\u00e3o encontrado.");
+		}catch(NonUniqueResultException e){
+			throw new Exception("Usuario n\u00e3o encontrado.");
+		}
+	}
 }

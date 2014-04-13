@@ -10,6 +10,7 @@ public interface ReservaInterface {
 	public ServiceDTO inserirReserva(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO alterarReserva(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirReserva(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO excluirReservaPorCodigo(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO selecionarTodasReservas(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO getReserva(ServiceDTO requestDTO, Long codigo) throws LayerException, RemoteException;
 }

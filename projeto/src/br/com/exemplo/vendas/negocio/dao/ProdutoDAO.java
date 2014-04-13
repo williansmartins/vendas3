@@ -1,5 +1,8 @@
 package br.com.exemplo.vendas.negocio.dao ;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.NoResultException;
@@ -19,35 +22,29 @@ public class ProdutoDAO extends GenericDAO<Produto> {
 		super(Persistence.createEntityManagerFactory("Vendas").createEntityManager());
 	}
 
+	/**
+	 * Metodo reponsavel por inserir um Produto.java (TBL_PRODUTO)
+	 * no sistema.
+	 * @param Produto recebe o produto que sera inserido.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean inserir(Produto produto) {
-		boolean result = false ;
-		Produto existenteProduto = null ;
-
-		try {
-//			Query q = em.createQuery( "from Usuario where login like :login" ) ;
-//			q.setParameter( "login", usuario.getLogin( ) ) ;
-//
-//			try
-//			{
-//				existenteUsuario = ( Usuario ) q.getSingleResult( ) ;
-//			}
-//			catch (NoResultException e)
-//			{
-//				existenteUsuario = null ;
-//			}
-
-			if(existenteProduto == null) {
+		try{
+			localizarPorCodigo(produto.getCodigo());
+			return false;//Produto com codigo ja existente
+		}catch(Exception e){
+			try{//OK, nao encontro um Produto com este codigo, pode inserir
 				em.persist(produto);
-			} else {
-				produto.setCodigo(existenteProduto.getCodigo());
-			}
-			result = true;
-		} catch (Exception e) {
-			if(debugInfo) {
-				e.printStackTrace();
+				return true;
+			}catch(Exception f){
+				if(debugInfo){
+					f.printStackTrace();
+				}
+				return false;
 			}
 		}
-		return result ;
 	}
 
 	public boolean alterar(Produto produto) {
@@ -70,23 +67,42 @@ public class ProdutoDAO extends GenericDAO<Produto> {
 		}
 		return result;
 	}
-
+	
+	/**
+	 * Metodo reponsavel por excluir um Produto.java (TBL_PRODUTO)
+	 * no sistema.
+	 * @param Produto recebe o produto que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
 	public boolean excluir(Produto produto) {
-		Produto obj = null ;
-		boolean result = false ;
-
-		try {
-			Query q = em.createQuery("from Produto where login = :login");
-			q.setParameter("login", produto.getCodigo());
-			obj = (Produto) q.getSingleResult();
-			em.remove(obj);
-			result = true;
-		}catch(Exception e) {
-			if(debugInfo) {
+		try{
+			em.remove(produto);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
 				e.printStackTrace();
 			}
+			return false;
 		}
-		return result;
+	}
+	
+	/**
+	 * Metodo reponsavel por excluir um Produto.java (TBL_PRODUTO)
+	 * no sistema.
+	 * @param Long recebe o codigo do produto que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(Long codigo) {
+		try{
+			Produto produto = localizarPorCodigo(codigo);
+			return excluir(produto);
+		}catch(Exception e){
+			return false;
+		}
 	}
 
 	public Produto localizarPorCodigo(Long codigo) throws Exception {
@@ -103,24 +119,20 @@ public class ProdutoDAO extends GenericDAO<Produto> {
 			throw new Exception("Produto n\u00e3o encontrado.");
 		}
 	}
-
-	// public List<Usuario> localizarPorNome( Usuario usuario )
-	// {
-	// List<Usuario> result = new ArrayList<Usuario>();
-	//
-	// try
-	// {
-	// Query q = em.createQuery( "from Usuario where nome like :nome");
-	// q.setParameter( "nome", usuario.getNome() );
-	// result = (List<Usuario>)q.getResultList();
-	// }
-	// catch (Exception e )
-	// {
-	// if (debugInfo )
-	// {
-	// e.printStackTrace();
-	// }
-	// }
-	// return result;
-	// }
+	
+	@SuppressWarnings("unchecked")
+	public List<Produto> localizarPorQuantidadeAcimaDeEPrecoAbaixoDe(BigDecimal preco, Integer quantidadeEstoque) throws Exception {
+		try{
+			Query query = em.createQuery("from Produto where preco < :preco and quantidadeEstoque >= :quantidadeEstoque");
+			query.setParameter("preco", preco);
+			query.setParameter("quantidadeEstoque", quantidadeEstoque);
+			return (List<Produto>) query.getResultList();
+		}catch(EntityNotFoundException e){
+			throw new Exception("Produto n\u00e3o encontrado.");
+		}catch(NoResultException e){
+			throw new Exception("Produto n\u00e3o encontrado.");
+		}catch(NonUniqueResultException e){
+			throw new Exception("Produto n\u00e3o encontrado.");
+		}
+	}
 }

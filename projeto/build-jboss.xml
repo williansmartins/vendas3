@@ -2,8 +2,8 @@
 
 <project name="build-jboss" default="_packaging_generation_">
 
-	<property name="jboss.home" value="C:/dev/servidores/jboss-5.1.0.GA-jdk6/jboss-5.1.0.GA" />
-	<property name="tomcat.web" value="C:/dev/servidores/Tomcat 6.0" />
+	<property name="jboss.home" value="C:/opensource/jboss-5.1.0.GA" />
+	<property name="tomcat.web" value="C:/opensource/tomcat6" />
 	<property name="projeto.webservice" value="Vendas_3_0_WebService" />
 	<property name="jboss.server.config" value="default" />
 	<property name="build.artifact.ejb" value="VendaEJB.jar" />
@@ -178,7 +178,12 @@
 
 		<!-- tomcat -->
 		<copy file="${build.artifact.war}" todir="${tomcat.web}/webapps" />
-
+		<copy file="VendaLocator.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaException.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaDTO.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaVO.jar" todir="${tomcat.web}/lib" />
+		<copy file="VendaEJB-client.jar" todir="${tomcat.web}/lib" />
+		
 		<!-- projeto -->
 		<copy file="VendaUtil.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaLog.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
@@ -189,16 +194,7 @@
 		<copy file="VendaVO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaEJB-client.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaDTO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
-
 		<copy file="${build.artifact.ejb}" todir="../${projeto.webservice}/WebContent/META-INF" />
 		<copy file="${build.artifact.war}" todir="../${projeto.webservice}/WebContent/META-INF" />
-
-		<copy file="VendaLocator.jar" todir="${tomcat.web}/lib" />
-		<copy file="VendaException.jar" todir="${tomcat.web}/lib" />
-		<copy file="VendaDTO.jar" todir="${tomcat.web}/lib" />
-		<copy file="VendaVO.jar" todir="${tomcat.web}/lib" />
-		<copy file="VendaEJB-client.jar" todir="${tomcat.web}/lib" />
-
 	</target>
-
 </project>

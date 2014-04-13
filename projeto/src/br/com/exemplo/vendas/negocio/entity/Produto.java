@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import br.com.exemplo.vendas.negocio.model.vo.ProdutoVO;
+
 @Entity
 @Table(name="TBL_PRODUTO")
 public class Produto implements Serializable {
@@ -26,12 +28,16 @@ public class Produto implements Serializable {
 	@Column(name="estoque", nullable=false)
 	private String estoque;
 	
+	@Column(name="quantidade_estoque", nullable=false)
+	private Integer quantidadeEstoque;
+	
 	public Produto(){}
-	public Produto(Long codigo, String descricao, BigDecimal preco, String estoque) {
+	public Produto(Long codigo, String descricao, BigDecimal preco, String estoque, Integer quantidadeEstoque) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.estoque = estoque;
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	
 	public Long getCodigo() {
@@ -58,6 +64,12 @@ public class Produto implements Serializable {
 	public void setEstoque(String estoque) {
 		this.estoque = estoque;
 	}
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,5 +92,14 @@ public class Produto implements Serializable {
 		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
+	}
+	public static Produto create(ProdutoVO produtoVO) {
+		Produto produto = new Produto();
+		produto.setCodigo(produtoVO.getCodigo());
+		produto.setDescricao(produtoVO.getDescricao());
+		produto.setPreco(produtoVO.getPreco());
+		produto.setEstoque(produtoVO.getEstoque());
+		produto.setQuantidadeEstoque(produtoVO.getQuantidadeEstoque());
+		return produto;
 	}
 }

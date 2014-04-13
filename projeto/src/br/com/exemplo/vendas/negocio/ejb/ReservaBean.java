@@ -1,5 +1,6 @@
 package br.com.exemplo.vendas.negocio.ejb ;
 
+import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -18,6 +19,7 @@ import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class ReservaBean implements ReservaRemote, ReservaLocal {
+	
 	@PersistenceContext(unitName = "Vendas")
 	EntityManager em ;
 
@@ -46,8 +48,39 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 		return null;
 	}
 	
-	public ServiceDTO excluirReserva( ServiceDTO requestDTO ) throws LayerException {
-		return null;
+	public ServiceDTO excluirReserva(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		ReservaVO vo = (ReservaVO) requestDTO.get("reservaVO");
+		if(vo != null){
+			try{
+				Reserva reserva = DaoFactory.getReservaDAO(em).localizarPorCodigo(vo.getCodigo());
+				if(DaoFactory.getReservaDAO(em).excluir(reserva)) {
+					responseDTO.set("resposta", new Boolean(true));
+				}else{
+					responseDTO.set("resposta", new Boolean(false));
+				}
+			}catch(Exception e){
+				responseDTO.set("resposta", new Boolean(false));
+			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO excluirReservaPorCodigo(ServiceDTO requestDTO) throws LayerException, RemoteException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		Long codigo = (Long) requestDTO.get("codigoReserva");
+		if(codigo != null){
+			if(DaoFactory.getReservaDAO(em).excluir(codigo)) {
+				responseDTO.set("resposta", new Boolean(true));
+			}else{
+				responseDTO.set("resposta", new Boolean(false));
+			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
+		}
+		return responseDTO;
 	}
 	
 	public ServiceDTO selecionarTodasReservas(ServiceDTO requestDTO) throws LayerException {
@@ -57,12 +90,7 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 			ReservaVO[] reservaVOs = new ReservaVO[lista.size()];
 			for(int i = 0; i < lista.size(); i++) {
 				Reserva reserva = (Reserva) lista.get(i);
-				ReservaVO reservaVO = new ReservaVO();
-				reservaVO.setCodigo(reserva.getCodigo());
-				reservaVO.setData(reserva.getData());
-				reservaVO.setAtendente(reserva.getAtendente());
-				reservaVO.setSituacao(reserva.getSituacao());
-				reservaVO.setValor(reserva.getValor());
+				ReservaVO reservaVO = ReservaVO.create(reserva);
 				reservaVO.setClienteVO(ClienteVO.create(reserva.getCliente()));
 				reservaVO.setLoginCliente(reserva.getCliente().getLogin());
 				reservaVOs[i] = reservaVO;
@@ -103,21 +131,6 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 			produto.setPreco(vo.getPreco());
 			produto.setEstoque(vo.getEstoque());
 			if(DaoFactory.getReservaDAO(em).alterar(produto)) {
-				responseDTO.set("resposta", new Boolean(true));
-			}else{
-				responseDTO.set("resposta", new Boolean(false));
-			}
-		}
-		return responseDTO;
-	}
-
-	public ServiceDTO excluirReserva( ServiceDTO requestDTO ) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
-		ReservaVO vo = (ReservaVO) requestDTO.get("produtoVO");
-		if(vo != null) {
-			Reserva produto = new Reserva();
-			produto.setCodigo(vo.getCodigo());
-			if(DaoFactory.getReservaDAO(em).excluir(produto)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
 				responseDTO.set("resposta", new Boolean(false));

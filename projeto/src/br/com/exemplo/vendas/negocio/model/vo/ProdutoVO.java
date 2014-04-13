@@ -12,6 +12,7 @@ public class ProdutoVO implements Serializable {
 	private String descricao;
 	private BigDecimal preco;
 	private String estoque;
+	private Integer quantidadeEstoque;
 	
 	@Override
 	public String toString() {
@@ -19,11 +20,12 @@ public class ProdutoVO implements Serializable {
 	}
 	
 	public ProdutoVO(){}
-	public ProdutoVO(Long codigo, String descricao, BigDecimal preco, String estoque) {
+	public ProdutoVO(Long codigo, String descricao, BigDecimal preco, String estoque, Integer quantidadeEstoque) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 		this.preco = preco;
 		this.estoque = estoque;
+		this.quantidadeEstoque = quantidadeEstoque;
 	}
 	
 	public Long getCodigo() {
@@ -50,12 +52,19 @@ public class ProdutoVO implements Serializable {
 	public void setEstoque(String estoque) {
 		this.estoque = estoque;
 	}
+	public Integer getQuantidadeEstoque() {
+		return quantidadeEstoque;
+	}
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
 	public static ProdutoVO create(Produto produto) {
 		ProdutoVO produtoVO = new ProdutoVO();
 		produtoVO.setCodigo(produto.getCodigo());
 		produtoVO.setDescricao(produto.getDescricao());
 		produtoVO.setPreco(produto.getPreco());
 		produtoVO.setEstoque(produto.getEstoque());
+		produtoVO.setQuantidadeEstoque(produto.getQuantidadeEstoque());
 		return produtoVO;
 	}
 }

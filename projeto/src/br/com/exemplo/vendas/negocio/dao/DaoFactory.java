@@ -9,6 +9,8 @@ public final class DaoFactory {
 	private static DaoFactory myInstance = null;
 	private static UsuarioDAO usuarioDAO_instance;
 	private static ClienteDAO clienteDAO_instance;
+	private static ClienteFisicoDAO clienteFisicoDAO_instance;
+	private static ClienteJuridicoDAO clienteJuridicoDAO_instance;
 	private static ProdutoDAO produtoDAO_instance;
 	private static ReservaDAO reservaDAO_instance;
 	private static CompraDAO compraDAO_instance;
@@ -35,6 +37,22 @@ public final class DaoFactory {
 			clienteDAO_instance = new ClienteDAO(em);
 		}
 		return clienteDAO_instance;
+	}
+	
+	public static ClienteFisicoDAO getClienteFisicoDAO(EntityManager em) throws SysException {
+		initialize();
+		if(clienteFisicoDAO_instance == null) {
+			clienteFisicoDAO_instance = new ClienteFisicoDAO(em);
+		}
+		return clienteFisicoDAO_instance;
+	}
+	
+	public static ClienteJuridicoDAO getClienteJuridicoDAO(EntityManager em) throws SysException {
+		initialize();
+		if(clienteJuridicoDAO_instance == null) {
+			clienteJuridicoDAO_instance = new ClienteJuridicoDAO(em);
+		}
+		return clienteJuridicoDAO_instance;
 	}
 	
 	public static ProdutoDAO getProdutoDAO(EntityManager em) throws SysException {

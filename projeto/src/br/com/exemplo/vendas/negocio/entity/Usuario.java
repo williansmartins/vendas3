@@ -14,6 +14,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.BatchSize;
 
+import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
+
 @Entity
 @Table(name="TBL_USUARIO")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -41,7 +43,7 @@ public class Usuario implements Serializable {
 	@Column(name="ultimo_acesso", nullable=false)
 	private Date ultimoAcesso;
 
-	public Usuario() {}
+	public Usuario(){}
 	public Usuario(String login, String senha, String grupo, String perfil, Boolean bloqueado, Date ultimoAcesso) {
 		this.login = login;
 		this.senha = senha;
@@ -86,6 +88,7 @@ public class Usuario implements Serializable {
 	public void setUltimoAcesso(Date ultimoAcesso) {
 		this.ultimoAcesso = ultimoAcesso;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -93,6 +96,7 @@ public class Usuario implements Serializable {
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -108,5 +112,16 @@ public class Usuario implements Serializable {
 		} else if (!login.equals(other.login))
 			return false;
 		return true;
+	}
+	
+	public static Usuario create(UsuarioVO usuarioVO) {
+		Usuario usuario = new Usuario();
+		usuario.setLogin(usuarioVO.getLogin());
+		usuario.setSenha(usuarioVO.getSenha());
+		usuario.setGrupo(usuarioVO.getGrupo());
+		usuario.setPerfil(usuarioVO.getPerfil());
+		usuario.setBloqueado(usuarioVO.getBloqueado());
+		usuario.setUltimoAcesso(usuarioVO.getUltimoAcesso());
+		return usuario;
 	}
 }

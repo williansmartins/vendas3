@@ -1,5 +1,7 @@
 package br.com.exemplo.vendas.negocio.ejb ;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -16,18 +18,15 @@ import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
+	
 	@PersistenceContext(unitName = "Vendas")
-	EntityManager em ;
+	EntityManager em;
 
 	public ServiceDTO inserirProduto(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		ProdutoVO vo = (ProdutoVO) requestDTO.get("produtoVO");
 		if(vo != null) {
-			Produto produto = new Produto();
-			produto.setCodigo(vo.getCodigo());
-			produto.setDescricao(vo.getDescricao());
-			produto.setPreco(vo.getPreco());
-			produto.setEstoque(vo.getEstoque());
+			Produto produto = Produto.create(vo);
 			if(DaoFactory.getProdutoDAO(em).inserir(produto)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
@@ -41,11 +40,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		ServiceDTO responseDTO = new ServiceDTO();
 		ProdutoVO vo = (ProdutoVO) requestDTO.get("produtoVO");
 		if (vo != null) {
-			Produto produto = new Produto();
-			produto.setCodigo(vo.getCodigo());
-			produto.setDescricao(vo.getDescricao());
-			produto.setPreco(vo.getPreco());
-			produto.setEstoque(vo.getEstoque());
+			Produto produto = Produto.create(vo);
 			if(DaoFactory.getProdutoDAO(em).alterar(produto)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
@@ -55,13 +50,30 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		return responseDTO;
 	}
 
-	public ServiceDTO excluirProduto( ServiceDTO requestDTO ) throws LayerException {
+	public ServiceDTO excluirProduto(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		ProdutoVO vo = (ProdutoVO) requestDTO.get("produtoVO");
-		if(vo != null) {
-			Produto produto = new Produto();
-			produto.setCodigo(vo.getCodigo());
-			if(DaoFactory.getProdutoDAO(em).excluir(produto)) {
+		if(vo != null){
+			try{
+				Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(vo.getCodigo());
+				if(DaoFactory.getProdutoDAO(em).excluir(produto)) {
+					responseDTO.set("resposta", new Boolean(true));
+				}else{
+					responseDTO.set("resposta", new Boolean(false));
+				}
+			}catch(Exception e){
+				responseDTO.set("resposta", new Boolean(false));
+			}
+			
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO excluirProdutoPorCodigo(ServiceDTO requestDTO) throws LayerException, RemoteException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		Long codigo = (Long) requestDTO.get("codigoProduto");
+		if(codigo != null){
+			if(DaoFactory.getProdutoDAO(em).excluir(codigo)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
 				responseDTO.set("resposta", new Boolean(false));
@@ -75,7 +87,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		List<Produto> lista = DaoFactory.getProdutoDAO(em).listar();
 		if((lista != null) && (!lista.isEmpty())) {
 			ProdutoVO[] produtos = new ProdutoVO[lista.size()];
-			for(int i = 0; i < lista.size(); i++) {
+			for(int i = 0; i < lista.size(); i++){
 				Produto produto = (Produto) lista.get(i);
 				ProdutoVO produtoVO = ProdutoVO.create(produto);
 				produtos[i] = produtoVO;
@@ -84,7 +96,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		}else{
 			responseDTO.set("listaProduto", new ProdutoVO[0]);
 		}
-		return responseDTO ;
+		return responseDTO;
 	}
 
 	public ServiceDTO getProduto(ServiceDTO requestDTO, Long codigo) throws LayerException {
@@ -95,6 +107,28 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 			responseDTO.set( "getProduto", produtoVO);
 		}catch(Exception e){
 			responseDTO.set( "getProduto", null);
+		}
+		return responseDTO;
+	}
+
+	@Override
+	public ServiceDTO localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(ServiceDTO requestDTO, BigDecimal preco, Integer quantidadeEstoque) throws LayerException, RemoteException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			List<Produto> produtos = DaoFactory.getProdutoDAO(em).localizarPorQuantidadeAcimaDeEPrecoAbaixoDe(preco, quantidadeEstoque);
+			if((produtos != null) && (!produtos.isEmpty())) {
+				ProdutoVO[] produtoVOs = new ProdutoVO[produtos.size()];
+				for(int i = 0; i < produtos.size(); i++){
+					Produto produto = (Produto) produtos.get(i);
+					ProdutoVO produtoVO = ProdutoVO.create(produto);
+					produtoVOs[i] = produtoVO;
+				}
+				responseDTO.set("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe", produtoVOs);
+			}else{
+				responseDTO.set("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe", new ProdutoVO[0]);
+			}
+		}catch(Exception e){
+			responseDTO.set("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe", new ProdutoVO[0]);
 		}
 		return responseDTO;
 	}

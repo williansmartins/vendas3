@@ -10,6 +10,7 @@ public interface UsuarioInterface {
 	public ServiceDTO inserirUsuario(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO alterarUsuario(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirUsuario(ServiceDTO requestDTO) throws LayerException, RemoteException;
+	public ServiceDTO excluirUsuarioPorLogin(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO selecionarTodosUsuarios(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO getUsuario(ServiceDTO requestDTO, String login) throws LayerException, RemoteException;
 }
