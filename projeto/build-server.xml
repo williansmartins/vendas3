@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build-server" default="_packaging_generation_">
+
+	<property name="tomcat.web" value="C:/dev/servidores/Tomcat 6.0" />
+	<property name="build.artifact.war" value="VendaWeb.war" />
+
+	<target name="_packaging_generation_" depends="tomcat-stop" />
+
+	<target name="tomcat-start" >
+	    <java jar="${tomcat.web}/bin/bootstrap.jar" fork="true">
+	        <jvmarg value="-Dcatalina.home=${tomcat.web}"/>
+	    </java>
+	</target>
+	 
+	<target name="tomcat-stop" >
+	    <java jar="${tomcat.web}/bin/bootstrap.jar" fork="true">
+	        <jvmarg value="-Dcatalina.home=${tomcat.web}"/>
+	        <arg line="stop"/>
+	    </java>
+	</target>
+	
+</project>

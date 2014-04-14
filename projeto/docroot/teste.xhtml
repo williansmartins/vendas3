@@ -1,36 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-  
-<html xmlns="http://www.w3.org/1999/xhtml"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core">
-	<h:head>
-	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
-	    <link href="css/estilos.css" rel="stylesheet" type="text/css" />
-	    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
-	    <link rel="shortcut icon" href="img/airplane.png" type="image/x-icon" />
-	</h:head>
-	<body> 
-		<div class="wrapper" >                  
-	        <div id="vitrine">
-	        	<div class="logo_clicavel">
-		        	<a href="#">
-		        	</a> 
-	        	</div>
-	        </div>
-		    <div id="palco">
-		  	</div>
-		    <h:messages styleClass="alert alert-danger">
-		    	<h:message></h:message>
-		    </h:messages>
-	  	</div>
-       	<div id="footer">
-      	</div>
-    	<script src="js/jquery-2.0.0.min.js"></script>
-    	<script src="js/bootstrap.min.js"></script>
-    	<script src="js/scripts.js"></script>
-    	<script src="js/jquery-ui.js"></script>
-	</body>
+    <h:body>
+    	<h:form>
+    		<h:inputText value="#{usuario_mb.vo.login}"></h:inputText>
+    		<h:commandButton action="#{usuario_mb.inserir}" class="btn btn-primary " value="INSERIR" />
+    		<h:commandButton action="#{usuario_mb.buscar}" class="btn btn-primary " value="BUSCAR" />
+    	</h:form>
+    </h:body>
 </html>

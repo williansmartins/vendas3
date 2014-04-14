@@ -2,11 +2,6 @@ package br.com.exemplo.vendas.util.exception ;
 
 import br.com.exemplo.vendas.util.log.LoggerGenerator ;
 
-/**
- * Responsável por criacao das Exceções de Sistema
- * 
- * @version 1.0
- */
 public class SysExceptionFactory
 {
 

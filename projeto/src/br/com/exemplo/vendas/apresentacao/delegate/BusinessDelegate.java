@@ -34,7 +34,8 @@ public class BusinessDelegate {
 	public ServiceDTO inserirUsuario(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
-			responseDTO = ((UsuarioInterface)serviceLocator.getService("UsuarioBean/remote")).inserirUsuario(requestDTO);
+			UsuarioInterface remoteUsuario = (UsuarioInterface) serviceLocator.getService("UsuarioBean/remote");
+			responseDTO = remoteUsuario.inserirUsuario(requestDTO);
 		}catch(RemoteException remoteException){
 			throw SysExceptionFactory.getException(remoteException);
 		}catch(ServiceLocatorException serviceLocatorException){

@@ -1,27 +1,24 @@
 package br.com.exemplo.vendas.negocio.ejb.client;
 
-import java.util.Date ;
-import java.util.Hashtable ;
+import java.util.Date;
+import java.util.Hashtable;
 
-import javax.naming.Context ;
-import javax.naming.InitialContext ;
+import javax.naming.Context;
+import javax.naming.InitialContext;
 
-import br.com.exemplo.vendas.negocio.interfaces.UsuarioInterface ;
-import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO ;
-import br.com.exemplo.vendas.util.dto.ServiceDTO ;
-import br.com.exemplo.vendas.util.locator.ServiceLocator ;
-import br.com.exemplo.vendas.util.locator.ServiceLocatorFactory ;
+import br.com.exemplo.vendas.negocio.interfaces.UsuarioInterface;
+import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
+import br.com.exemplo.vendas.util.dto.ServiceDTO;
 
 public class TesterUsuario {
 
-	@SuppressWarnings({ "unchecked", "rawtypes", "unused" })
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main(String[] args) throws Exception {
 		Hashtable prop = new Hashtable();
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
 		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx.lookup("UsuarioBean/remote");
-		ServiceLocator serviceLocator = ServiceLocatorFactory.getServiceLocator("serviceLocator");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 

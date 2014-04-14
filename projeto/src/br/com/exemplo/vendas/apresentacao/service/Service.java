@@ -22,7 +22,15 @@ public class Service {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		requestDTO.set("usuarioVO", vo);
-		responseDTO = BusinessDelegate.getInstance().inserirUsuario(requestDTO);
+		try
+		{
+		    responseDTO = BusinessDelegate.getInstance().inserirUsuario(requestDTO);
+		    
+		} catch ( Exception e )
+		{
+		    // TODO: handle exception
+		    System.out.println(">>" + e.getMessage());
+		}
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		return sucesso;
 	}

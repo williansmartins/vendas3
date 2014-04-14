@@ -71,6 +71,7 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 			UsuarioVO[] usuarios = new UsuarioVO[lista.size()];
 			for(int i = 0; i < lista.size(); i++) {
 				usuario = (Usuario) lista.get(i);
+				System.out.println("DENTRO DO JBOSS: " + usuario);
 				UsuarioVO usuarioVO = new UsuarioVO(usuario.getLogin(), usuario.getSenha(), usuario.getGrupo(), usuario.getPerfil(), usuario.getBloqueado(), usuario.getUltimoAcesso());
 				usuarios[ i ] = usuarioVO ;
 			}

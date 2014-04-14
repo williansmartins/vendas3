@@ -9,7 +9,7 @@
 	<property name="build.artifact.ejb" value="VendaEJB.jar" />
 	<property name="build.artifact.war" value="VendaWeb.war" />
 
-	<target name="_packaging_generation_" depends="delete, delegate, dto, vo, locator, exception, log, util, client, ejb, web, ear" />
+	<target name="_packaging_generation_" depends="delete, delegate, dto, vo, locator, exception, log, util, client, web, ejb, ear" />
 
 	<target name="tomcat-start">
 	    <java jar="${tomcat.home}/bin/bootstrap.jar" fork="true">
@@ -25,6 +25,8 @@
 	</target>
 	
 	<target name="delete" depends="">
+		<delete dir="${jboss.home}/server/default/tmp" />
+		
 		<delete dir="${tomcat.web}/webapps/VendaWeb" />
 		<delete file="${tomcat.web}/webapps/VendaWeb.war" />
 		
@@ -147,7 +149,7 @@
 				<include name="VendaUtil.jar" />
 			</zipfileset>
 			<zipfileset dir="WebContent/WEB-INF/lib" prefix="WEB-INF/lib" includes="*.jar" />
-			<zipfileset dir="bin" prefix="WEB-INF/classes" includes="br/com/exemplo/vendas/apresentacao/web/*.class, br/com/exemplo/vendas/apresentacao/delegate/*.class, br/com/exemplo/vendas/apresentacao/service/*.class, br/com/exemplo/vendas/apresentacao/actions/*.class" />
+			<zipfileset dir="bin" prefix="WEB-INF/classes" includes="br/com/exemplo/vendas/apresentacao/web/*.class, br/com/exemplo/vendas/apresentacao/web/mb/*.class, br/com/exemplo/vendas/apresentacao/delegate/*.class, br/com/exemplo/vendas/apresentacao/service/*.class, br/com/exemplo/vendas/apresentacao/actions/*.class" />
 			<zipfileset dir="docroot" />
 		</jar>
 	</target>
@@ -188,8 +190,8 @@
 		<copy file="VendaDelegate.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaVO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
 		<copy file="VendaEJB-client.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
-		<copy file="VendaDTO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />
-
+		<copy file="VendaDTO.jar" todir="../${projeto.webservice}/WebContent/WEB-INF/lib" />		
+		
 		<copy file="${build.artifact.ejb}" todir="../${projeto.webservice}/WebContent/META-INF" />
 		<copy file="${build.artifact.war}" todir="../${projeto.webservice}/WebContent/META-INF" />
 
@@ -198,6 +200,8 @@
 		<copy file="VendaDTO.jar" todir="${tomcat.web}/lib" />
 		<copy file="VendaVO.jar" todir="${tomcat.web}/lib" />
 		<copy file="VendaEJB-client.jar" todir="${tomcat.web}/lib" />
+		
+		
 
 	</target>
 
