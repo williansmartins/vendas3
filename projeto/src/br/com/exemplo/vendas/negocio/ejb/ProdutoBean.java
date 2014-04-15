@@ -25,13 +25,15 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 	public ServiceDTO inserirProduto(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		ProdutoVO vo = (ProdutoVO) requestDTO.get("produtoVO");
-		if(vo != null) {
+		if(vo != null){
 			Produto produto = Produto.create(vo);
 			if(DaoFactory.getProdutoDAO(em).inserir(produto)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
 				responseDTO.set("resposta", new Boolean(false));
 			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
 		}
 		return responseDTO ;
 	}
@@ -39,13 +41,15 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 	public ServiceDTO alterarProduto(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		ProdutoVO vo = (ProdutoVO) requestDTO.get("produtoVO");
-		if (vo != null) {
+		if(vo != null){
 			Produto produto = Produto.create(vo);
 			if(DaoFactory.getProdutoDAO(em).alterar(produto)) {
 				responseDTO.set("resposta", new Boolean(true));
 			}else{
 				responseDTO.set("resposta", new Boolean(false));
 			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
 		}
 		return responseDTO;
 	}
@@ -62,9 +66,11 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 					responseDTO.set("resposta", new Boolean(false));
 				}
 			}catch(Exception e){
+				e.printStackTrace();
 				responseDTO.set("resposta", new Boolean(false));
 			}
-			
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
 		}
 		return responseDTO;
 	}
@@ -78,6 +84,8 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 			}else{
 				responseDTO.set("resposta", new Boolean(false));
 			}
+		}else{
+			responseDTO.set("resposta", new Boolean(false));
 		}
 		return responseDTO;
 	}
@@ -104,9 +112,10 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		try{
 			Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(codigo);
 			ProdutoVO produtoVO = ProdutoVO.create(produto);
-			responseDTO.set( "getProduto", produtoVO);
+			responseDTO.set("getProduto", produtoVO);
 		}catch(Exception e){
-			responseDTO.set( "getProduto", null);
+			e.printStackTrace();
+			responseDTO.set("getProduto", null);
 		}
 		return responseDTO;
 	}
@@ -128,6 +137,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 				responseDTO.set("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe", new ProdutoVO[0]);
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			responseDTO.set("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe", new ProdutoVO[0]);
 		}
 		return responseDTO;

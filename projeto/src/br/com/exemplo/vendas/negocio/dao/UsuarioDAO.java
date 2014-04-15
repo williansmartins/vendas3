@@ -42,35 +42,25 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 		}
 	}
 
-	public boolean alterar( Usuario usuario ) {
-		/*
-		boolean result = false ;
-		Usuario existenteUsuario = null ;
-
-		try
-		{
-			existenteUsuario = em.find( Usuario.class, usuario.getLogin( ) ) ;
-			if (existenteUsuario != null)
-			{
-				em.merge( usuario ) ;
-				result = true ;
+	/**
+	 * Metodo reponsavel por alterar um Usuario.java (TBL_USUARIO)
+	 * no sistema.
+	 * @param Usuario recebe o usuario que sera alterado.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
+	public boolean alterar(Usuario usuario) {
+		try{
+			localizarPorLogin(usuario.getLogin());
+			em.merge(usuario);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
+				e.printStackTrace();
 			}
-			else
-			{
-				result = false ;
-			}
+			return false;
 		}
-		catch (Exception e)
-		{
-			if (debugInfo)
-			{
-				e.printStackTrace( ) ;
-			}
-			result = false ;
-		}
-		return result ;
-		*/
-		return false;
 	}
 
 	/**
@@ -106,6 +96,9 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 			Usuario usuario = localizarPorLogin(login);
 			return excluir(usuario);
 		}catch(Exception e){
+			if(debugInfo){
+				e.printStackTrace();
+			}
 			return false;
 		}
 	}
@@ -123,7 +116,6 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 			throw new Exception("Usuario n\u00e3o encontrado.");
 		}
 	}
-	
 	
 	public Usuario localizarPorLogin(Usuario usuario) throws Exception {
 		try{

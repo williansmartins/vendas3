@@ -22,82 +22,128 @@ import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class ItemBean implements ItemRemote, ItemLocal {
+	
 	@PersistenceContext(unitName = "Vendas")
 	EntityManager em ;
 
 	public ServiceDTO inserirItem(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		ItemVO vo = (ItemVO) requestDTO.get("itemVO");
 		if(vo != null) {
+			Item item = Item.create(vo);
 			try{
 				Reserva reserva = DaoFactory.getReservaDAO(em).localizarPorCodigo(vo.getCodigoReserva());
-				Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(vo.getCodigoPrduto());
-				Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(vo.getNumeroCompra());
-				Item item = Item.create(vo);
 				item.setReserva(reserva);
-				item.setCompra(compra);
-				item.setProduto(produto);
-				if(DaoFactory.getItemDAO(em).inserir(item)) {
-					responseDTO.set("resposta", new Boolean(true));
-				}else{
-					responseDTO.set("resposta", new Boolean(false));
-				}
 			}catch(Exception e){
 				e.printStackTrace();
-				responseDTO.set("resposta", new Boolean(false));
+				return new ServiceDTO("resposta", new Boolean(false));
 			}
+			try{
+				Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(vo.getCodigoPrduto());
+				item.setProduto(produto);
+			}catch(Exception e){
+				e.printStackTrace();
+				return new ServiceDTO("resposta", new Boolean(false));
+			}
+			try{
+				Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(vo.getNumeroCompra());
+				item.setCompra(compra);
+			}catch(Exception e){
+				e.printStackTrace();
+				return new ServiceDTO("resposta", new Boolean(false));
+			}
+			if(DaoFactory.getItemDAO(em).inserir(item)) {
+				return new ServiceDTO("resposta", new Boolean(true));
+			}else{
+				return new ServiceDTO("resposta", new Boolean(false));
+			}
+		}else{
+			return new ServiceDTO("resposta", new Boolean(false));
 		}
-		return responseDTO;
 	}
 
 	public ServiceDTO alterarItem(ServiceDTO requestDTO) throws LayerException {
-		/*ServiceDTO responseDTO = new ServiceDTO();
 		ItemVO vo = (ItemVO) requestDTO.get("itemVO");
-		if (vo != null) {
-			Item item = new Item();
-			item.setLogin(vo.getLogin());
-			item.setSenha(vo.getSenha());
-			item.setGrupo(vo.getGrupo());
-			item.setPerfil(vo.getPerfil());
-			item.setBloqueado(Boolean.valueOf(vo.getBloqueado()));
-			item.setUltimoAcesso(vo.getUltimoAcesso());
-			item.setCodigo(vo.getCodigo());
-			item.setNome(vo.getNome());
-			item.setEndereco(vo.getEndereco());
-			item.setTelefone(vo.getTelefone());
-			item.setSituacao(vo.getSituacao());
-			if(DaoFactory.getItemDAO(em).alterar(item)) {
-				responseDTO.set("resposta", new Boolean(true));
-			}else{
-				responseDTO.set("resposta", new Boolean(false));
+		if(vo != null){
+			Item item = Item.create(vo);
+			try{
+				Reserva reserva = DaoFactory.getReservaDAO(em).localizarPorCodigo(vo.getCodigoReserva());
+				item.setReserva(reserva);
+			}catch(Exception e){
+				e.printStackTrace();
+				return new ServiceDTO("resposta", new Boolean(false));
 			}
+			try{
+				Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(vo.getCodigoPrduto());
+				item.setProduto(produto);
+			}catch(Exception e){
+				e.printStackTrace();
+				return new ServiceDTO("resposta", new Boolean(false));
+			}
+			try{
+				Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(vo.getNumeroCompra());
+				item.setCompra(compra);
+			}catch(Exception e){
+				e.printStackTrace();
+				return new ServiceDTO("resposta", new Boolean(false));
+			}
+			if(DaoFactory.getItemDAO(em).alterar(item)) {
+				return new ServiceDTO("resposta", new Boolean(true));
+			}else{
+				return new ServiceDTO("resposta", new Boolean(false));
+			}
+		}else{
+			return new ServiceDTO("resposta", new Boolean(false));
 		}
-		
-		return responseDTO;
-		*/
-		return null;
 	}
 
-	public ServiceDTO excluirItem( ServiceDTO requestDTO ) throws LayerException {
-		/*
-		ServiceDTO responseDTO = new ServiceDTO();
+	public ServiceDTO excluirItem(ServiceDTO requestDTO) throws LayerException {
 		ItemVO vo = (ItemVO) requestDTO.get("itemVO");
-		if(vo != null) {
-			Item item = new Item();
-			item.setLogin(vo.getLogin());
-			if(DaoFactory.getItemDAO(em).excluir(item)) {
-				responseDTO.set("resposta", new Boolean(true));
+		if(vo != null){
+			Item item = DaoFactory.getItemDAO(em).localizar(vo.getId());
+			if(DaoFactory.getItemDAO(em).excluir(item)){
+				return new ServiceDTO("listaItem", new Boolean(true));
 			}else{
-				responseDTO.set("resposta", new Boolean(false));
+				return new ServiceDTO("listaItem", new Boolean(false));
 			}
+		}else{
+			return new ServiceDTO("listaItem", new Boolean(false));
 		}
-		return responseDTO;
-		*/
-		return null;
+	}
+	
+	public ServiceDTO excluirItemPorId(ServiceDTO requestDTO) throws LayerException {
+		Long id = (Long) requestDTO.get("idItem");
+		if(id != null){
+			Item item = DaoFactory.getItemDAO(em).localizar(id);
+			if(DaoFactory.getItemDAO(em).excluir(item)){
+				return new ServiceDTO("listaItem", new Boolean(true));
+			}else{
+				return new ServiceDTO("listaItem", new Boolean(false));
+			}
+		}else{
+			return new ServiceDTO("listaItem", new Boolean(false));
+		}
+	}
+	
+	public ServiceDTO excluirItemPorReservaCompraProduto(ServiceDTO requestDTO) throws LayerException {
+		ItemVO vo = (ItemVO) requestDTO.get("itemVO");
+		if(vo != null){
+			try{
+				Item item = DaoFactory.getItemDAO(em).localizarPorReservaCompraProduto(vo.getCodigoReserva(), vo.getNumeroCompra(), vo.getCodigoPrduto());
+				if(DaoFactory.getItemDAO(em).excluir(item)){
+					return new ServiceDTO("listaItem", new Boolean(true));
+				}else{
+					return new ServiceDTO("listaItem", new Boolean(false));
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				return new ServiceDTO("listaItem", new Boolean(false));
+			}
+		}else{
+			return new ServiceDTO("listaItem", new Boolean(false));
+		}
 	}
 
 	public ServiceDTO selecionarTodosItens(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		List<Item> lista = DaoFactory.getItemDAO(em).listar();
 		if((lista != null) && (!lista.isEmpty())) {
 			ItemVO[] items = new ItemVO[lista.size()];
@@ -113,17 +159,15 @@ public class ItemBean implements ItemRemote, ItemLocal {
 				itemVO.setProdutoVO(produtoVO);
 				items[i] = itemVO;
 			}
-			responseDTO.set("listaItem", items);
+			return new ServiceDTO("listaItem", items);
 		}else{
-			responseDTO.set("listaItem", new ItemVO[0]);
+			return new ServiceDTO("listaItem", new ItemVO[0]);
 		}
-		return responseDTO ;
 	}
 
 	public ServiceDTO getItem(ServiceDTO requestDTO, Long codigoReserva, Long numeroCompra, Long codigoProduto) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		try{
-			Item item = DaoFactory.getItemDAO(em).localizar(codigoReserva, numeroCompra, codigoProduto);
+			Item item = DaoFactory.getItemDAO(em).localizarPorReservaCompraProduto(codigoReserva, numeroCompra, codigoProduto);
 			ItemVO itemVO = ItemVO.create(item);
 			itemVO.setCodigoReserva(item.getReserva().getCodigo());
 			ReservaVO reservaVO = ReservaVO.create(item.getReserva());
@@ -132,10 +176,10 @@ public class ItemBean implements ItemRemote, ItemLocal {
 			itemVO.setCompraVO(compraVO);
 			ProdutoVO produtoVO = ProdutoVO.create(item.getProduto());
 			itemVO.setProdutoVO(produtoVO);
-			responseDTO.set("getItem", itemVO);
+			return new ServiceDTO("listaItem", itemVO);
 		}catch(Exception e){
-			responseDTO.set("getItem", null);
+			e.printStackTrace();
+			return new ServiceDTO("listaItem", null);
 		}
-		return responseDTO;
 	}
 }

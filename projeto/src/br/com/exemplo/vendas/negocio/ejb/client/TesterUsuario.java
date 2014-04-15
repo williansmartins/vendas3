@@ -46,7 +46,7 @@ public class TesterUsuario {
 	 * 2
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void main(String[] args) throws Exception {
+	public static void main2(String[] args) throws Exception {
 		Hashtable prop = new Hashtable();
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
@@ -62,6 +62,33 @@ public class TesterUsuario {
 			System.out.println("Exclus\u00e3o realizada com sucesso.");
 		}else{
 			System.out.println("N\u00e3o foi possivel efetuar a exclus\u00e3o.");
+		}
+	}
+	
+	/**
+	 * Alterar Usuario.java
+	 * TBL_USUARIO
+	 * 
+	 * 3
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void main(String[] args) throws Exception {
+		Hashtable prop = new Hashtable();
+		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
+		Context ctx = new InitialContext(prop);
+		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx.lookup("UsuarioBean/remote");
+		ServiceDTO requestDTO = new ServiceDTO();
+		ServiceDTO responseDTO = new ServiceDTO();
+
+		UsuarioVO vo = new UsuarioVO("marcao1", "senha2222", "grupo2222", "perfil2222", true, new Date());
+		requestDTO.set("usuarioVO", vo);
+		responseDTO = remoteUsuario.alterarUsuario(requestDTO);
+		Boolean sucesso = (Boolean) responseDTO.get("resposta");
+		if(sucesso){
+			System.out.println("Altera\u00e7\u00e3o realizada com sucesso.");
+		}else{
+			System.out.println("N\u00e3o foi possivel efetuar a altera\u00e7\u00e3o.");
 		}
 	}
 }

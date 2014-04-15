@@ -120,6 +120,7 @@ public class Item implements Serializable {
 	
 	public static Item create(ItemVO itemVO){
 		Item item = new Item();
+		item.setId(item.getId());
 		item.setQuantidade(itemVO.getQuantidade());
 		item.setValor(itemVO.getValor());
 		item.setSituacao(itemVO.getSituacao());

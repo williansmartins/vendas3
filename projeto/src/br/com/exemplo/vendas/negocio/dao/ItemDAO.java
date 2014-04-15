@@ -19,6 +19,14 @@ public class ItemDAO extends GenericDAO<Item> {
 		super(Persistence.createEntityManagerFactory("Vendas").createEntityManager());
 	}
 
+	/**
+	 * Metodo reponsavel por inserir um Item.java (TBL_ITEM)
+	 * no sistema.
+	 * @param Item recebe o item que sera inserido.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean inserir(Item item) {
 		try{
 			em.persist(item);
@@ -31,59 +39,104 @@ public class ItemDAO extends GenericDAO<Item> {
 		}
 	}
 
+	/**
+	 * Metodo reponsavel por alterar um Item.java (TBL_ITEM)
+	 * no sistema.
+	 * @param Item recebe o item que sera alterado.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean alterar(Item item) {
-		boolean result = false ;
-		Item existenteItem = null ;
-
 		try{
-			//existenteItem = em.find(Item.class, item.getCodigo());
-			if(existenteItem != null){
+			Item otherItem = em.find(Item.class, item.getId());
+			if(otherItem != null){
 				em.merge(item);
-				result = true ;
+				return true;
 			}else{
-				result = false;
+				return false;
 			}
 		}catch(Exception e){
-			if(debugInfo) {
+			if(debugInfo){
 				e.printStackTrace();
 			}
-			result = false;
+			return false;
 		}
-		return result;
 	}
 
+	/**
+	 * Metodo reponsavel por excluir um Item.java (TBL_ITEM)
+	 * no sistema.
+	 * @param item recebe o item que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
 	public boolean excluir(Item item) {
-		Item obj = null ;
-		boolean result = false ;
-
-		try {
-			Query q = em.createQuery("from Item where login = :login");
-			//q.setParameter("login", item.getCodigo());
-			obj = (Item) q.getSingleResult();
-			em.remove(obj);
-			result = true;
-		}catch(Exception e) {
-			if(debugInfo) {
+		try{
+			em.remove(item);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
 				e.printStackTrace();
 			}
+			return false;
 		}
-		return result;
+	}
+	
+	/**
+	 * Metodo reponsavel por excluir um Item.java (TBL_ITEM)
+	 * no sistema.
+	 * @param Long recebe o id do item que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(Long id) {
+		try{
+			Item item = em.find(Item.class, id);
+			if(item == null){
+				return false;
+			}else{
+				return excluir(item);
+			}
+		}catch(Exception e){
+			return false;
+		}
+	}
+	
+	/**
+	 * Metodo reponsavel por excluir um Item.java (TBL_ITEM)
+	 * no sistema.
+	 * @param Long recebe o codigo da reserva do item que sera excluido.
+	 * @param Long recebe o numero de compra do item que sera excluido.
+	 * @param Long recebe o codigo do produto do item que sera excluido.
+	 * @return boolean 
+	 * 		true: Para sucesso na exclusao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a exclusao.
+	 */
+	public boolean excluir(Long codigoReserva, Long numeroCompra, Long codigoProduto) {
+		try{
+			Item item = localizarPorReservaCompraProduto(codigoReserva, numeroCompra, codigoProduto);
+			return excluir(item);
+		}catch(Exception e){
+			return false;
+		}
 	}
 
-	public Item localizar(Long codigoReserva, Long numeroCompra, Long codigoProduto) throws Exception {
+	public Item localizarPorReservaCompraProduto(Long codigoReserva, Long numeroCompra, Long codigoProduto) throws Exception {
 		try{
 			Query query = em.createQuery("from Item where produto.codigo = :codigoProduto and compra.numero = :numeroCompra and reserva.codigo = :codigoReserva");
 			query.setParameter("codigoReserva", codigoReserva);
 			query.setParameter("numeroCompra", numeroCompra);
 			query.setParameter("codigoProduto", codigoProduto);
-			Item obj = (Item) query.getSingleResult();
-			return obj;
+			return (Item) query.getSingleResult();
 		}catch(EntityNotFoundException e){
-			throw new Exception("Compra n\u00e3o encontrada.");
+			throw new Exception("Item n\u00e3o encontrado.");
 		}catch(NoResultException e){
-			throw new Exception("Compra n\u00e3o encontrada.");
+			throw new Exception("Item n\u00e3o encontrado.");
 		}catch(NonUniqueResultException e){
-			throw new Exception("Compra n\u00e3o encontrada.");
+			throw new Exception("Item n\u00e3o encontrado.");
 		}
 	}
 }

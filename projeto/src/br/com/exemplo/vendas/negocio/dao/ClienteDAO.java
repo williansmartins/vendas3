@@ -44,25 +44,25 @@ public class ClienteDAO extends GenericDAO<Cliente> {
 		}
 	}
 
+	/**
+	 * Metodo reponsavel por alterar um Cliente.java (TBL_CLIENTE)
+	 * no sistema.
+	 * @param Cliente recebe o cliente que sera alterado.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean alterar(Cliente cliente) {
-		boolean result = false ;
-		Cliente existenteCliente = null ;
-
-		try {
-			existenteCliente = em.find(Cliente.class, cliente.getLogin());
-			if (existenteCliente != null) {
-				em.merge(cliente);
-				result = true ;
-			} else {
-				result = false;
-			}
-		}catch(Exception e) {
-			if(debugInfo) {
+		try{
+			localizarPorLogin(cliente.getLogin());
+			em.merge(cliente);
+			return true;
+		}catch(Exception e){
+			if(debugInfo){
 				e.printStackTrace();
 			}
-			result = false;
+			return false;
 		}
-		return result;
 	}
 
 	/**

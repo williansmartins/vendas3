@@ -22,70 +22,66 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 	EntityManager em ;
 
 	public ServiceDTO inserirUsuario(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		UsuarioVO vo = (UsuarioVO) requestDTO.get("usuarioVO");
 		if(vo != null) {
-			Usuario usuario = new Usuario(vo.getLogin(), vo.getSenha(), vo.getGrupo(), vo.getPerfil(), new Boolean(vo.getBloqueado()), vo.getUltimoAcesso());
-			if (DaoFactory.getUsuarioDAO(em).inserir(usuario)) {
-				responseDTO.set("resposta", new Boolean(true));
+			Usuario usuario = Usuario.create(vo);
+			if(DaoFactory.getUsuarioDAO(em).inserir(usuario)){
+				return new ServiceDTO("resposta", new Boolean(true));
 			}else{
-				responseDTO.set("resposta", new Boolean(false));
+				return new ServiceDTO("resposta", new Boolean(false));
 			}
+		}else{
+			return new ServiceDTO("resposta", new Boolean(false));
 		}
-		return responseDTO;
 	}
 
 	public ServiceDTO alterarUsuario(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		UsuarioVO vo = (UsuarioVO) requestDTO.get("usuarioVO");
 		if(vo != null) {
-			Usuario usuario = new Usuario(vo.getLogin(), vo.getSenha(), vo.getGrupo(), vo.getPerfil(), new Boolean(vo.getBloqueado()), vo.getUltimoAcesso());
-			if(DaoFactory.getUsuarioDAO(em).alterar(usuario)) {
-				responseDTO.set("resposta", new Boolean(true));
+			Usuario usuario = Usuario.create(vo);
+			if(DaoFactory.getUsuarioDAO(em).alterar(usuario)){
+				return new ServiceDTO("resposta", new Boolean(true));
 			}else{
-				responseDTO.set("resposta", new Boolean(false));
+				return new ServiceDTO("resposta", new Boolean(false));
 			}
+		}else{
+			return new ServiceDTO("resposta", new Boolean(false));
 		}
-		return responseDTO ;
 	}
 
 	public ServiceDTO excluirUsuario(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		UsuarioVO vo = (UsuarioVO) requestDTO.get("usuarioVO");
-		if(vo != null) {
+		if(vo != null){
 			try{
 				Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(vo.getLogin());
-				if(DaoFactory.getUsuarioDAO(em).excluir(usuario)) {
-					responseDTO.set("resposta", new Boolean(true));
+				if(DaoFactory.getUsuarioDAO(em).excluir(usuario)){
+					return new ServiceDTO("resposta", new Boolean(true));
 				}else{
-					responseDTO.set("resposta", new Boolean(false));
+					return new ServiceDTO("resposta", new Boolean(false));
 				}
 			}catch(Exception e){
-				responseDTO.set("resposta", new Boolean(false));
+				e.printStackTrace();
+				return new ServiceDTO("resposta", new Boolean(false));
 			}
 		}else{
-			responseDTO.set("resposta", new Boolean(false));
+			return new ServiceDTO("resposta", new Boolean(false));
 		}
-		return responseDTO ;
 	}
 	
 	public ServiceDTO excluirUsuarioPorLogin(ServiceDTO requestDTO) throws LayerException, RemoteException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		String login = (String) requestDTO.get("loginUsuario");
 		if(login != null){
 			if(DaoFactory.getUsuarioDAO(em).excluir(login)) {
-				responseDTO.set("resposta", new Boolean(true));
+				return new ServiceDTO("resposta", new Boolean(true));
 			}else{
-				responseDTO.set("resposta", new Boolean(false));
+				return new ServiceDTO("resposta", new Boolean(false));
 			}
 		}else{
-			responseDTO.set("resposta", new Boolean(false));
+			return new ServiceDTO("resposta", new Boolean(false));
 		}
-		return responseDTO;
 	}
 
 	public ServiceDTO selecionarTodosUsuarios(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		Usuario usuario = null;
 		List<Usuario> lista = DaoFactory.getUsuarioDAO(em).listar();
 		if((lista != null) && (!lista.isEmpty())) {
@@ -95,24 +91,24 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 				UsuarioVO usuarioVO = UsuarioVO.create(usuario);
 				usuarios[i] = usuarioVO;
 			}
-			responseDTO.set("listaUsuario", usuarios);
+			return new ServiceDTO("listaUsuario", usuarios);
+		}else{
+			return new ServiceDTO("listaUsuario", new UsuarioVO[0]);
 		}
-		return responseDTO ;
 	}
 
 	public ServiceDTO getUsuario(ServiceDTO requestDTO, String login) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
 		try{
 			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(login);
 			if(usuario != null){
 				UsuarioVO usuarioVO = UsuarioVO.create(usuario);
-				responseDTO.set("getUsuario", usuarioVO);
+				return new ServiceDTO("getUsuario", usuarioVO);
 			}else{
-				responseDTO.set("getUsuario", null);
+				return new ServiceDTO("getUsuario", null);
 			}
 		}catch(Exception e){
-			responseDTO.set("getUsuario", null);
+			e.printStackTrace();
+			return new ServiceDTO("getUsuario", null);
 		}
-		return responseDTO;
 	}
 }

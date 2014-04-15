@@ -109,12 +109,39 @@ public class TesteCliente {
 			System.out.println("N\u00e3o foi possivel efetuar a exclus\u00e3o.");
 		}
 	}
+
+	/**
+	 * Alterar Cliente.java
+	 * TBL_CLIENTE
+	 * 
+	 * 5
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void main(String[] args) throws Exception {
+		Hashtable prop = new Hashtable();
+		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
+		Context ctx = new InitialContext(prop);
+		ClienteInterface remoteCliente = (ClienteInterface) ctx.lookup("ClienteBean/remote");
+		ServiceDTO requestDTO = new ServiceDTO();
+		ServiceDTO responseDTO = new ServiceDTO();
+
+		ClienteVO vo = new ClienteVO("alberto", "alberto123567", "Fiap - Altera", "Legal - Altera", true, new Date(), new Long(1), "Alberto Cerqueira", "Diadema", 12345678, "Sei la - Alterar");
+		requestDTO.set("clienteVO", vo);
+		responseDTO = remoteCliente.alterarCliente(requestDTO);
+		Boolean sucesso = (Boolean) responseDTO.get("resposta");
+		if(sucesso){
+			System.out.println("Altera\u00e7\u00e3o realizada com sucesso.");
+		}else{
+			System.out.println("N\u00e3o foi possivel efetuar a altera\u00e7\u00e3o.");
+		}
+	}
 	
 	/**
 	 * Teste webservices: Localizar cliente que tenham feito compras.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void main(String[] args) throws Exception {
+	public static void mainw(String[] args) throws Exception {
 		Hashtable prop = new Hashtable();
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");

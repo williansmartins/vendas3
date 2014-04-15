@@ -47,25 +47,25 @@ public class ProdutoDAO extends GenericDAO<Produto> {
 		}
 	}
 
+	/**
+	 * Metodo reponsavel por alterar um Produto.java (TBL_PRODUTO)
+	 * no sistema.
+	 * @param Produto recebe o produto que sera alterado.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean alterar(Produto produto) {
-		boolean result = false ;
-		Produto existenteProduto = null ;
-
 		try{
-			existenteProduto = em.find(Produto.class, produto.getCodigo());
-			if(existenteProduto != null){
-				em.merge(produto);
-				result = true ;
-			}else{
-				result = false;
-			}
+			localizarPorCodigo(produto.getCodigo());
+			em.merge(produto);
+			return true;
 		}catch(Exception e){
 			if(debugInfo) {
 				e.printStackTrace();
 			}
-			result = false;
+			return false;
 		}
-		return result;
 	}
 	
 	/**

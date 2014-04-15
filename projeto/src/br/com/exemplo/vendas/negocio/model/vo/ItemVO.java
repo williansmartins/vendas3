@@ -8,6 +8,7 @@ import br.com.exemplo.vendas.negocio.entity.Item;
 public class ItemVO implements Serializable {
 	
 	private static final long serialVersionUID = 6819396935195419556L;
+	private Long id;
 	private Integer quantidade;
 	private BigDecimal valor;
 	private String situacao;
@@ -41,6 +42,12 @@ public class ItemVO implements Serializable {
 		this.produtoVO = produtoVO;
 	}
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public Integer getQuantidade() {
 		return quantidade;
 	}
@@ -97,6 +104,7 @@ public class ItemVO implements Serializable {
 	}
 	public static ItemVO create(Item item){
 		ItemVO itemVO = new ItemVO();
+		itemVO.setId(item.getId());
 		itemVO.setQuantidade(item.getQuantidade());
 		itemVO.setValor(item.getValor());
 		itemVO.setSituacao(item.getSituacao());

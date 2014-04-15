@@ -7,7 +7,6 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import br.com.exemplo.vendas.negocio.entity.Produto;
 import br.com.exemplo.vendas.negocio.entity.Reserva;
 
 public class ReservaDAO extends GenericDAO<Reserva> {
@@ -20,6 +19,14 @@ public class ReservaDAO extends GenericDAO<Reserva> {
 		super(Persistence.createEntityManagerFactory("Vendas").createEntityManager());
 	}
 
+	/**
+	 * Metodo reponsavel por inserir uma Reserva.java (TBL_RESERVA)
+	 * no sistema.
+	 * @param Reserva recebe a reserva que sera inserida.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
 	public boolean inserir(Reserva reserva) {
 		try{
 			localizarPorCodigo(reserva.getCodigo());
@@ -37,25 +44,25 @@ public class ReservaDAO extends GenericDAO<Reserva> {
 		}
 	}
 
-	public boolean alterar(Produto produto) {
-		boolean result = false ;
-		Produto existenteProduto = null ;
-
+	/**
+	 * Metodo reponsavel por alterar uma Reserva.java (TBL_RESERVA)
+	 * no sistema.
+	 * @param Reserva recebe a reserva que sera alterada.
+	 * @return boolean 
+	 * 		true: Para sucesso na insercao.
+	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
+	 */
+	public boolean alterar(Reserva reserva) {
 		try{
-			existenteProduto = em.find(Produto.class, produto.getCodigo());
-			if(existenteProduto != null){
-				em.merge(produto);
-				result = true ;
-			}else{
-				result = false;
-			}
+			localizarPorCodigo(reserva.getCodigo());
+			em.merge(reserva);
+			return true;
 		}catch(Exception e){
-			if(debugInfo) {
+			if(debugInfo){
 				e.printStackTrace();
 			}
-			result = false;
+			return false;
 		}
-		return result;
 	}
 
 	/**

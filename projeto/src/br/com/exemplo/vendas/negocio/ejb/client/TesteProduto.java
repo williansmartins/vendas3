@@ -28,7 +28,7 @@ public class TesteProduto {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		ProdutoVO vo = new ProdutoVO(new Long(1), "Produto teste", new BigDecimal(100), "Sei la", new Integer(1000));
+		ProdutoVO vo = new ProdutoVO(new Long(12), "Produto teste", new BigDecimal(100), "Sei la", new Integer(1000));
 		requestDTO.set("produtoVO", vo);
 		responseDTO = remoteProduto.inserirProduto(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
@@ -147,13 +147,40 @@ public class TesteProduto {
 			}
 		}
 	}
+
+	/**
+	 * Alterar Produto.java
+	 * TBL_PRODUTO
+	 * 
+	 * 6
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void main(String[] args) throws Exception {
+		Hashtable prop = new Hashtable();
+		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
+		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
+		Context ctx = new InitialContext(prop);
+		ProdutoInterface remoteProduto = (ProdutoInterface) ctx.lookup("ProdutoBean/remote");
+		ServiceDTO requestDTO = new ServiceDTO();
+		ServiceDTO responseDTO = new ServiceDTO();
+
+		ProdutoVO vo = new ProdutoVO(new Long(1), "Produto teste alterado", new BigDecimal(100), "Sei la", new Integer(1000));
+		requestDTO.set("produtoVO", vo);
+		responseDTO = remoteProduto.alterarProduto(requestDTO);
+		Boolean sucesso = (Boolean) responseDTO.get("resposta");
+		if(sucesso){
+			System.out.println("Altera\u00e7\u00e3o realizada com sucesso.");
+		}else{
+			System.out.println("N\u00e3o foi possivel efetuar a altera\u00e7\u00e3o.");
+		}
+	}
 	
 	/**
 	 * Teste webservices: Localizar produtos com preco abaixo de R$ 1000 e com mais de 2
 	 * unidade em estoque.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void main(String[] args) throws Exception {
+	public static void mainw(String[] args) throws Exception {
 		Hashtable prop = new Hashtable();
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
