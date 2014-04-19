@@ -20,6 +20,7 @@ public class UsuarioVO implements Serializable {
 	}
 
 	public UsuarioVO() {}
+	
 	public UsuarioVO(String login, String senha, String grupo, String perfil, Boolean bloqueado, Date ultimoAcesso) {
 		this.login = login;
 		this.senha = senha;
@@ -76,15 +77,5 @@ public class UsuarioVO implements Serializable {
 	public void setUltimoAcesso(Date ultimoAcesso) {
 		this.ultimoAcesso = ultimoAcesso;
 	}
-	
-//	public static UsuarioVO create(Usuario usuario) {
-//		UsuarioVO usuarioVO = new UsuarioVO();
-//		usuarioVO.setLogin(usuario.getLogin());
-//		usuarioVO.setSenha(usuario.getSenha());
-//		usuarioVO.setGrupo(usuario.getGrupo());
-//		usuarioVO.setPerfil(usuario.getPerfil());
-//		usuarioVO.setBloqueado(usuario.getBloqueado());
-//		usuarioVO.setUltimoAcesso(usuario.getUltimoAcesso());
-//		return usuarioVO;
-//	}
+
 }

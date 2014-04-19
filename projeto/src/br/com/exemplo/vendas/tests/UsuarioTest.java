@@ -44,7 +44,7 @@ public class UsuarioTest
 	    Assert.assertTrue( sucesso1 );
 	    Assert.assertTrue( usuarioBuscado != null );
 
-	    //DaoFactory.getUsuarioDAO( em ).excluir( usuario );
+	    DaoFactory.getUsuarioDAO( em ).excluir( usuarioBuscado );
 	} catch ( Exception e )
 	{
 	    e.printStackTrace();

@@ -12,5 +12,5 @@ public interface UsuarioInterface {
 	public ServiceDTO excluirUsuario(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirUsuarioPorLogin(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO selecionarTodosUsuarios(ServiceDTO requestDTO) throws LayerException, RemoteException;
-	public ServiceDTO getUsuario(ServiceDTO requestDTO, String login) throws LayerException, RemoteException;
+	public ServiceDTO localizarPorLogin(ServiceDTO requestDTO, String login) throws LayerException, RemoteException;
 }

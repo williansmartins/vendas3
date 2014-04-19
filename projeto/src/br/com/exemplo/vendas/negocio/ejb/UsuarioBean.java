@@ -100,25 +100,29 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
             }
 	}
 
-	@Override
-	public ServiceDTO getUsuario( ServiceDTO requestDTO, String login )
-		throws LayerException, RemoteException
-	{
-	    return null;
+	public ServiceDTO localizarPorLogin(ServiceDTO requestDTO, String login) throws LayerException {
+		try{
+			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(login);
+			if(usuario != null){
+				UsuarioVO usuarioVO = create(usuario);
+				return new ServiceDTO("getUsuario", usuarioVO);
+			}else{
+				return new ServiceDTO("getUsuario", null);
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			return new ServiceDTO("getUsuario", null);
+		}
 	}
 
-//	public ServiceDTO getUsuario(ServiceDTO requestDTO, String login) throws LayerException {
-//		try{
-//			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(login);
-//			if(usuario != null){
-//				UsuarioVO usuarioVO = UsuarioVO.create(usuario);
-//				return new ServiceDTO("getUsuario", usuarioVO);
-//			}else{
-//				return new ServiceDTO("getUsuario", null);
-//			}
-//		}catch(Exception e){
-//			e.printStackTrace();
-//			return new ServiceDTO("getUsuario", null);
-//		}
-//	}
+	public static UsuarioVO create(Usuario usuario) {
+		UsuarioVO usuarioVO = new UsuarioVO();
+		usuarioVO.setLogin(usuario.getLogin());
+		usuarioVO.setSenha(usuario.getSenha());
+		usuarioVO.setGrupo(usuario.getGrupo());
+		usuarioVO.setPerfil(usuario.getPerfil());
+		usuarioVO.setBloqueado(usuario.getBloqueado());
+		usuarioVO.setUltimoAcesso(usuario.getUltimoAcesso());
+		return usuarioVO;
+	}
 }
