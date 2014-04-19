@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="build-ejb" default="_packaging_generation_">
+
+	<property name="jboss.home" value="C:/dev/servidores/jboss-5.1.0.GA-jdk6/jboss-5.1.0.GA" />
+	<property name="jboss.server.config" value="default" />
+	<property name="build.artifact.ejb" value="VendaEJB.jar" />
+
+	<target name="_packaging_generation_" depends="delete, client, delegate, dto, vo, locator, exception, log, util, ejb, deploy" />
+
+	<target name="delete">
+		<delete dir="${jboss.home}/server/default/tmp" />		
+		
+		<delete file="VendaDelegate.jar" />
+		<delete file="VendaDTO.jar" />
+		<delete file="VendaEJB-client.jar" />
+		<delete file="VendaEJB.jar" />
+		<delete file="VendaException.jar" />
+		<delete file="VendaLocator.jar" />
+		<delete file="VendaLog.jar" />
+		<delete file="VendaUtil.jar" />
+		<delete file="VendaVO.jar" />
+		<delete file="VendaWeb.jar" />
+		
+		<delete file="${jboss.home}/server/${jboss.server.config}/deploy/VendaEJB.jar" />
+	</target>
+
+	<target name="client" description="VendaEJB-client.jar">
+		<jar destfile="VendaEJB-client.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/negocio/interfaces/*.class, br/com/exemplo/vendas/negocio/ejb/interfaces/*.class," />
+		</jar>
+	</target>
+				
+	<target name="locator" description="VendaLocator.jar">
+		<jar destfile="VendaLocator.jar">
+			<zipfileset dir="src" prefix="">
+				<include name="config/portallog.properties" />
+				<include name="config/sl-providers.xml" />
+				<include name="config/sl-services.xml" />
+			</zipfileset>
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/util/locator/*.class" />
+		</jar>
+	</target>
+	
+	<target name="log" description="VendaLog.jar">
+		<jar destfile="VendaLog.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/util/log/*.class" />
+		</jar>
+	</target>
+
+	<target name="util" description="VendaUtil.jar">
+		<jar destfile="VendaUtil.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/util/*.class" />
+		</jar>
+	</target>
+	
+	<target name="delegate" description="VendaDelegate.jar">
+		<jar destfile="VendaDelegate.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/apresentacao/delegate/*.class, br/com/exemplo/vendas/apresentacao/service/*.class" />
+		</jar>
+	</target>
+
+	<target name="dto" description="VendaDTO.jar">
+		<jar destfile="VendaDTO.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/util/dto/*.class" />
+		</jar>
+	</target>
+
+	<target name="vo" description="VendaVO.jar">
+		<jar destfile="VendaVO.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/negocio/model/vo/*.class" />
+		</jar>
+	</target>
+
+	<target name="exception" description="VendaException.jar">
+		<jar destfile="VendaException.jar">
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/util/exception/*.class" />
+		</jar>
+	</target>
+
+	<target name="ejb" description="VendaEJB.jar">
+		<jar destfile="VendaEJB.jar">
+			<zipfileset dir="src" prefix="">
+				<include name="META-INF/persistence.xml" />
+			</zipfileset>
+			<zipfileset dir="bin" includes="br/com/exemplo/vendas/negocio/dao/*.class, br/com/exemplo/vendas/negocio/entity/*.class, br/com/exemplo/vendas/negocio/ejb/*.class, br/com/exemplo/vendas/negocio/interfaces/*.class, br/com/exemplo/vendas/negocio/ejb/interfaces/*.class" />
+		</jar>
+	</target>
+	
+	<target name="deploy">
+		<copy file="VendaUtil.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+		<copy file="VendaLog.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+		<copy file="VendaLocator.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+		<copy file="VendaException.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+		<copy file="VendaDTO.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+		<copy file="VendaDelegate.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+		<copy file="VendaVO.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />	
+		<copy file="${build.artifact.ejb}" todir="${jboss.home}/server/${jboss.server.config}/deploy" />
+		
+		<copy file="VendaEJB-client.jar" todir="C:/dev/workspace/cliente-ejb" />
+		<copy file="VendaDTO.jar" todir="C:/dev/workspace/cliente-ejb" />
+		<copy file="VendaVO.jar" todir="C:/dev/workspace/cliente-ejb" />	
+		<copy file="VendaException.jar" todir="C:/dev/workspace/cliente-ejb" />
+	</target>
+
+</project>
