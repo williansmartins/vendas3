@@ -93,11 +93,12 @@ public class BusinessController extends HttpServlet
 			}
 			else
 			{
-				// tratar caso a action venha nula
+				System.out.println("Action nula");
 			}
 		}
 		catch (Throwable _exception)
 		{
+		    	System.out.println("Exception: " + _exception.getMessage());
 			throw new BusinessControllerException( _exception.getMessage( ) ) ;
 		}
 	}

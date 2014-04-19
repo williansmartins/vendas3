@@ -27,20 +27,21 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 	 * 		true: Para sucesso na insercao.
 	 * 		false: Caso ocorra algum problema e nao seja posivel realizar a insercao.
 	 */
-	public boolean inserir(Usuario usuario) {
-		try{
-			//Nao precisa verificar existecia de cliente, pois
-			//todos os dados da tabelas poderam ser repetir, apenas
-			//o login nao, e unico por usuario e PK.
-			em.persist(usuario);
-			return true;
-		}catch(Exception e){
-			if(debugInfo){
-				e.printStackTrace();
-			}
-			return false;
-		}
+    public boolean inserir( Usuario usuario )
+    {
+	try
+	{
+	    em.merge( usuario );
+	    return true;
+	} catch ( Exception e )
+	{
+	    if ( debugInfo )
+	    {
+		e.printStackTrace();
+	    }
+	    return false;
 	}
+    }
 
 	/**
 	 * Metodo reponsavel por alterar um Usuario.java (TBL_USUARIO)

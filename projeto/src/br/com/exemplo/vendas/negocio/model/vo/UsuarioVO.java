@@ -3,7 +3,6 @@ package br.com.exemplo.vendas.negocio.model.vo ;
 import java.io.Serializable;
 import java.util.Date;
 
-import br.com.exemplo.vendas.negocio.entity.Usuario;
 
 public class UsuarioVO implements Serializable {
 	
@@ -78,14 +77,14 @@ public class UsuarioVO implements Serializable {
 		this.ultimoAcesso = ultimoAcesso;
 	}
 	
-	public static UsuarioVO create(Usuario usuario) {
-		UsuarioVO usuarioVO = new UsuarioVO();
-		usuarioVO.setLogin(usuario.getLogin());
-		usuarioVO.setSenha(usuario.getSenha());
-		usuarioVO.setGrupo(usuario.getGrupo());
-		usuarioVO.setPerfil(usuario.getPerfil());
-		usuarioVO.setBloqueado(usuario.getBloqueado());
-		usuarioVO.setUltimoAcesso(usuario.getUltimoAcesso());
-		return usuarioVO;
-	}
+//	public static UsuarioVO create(Usuario usuario) {
+//		UsuarioVO usuarioVO = new UsuarioVO();
+//		usuarioVO.setLogin(usuario.getLogin());
+//		usuarioVO.setSenha(usuario.getSenha());
+//		usuarioVO.setGrupo(usuario.getGrupo());
+//		usuarioVO.setPerfil(usuario.getPerfil());
+//		usuarioVO.setBloqueado(usuario.getBloqueado());
+//		usuarioVO.setUltimoAcesso(usuario.getUltimoAcesso());
+//		return usuarioVO;
+//	}
 }

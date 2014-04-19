@@ -1,19 +1,19 @@
 package br.com.exemplo.vendas.negocio.ejb ;
 
 import java.rmi.RemoteException;
-import java.util.List ;
+import java.util.List;
 
-import javax.ejb.Stateless ;
-import javax.persistence.EntityManager ;
-import javax.persistence.PersistenceContext ;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-import br.com.exemplo.vendas.negocio.dao.DaoFactory ;
-import br.com.exemplo.vendas.negocio.ejb.interfaces.UsuarioLocal ;
-import br.com.exemplo.vendas.negocio.ejb.interfaces.UsuarioRemote ;
-import br.com.exemplo.vendas.negocio.entity.Usuario ;
-import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO ;
-import br.com.exemplo.vendas.util.dto.ServiceDTO ;
-import br.com.exemplo.vendas.util.exception.LayerException ;
+import br.com.exemplo.vendas.negocio.dao.DaoFactory;
+import br.com.exemplo.vendas.negocio.ejb.interfaces.UsuarioLocal;
+import br.com.exemplo.vendas.negocio.ejb.interfaces.UsuarioRemote;
+import br.com.exemplo.vendas.negocio.entity.Usuario;
+import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
+import br.com.exemplo.vendas.util.dto.ServiceDTO;
+import br.com.exemplo.vendas.util.exception.LayerException;
 
 @Stateless
 public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
@@ -82,33 +82,43 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 	}
 
 	public ServiceDTO selecionarTodosUsuarios(ServiceDTO requestDTO) throws LayerException {
-		Usuario usuario = null;
-		List<Usuario> lista = DaoFactory.getUsuarioDAO(em).listar();
-		if((lista != null) && (!lista.isEmpty())) {
-			UsuarioVO[] usuarios = new UsuarioVO[lista.size()];
-			for(int i = 0; i < lista.size(); i++) {
-				usuario = (Usuario) lista.get(i);
-				UsuarioVO usuarioVO = UsuarioVO.create(usuario);
-				usuarios[i] = usuarioVO;
-			}
-			return new ServiceDTO("listaUsuario", usuarios);
-		}else{
-			return new ServiceDTO("listaUsuario", new UsuarioVO[0]);
-		}
+	    ServiceDTO responseDTO = new ServiceDTO();
+
+	    Usuario usuario = null;
+            List<Usuario> lista = DaoFactory.getUsuarioDAO(em).listar();
+            if((lista != null) && (!lista.isEmpty())) {
+            	UsuarioVO[] usuarios = new UsuarioVO[lista.size()];
+            	for(int i = 0; i < lista.size(); i++) {
+            		usuario = (Usuario) lista.get(i);
+			UsuarioVO usuarioVO = new UsuarioVO(usuario.getLogin(), usuario.getSenha(), usuario.getGrupo(), usuario.getPerfil(), usuario.getBloqueado(), usuario.getUltimoAcesso());
+			usuarios[ i ] = usuarioVO ;
+            		usuarios[i] = usuarioVO;
+            	}
+            	return new ServiceDTO("listaUsuario", usuarios);
+            }else{
+            	return new ServiceDTO("listaUsuario", new UsuarioVO[0]);
+            }
 	}
 
-	public ServiceDTO getUsuario(ServiceDTO requestDTO, String login) throws LayerException {
-		try{
-			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(login);
-			if(usuario != null){
-				UsuarioVO usuarioVO = UsuarioVO.create(usuario);
-				return new ServiceDTO("getUsuario", usuarioVO);
-			}else{
-				return new ServiceDTO("getUsuario", null);
-			}
-		}catch(Exception e){
-			e.printStackTrace();
-			return new ServiceDTO("getUsuario", null);
-		}
+	@Override
+	public ServiceDTO getUsuario( ServiceDTO requestDTO, String login )
+		throws LayerException, RemoteException
+	{
+	    return null;
 	}
+
+//	public ServiceDTO getUsuario(ServiceDTO requestDTO, String login) throws LayerException {
+//		try{
+//			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(login);
+//			if(usuario != null){
+//				UsuarioVO usuarioVO = UsuarioVO.create(usuario);
+//				return new ServiceDTO("getUsuario", usuarioVO);
+//			}else{
+//				return new ServiceDTO("getUsuario", null);
+//			}
+//		}catch(Exception e){
+//			e.printStackTrace();
+//			return new ServiceDTO("getUsuario", null);
+//		}
+//	}
 }
