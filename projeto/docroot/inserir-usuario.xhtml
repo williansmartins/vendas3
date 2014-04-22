@@ -17,27 +17,28 @@
 						<div class="tabela"> 
 						    <div class="labels">
 						        <label for="code">Login</label>
-								<h:inputText type="text" class="form-control" value="#{usuario_controller.vo.login}" />
+								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.login}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Senha</label>
-								<h:inputText type="text" class="form-control" value="#{usuario_controller.vo.senha}" />
+								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.senha}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Grupo</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_controller.vo.grupo}" />
+						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.grupo}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Perfil</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_controller.vo.perfil}" />
+						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.perfil}" />
 						    </div>
 						</div>
 					    <br />
-					    <h:commandButton action="#{usuario_controller.salvar}" class="btn btn-primary " value="Salvar" />
+					    <h:commandButton action="#{usuario_mb.salvar}" class="btn btn-primary " value="Salvar" />
+					    <h:commandButton action="#{usuario_mb.teste}" class="btn btn-primary " value="Teste" />
 					    <i class="icon-search icon-white"></i>
 					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
 					    <i class="icon-search icon-white"></i>
-					    <h:commandButton action="#{usuario_controller.apresentarUsuarios}" class="btn btn-primary " value="Listar usuarios" />
+					    <h:commandButton action="#{usuario_mb.apresentarUsuarios}" class="btn btn-primary " value="Listar usuarios" />
 					</h:form>							
 				</div>
  			</ui:define>

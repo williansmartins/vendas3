@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="templates/template.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Venda de Produtos</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<h1 class="centro">Testando o Managed Bean de Usuários</h1>
+				<div class="conteudo">
+					<h:form >
+					    <h:commandButton action="#{teste_mb.inserir}" class="btn btn-primary bt-teste" value="Inserir" />
+					    <br />
+					    <br />
+					    <h:commandButton action="#{teste_mb.atualizar}" class="btn btn-primary bt-teste" value="Atualizar" />
+					    <br />
+					    <br />
+					    <h:commandButton action="#{teste_mb.listar}" class="btn btn-primary bt-teste" value="Listar" />
+					    <br />
+					    <br />
+					    <h:commandButton action="#{teste_mb.remover}" class="btn btn-primary bt-teste" value="Excluir" />
+					</h:form>							
+				</div>
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>
