@@ -1,3 +1,6 @@
+build/${build.artifact}
+/build/${build.artifact}
+/build*
 /target
 /target/*
 /target/classes
