@@ -21,11 +21,27 @@ public class UsuarioMB implements Serializable
 
     private UsuarioVO vo;
     private List<UsuarioVO> lista;
+    Service service;
+    Boolean sucesso;
 
     public UsuarioMB()
     {
 	vo = new UsuarioVO();
 	lista = new ArrayList<>();
+	lista = buscarItens();
+    }
+
+    public List<UsuarioVO> buscarItens( )
+    {
+	service = new Service();
+	try
+	{
+	    lista = service.listarUsuarios();
+	} catch ( LayerException e )
+	{
+	    System.out.println( "Erro: " + this );
+	}
+	return lista;
     }
 
     public void redirecionarIncAlt( )
@@ -45,40 +61,22 @@ public class UsuarioMB implements Serializable
 
     public void inserir( )
     {
-	System.out.println( "Inserindo..." );
-	String login = vo.getLogin();
-	String senha = ( "senha2" );
-	String grupo = ( "grupo2" );
-	String perfil = ( "perfil2" );
-	String bloqueado = ( "bloqueado" );
-	String nome = ( "nome" );
 
-	// UsuarioVO vo = new UsuarioVO( login, senha, grupo, perfil, true, new
-	// Date() );
-	UsuarioVO vo = new UsuarioVO();
-	vo.setLogin( login );
-	vo.setSenha( senha );
-	vo.setGrupo( grupo );
-	vo.setPerfil( perfil );
-	vo.setUltimoAcesso( new Date() );
-
-	Service service = new Service();
-	Boolean sucesso = false;
+	service = new Service();
 	try
 	{
-	    sucesso = service.inserirUsuario( vo );
+	    if ( service.inserirUsuario( vo ) )
+	    {
+		System.out.println( "Sucesso ao inserir" );
+	    } else
+	    {
+		System.out.println( "Erro ao inserir" );
+	    }
 	} catch ( LayerException e )
 	{
 	    System.out.println( "Exceção ao inserir: " + e.getMessage() );
 	}
 
-	if ( sucesso )
-	{
-	    System.out.println( "Sucesso ao inserir" );
-	} else
-	{
-	    System.out.println( "Erro ao inserir" );
-	}
     }
 
     public void remover( )
@@ -87,34 +85,31 @@ public class UsuarioMB implements Serializable
     public void atualizar( )
     {}
 
-    
-    public void teste( ) throws LayerException
+    public void loadLista( ) throws LayerException
     {
-	Service service = new Service( ) ;
-	List<UsuarioVO> lista = service.listarUsuarios( ) ;
-	System.out.println(lista);
+	service = new Service();
+	lista = service.listarUsuarios();
     }
-    
+
     // GETTERS AND SETTERS
     public UsuarioVO getVo( )
     {
-        return vo;
+	return vo;
     }
 
     public void setVo( UsuarioVO vo )
     {
-        this.vo = vo;
+	this.vo = vo;
     }
 
     public List<UsuarioVO> getLista( )
     {
-        return lista;
+	return lista;
     }
 
     public void setLista( List<UsuarioVO> lista )
     {
-        this.lista = lista;
+	this.lista = lista;
     }
 
- 
 }

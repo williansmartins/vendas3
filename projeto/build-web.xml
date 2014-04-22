@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="build-web-2" default="_packaging_generation_">
+<project name="build-web" default="_packaging_generation_">
 
 	<property name="jboss.home" value="C:/dev/servidores/jboss-5.1.0.GA-jdk6/jboss-5.1.0.GA" />
 	<property name="tomcat.web" value="C:/dev/servidores/Tomcat 6.0" />

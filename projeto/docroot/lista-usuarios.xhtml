@@ -15,14 +15,13 @@
 				<div class="conteudo">
 					<h:form id="form" role="form" class="table-responsive">
 						<div id="tabela_wrapper">
-			    			<h:dataTable value="#{usuario_controller.lista}" var="obj"
+						<f:metadata>
+						   <f:event listener="#{usuario_mb.buscarItens}" type="preRenderView"></f:event>
+						</f:metadata>
+			    			<h:dataTable value="#{usuario_mb.lista}" var="obj"
 				    			styleClass="table table-striped tabela"
 				    			headerClass="order-table-header"
 				    			rowClasses="order-table-odd-row,order-table-even-row" >
-				    			<h:column>
-				    				<f:facet name="header">ID</f:facet>
-				    				#{obj.id}
-				    			</h:column>
 				    			<h:column>
 				    				<f:facet name="header">Login</f:facet>
 				    				#{obj.login}
@@ -41,22 +40,20 @@
 				    			</h:column>
 				    			<h:column>
 				    				<f:facet name="header">Ações</f:facet>
-				    				<h:commandButton styleClass="btn btn-success" value="Editar"  action="#{usuario_controller.incAlt}">
-				    					<f:setPropertyActionListener target="#{usuario_controller.vo}" value="#{obj}"></f:setPropertyActionListener>
+				    				<h:commandButton styleClass="btn btn-success" value="Editar"  action="#{usuario_mb.incAlt}">
+				    					<f:setPropertyActionListener target="#{usuario_mb.vo}" value="#{obj}"></f:setPropertyActionListener>
 				    				</h:commandButton>
 				    				 &nbsp;
-				    				<input type="button" class="btn btn-danger" value="Remover" onclick="confirmacao( #{obj.id} )"/>
-									<h:commandButton style="display:none" class="objeto_#{obj.id}" styleClass="btn btn-danger" value="Remover" action="#{cliente_controller.remover}">
-				    					<f:setPropertyActionListener target="#{usuario_controller.vo}" value="#{obj}"></f:setPropertyActionListener>
+				    				<input type="button" class="btn btn-danger" value="Remover" onclick="confirmacao( #{obj.login} )"/>
+									<h:commandButton style="display:none" class="objeto_#{obj.login}" styleClass="btn btn-danger" value="Remover" action="#{usuario_mb.remover}">
+				    					<f:setPropertyActionListener target="#{usuario_mb.vo}" value="#{obj}"></f:setPropertyActionListener>
 				    				</h:commandButton>
 				    			</h:column>
 				 
 				 
 				    		</h:dataTable>
 						</div>	
-	    				<h:commandButton styleClass="btn btn-primary" value="Inserir" action="#{usuario_controller.insertView}" />	
-	    				&nbsp;
-	    				<h:commandButton styleClass="btn btn-primary" value="Meu botão novo que vai fazer uma coisa mágica" action="#{usuario_controller.metodo}" />	
+	    				<h:commandButton styleClass="btn btn-primary" value="Inserir" action="#{usuario_mb.redirecionarIncAlt}" />	
 	    				&nbsp;
 	    				<h:commandButton styleClass="btn btn-primary" value="Início" action="#{geral_controller.home}" />	
 	    				<div id="dialog-confirm" title="Aviso de exclusão" style="display:none">

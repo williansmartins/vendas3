@@ -39,19 +39,21 @@ public class MBTest implements Serializable
 	System.out.println("Inserindo...");
 	try
 	{
+	    vo = gerarVO();
 	    sucesso = service.inserirUsuario( vo );
+	    
+	    if ( sucesso )
+	    {
+		System.out.println( "Sucesso ao inserir" );
+	    } else
+	    {
+		System.out.println( "Erro ao inserir" );
+	    }
 	} catch ( LayerException e )
 	{
 	    System.out.println( "Exceção ao inserir: " + e.getMessage() );
 	}
 
-	if ( sucesso )
-	{
-	    System.out.println( "Sucesso ao inserir" );
-	} else
-	{
-	    System.out.println( "Erro ao inserir" );
-	}
     }
 
     public void remover( )
@@ -60,10 +62,18 @@ public class MBTest implements Serializable
 	service = new Service();
 	try
 	{
-	    service.excluirUsuario( vo );
+	    sucesso = service.excluirUsuario( vo );
 	}catch ( LayerException e )
 	{
 	    System.out.println( "Exceção ao inserir: " + e.getMessage() );
+	}
+	
+	if ( sucesso )
+	{
+	    System.out.println( "Sucesso!" );
+	} else
+	{
+	    System.out.println( "Erro!" );
 	}
     }
     
@@ -74,10 +84,18 @@ public class MBTest implements Serializable
 	service = new Service();
 	try
 	{
-	    service.alterarUsuario( vo );
+	    sucesso = service.alterarUsuario( vo );
 	}catch ( LayerException e )
 	{
 	    System.out.println( "Exceção ao inserir: " + e.getMessage() );
+	}
+	
+	if ( sucesso )
+	{
+	    System.out.println( "Sucesso!" );
+	} else
+	{
+	    System.out.println( "Erro!" );
 	}
     }
     
@@ -87,6 +105,14 @@ public class MBTest implements Serializable
 	service = new Service();
 	List<UsuarioVO> lista = service.listarUsuarios();
 	System.out.println( lista );
+	
+	if ( lista.size() > 0 )
+	{
+	    System.out.println( "Sucesso!" );
+	} else
+	{
+	    System.out.println( "Erro!" );
+	}
     }
     
     private UsuarioVO gerarVO( )
