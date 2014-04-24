@@ -102,7 +102,8 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 
 	public ServiceDTO localizarPorLogin(ServiceDTO requestDTO, String login) throws LayerException {
 		try{
-			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(login);
+		    	UsuarioVO vo = (UsuarioVO) requestDTO.get( "usuarioVO" );
+			Usuario usuario = DaoFactory.getUsuarioDAO(em).localizarPorLogin(vo.getLogin());
 			if(usuario != null){
 				UsuarioVO usuarioVO = create(usuario);
 				return new ServiceDTO("getUsuario", usuarioVO);

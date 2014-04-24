@@ -31,14 +31,15 @@
 						        <label for="code">Perfil</label>
 						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.perfil}" />
 						    </div>
+						    <div class="labels">
+						        <label for="code">Bloqueado</label>
+						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.bloqueado}" />
+						    </div>
 						</div>
 					    <br />
 					    <h:commandButton action="#{usuario_mb.salvar}" class="btn btn-primary " value="Salvar" />
-					    <h:commandButton action="#{usuario_mb.teste}" class="btn btn-primary " value="Teste" />
 					    <i class="icon-search icon-white"></i>
-					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
-					    <i class="icon-search icon-white"></i>
-					    <h:commandButton action="#{usuario_mb.apresentarUsuarios}" class="btn btn-primary " value="Listar usuarios" />
+					    <h:commandButton action="#{usuario_mb.redirecinoarListagem}" class="btn btn-primary " value="Listar usuarios" />
 					</h:form>							
 				</div>
  			</ui:define>

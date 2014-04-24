@@ -78,6 +78,18 @@ public class BusinessDelegate {
 		}
 		return responseDTO ;
 	}
+	
+	public ServiceDTO buscarUsuario(ServiceDTO requestDTO) throws LayerException {
+	    ServiceDTO responseDTO = new ServiceDTO();
+	    try{
+		responseDTO = ((UsuarioInterface)serviceLocator.getService("UsuarioBean/remote")).localizarPorLogin( requestDTO, "");
+	    }catch(RemoteException remoteException){
+		throw SysExceptionFactory.getException(remoteException);
+	    }catch(ServiceLocatorException serviceLocatorException){
+		throw SysExceptionFactory.getException(serviceLocatorException);
+	    }
+	    return responseDTO ;
+	}
 
 	public ServiceDTO inserirQueue(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();

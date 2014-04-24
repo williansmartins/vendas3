@@ -36,6 +36,17 @@ public class Service {
 		return lista;
 	}
 
+	public UsuarioVO buscarUsuario( UsuarioVO vo ) throws LayerException {
+	    ServiceDTO requestDTO = new ServiceDTO();
+	    ServiceDTO responseDTO = new ServiceDTO();
+	    
+	    requestDTO.set( "usuarioVO", vo ) ;
+	    responseDTO = BusinessDelegate.getInstance().buscarUsuario( requestDTO );
+	    UsuarioVO usuario = (UsuarioVO)responseDTO.get("getUsuario");
+
+	    return usuario;
+	}
+
 	public Boolean alterarUsuario( UsuarioVO vo ) throws LayerException {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
