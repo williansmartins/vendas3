@@ -76,7 +76,7 @@ public class BusinessDelegate {
 		}catch(ServiceLocatorException serviceLocatorException){
 			throw SysExceptionFactory.getException(serviceLocatorException);
 		}
-		return responseDTO ;
+		return responseDTO;
 	}
 	
 	public ServiceDTO buscarUsuario(ServiceDTO requestDTO) throws LayerException {
