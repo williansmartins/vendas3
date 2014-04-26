@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="compraDeleteDialogWidget"
+		id="compraDeleteDialogId" height="150" width="500" modal="true"
+		closable="true" draggable="false" resizable="false" hideEffect="explode" 
+		showEffect="fade" header="Cancelar e Excluir Compra">
+		<h:form id="compraDeleteDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+						        Tem certeza de que deseja cancelar e excluir a compra #{compra_controller.vo.numero} ?				
+			</h:panelGrid>
+				<br />
+				<p:commandButton action="#{compra_controller.excluir}" styleClass="btn btn-primary " value="Excluir" 
+					    update=":comprasForm:comprasTable" icon="ui-icon-trash" 
+					    oncomplete="closeDialogIfSucess(xhr, status, args, compraDeleteDialogWidget, 'compraDeleteDialogId')" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{compra_controller.reset}"
+					onclick="compraDeleteDialogWidget.hide();" type="button" />
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="produtoCreateDialogWidget"
+		id="produtoCreateDialogId" height="175" width="300" modal="true"
+		closable="true" draggable="true" resizable="false" hideEffect="blind" showEffect="fade" header="#{produto_controller.vo.descricao}">
+		<h:form id="produtoCreateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+						    	<h:outputText value="Descrição" />
+								<h:inputText styleClass="form-control" value="#{produto_controller.vo.descricao}" />
+						    
+								<h:outputText value="Preço (R$)" />
+						        <h:inputText styleClass="form-control" value="#{produto_controller.vo.preco}" />
+							    
+								<h:outputText value="Estoque" />
+						        <h:inputText styleClass="form-control" value="#{produto_controller.vo.estoque}" />
+				
+				<br />
+			</h:panelGrid>
+			    <p:commandButton action="#{produto_controller.save}" icon="ui-icon-plus" styleClass="btn btn-primary " value="Salvar" 
+					    update=":produtosForm:produtosTable" 
+					    oncomplete="closeDialogIfSucess(xhr, status, args, produtoCreateDialogWidget, 'produtoCreateDialogId')" />
+				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{produto_controller.reset}"
+					onclick="produtoCreateDialogWidget.hide();" type="button" />
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

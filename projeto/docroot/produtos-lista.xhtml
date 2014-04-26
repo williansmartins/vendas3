@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="templates/template.xhtml">
+		<ui:define name="palco">
+			<h:form id="produtosForm">
+					<font style="font-family: sans-serif; font-size: x-large;"><b>	Cadastro de Produtos </b></font>
+	    			<p:dataTable id="produtosTable" value="#{produto_controller.lista}" 
+	    						var="obj" styleClass="table table-striped tabela" headerClass="order-table-header" 
+	    						rowClasses="order-table-odd-row,order-table-even-row" emptyMessage="Sem Registros" >
+				    			<p:column>
+				    				<f:facet name="header">Codigo</f:facet>
+				    				<h:outputText value="#{obj.codigo}" />
+				    			</p:column>
+				    			<p:column>
+				    				<f:facet name="header">Descricao</f:facet>
+				    				<h:outputText value="#{obj.descricao}"/>
+				    			</p:column>
+				    			<p:column>
+				    				<f:facet name="header">Preco</f:facet>
+				    				<h:outputText value="#{obj.preco}"/>
+				    			</p:column>
+				    			<p:column>
+				    				<f:facet name="header">Estoque</f:facet>
+				    				<h:outputText value="#{obj.estoque}"/>
+				    			</p:column>
+ 				    			<!-- <p:column>
+				    				<p:commandButton styleClass="btn btn-success" icon="ui-icon-pencil"  value="Editar"  onclick="produtoUpdateDialogWidget.show();" update=":produtoUpdateDialogForm" >
+				    					<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{obj}" />
+				    				</p:commandButton>
+				    				
+				    				<p:spacer width="10px" />
+				    				
+				    				<p:commandButton styleClass="btn btn-danger" value="Remover" icon="ui-icon-trash" update=":produtoDeleteDialogForm" onclick="produtoDeleteDialogWidget.show();" >
+										<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{produto}" />
+									</p:commandButton>
+
+									<p:commandButton value="#{bundle.detail}" icon="ui-icon-contact" onclick="produtoDetailDialogWidget.show();" update=":produtoDetailDialogForm" styleClass="btn btn-danger" >
+										<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{produto}" />
+									</p:commandButton> 
+
+				    			</p:column> -->
+				 
+				 
+				    		</p:dataTable>
+							<p:commandButton value="Inserir" icon="ui-icon-plus" update=":produtoCreateDialogForm"
+								actionListener="#{produto_controller.reset}" onclick="produtoCreateDialogWidget.show();"  style="float: left;" />
+					
+						
+	    				&nbsp;
+	    				 <h:commandButton styleClass="btn btn-primary" value="Início" action="#{geral_controller.home}" />
+					</h:form>							
+				
+			<ui:include src="/produtos-inserir.xhtml" />
+			<ui:include src="/produtos-detalhes.xhtml" />
+			<ui:include src="/produtos-excluir.xhtml" />
+			<ui:include src="/produtos-alterar.xhtml" />
+ 			</ui:define>
+ 			<!-- <ui:define name="rodape" />  -->
+    	</ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="compraUpdateDialogWidget"
+		id="compraUpdateDialogId" height="175" width="250" modal="true"
+		closable="true" draggable="true" resizable="false" hideEffect="blind" 
+		showEffect="fade" header="Atualizar Compra #{compra_controller.vo.numero}">
+		<h:form id="compraUpdateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+						    	<h:outputText value="Data" />
+								<p:calendar  styleClass="form-control" value="#{compra_controller.vo.data}" pattern="dd/MM/yyyy" />
+
+						    	<h:outputText value="Situação" />
+								<h:inputText styleClass="form-control" value="#{compra_controller.vo.situacao}" />
+						    
+								<h:outputText value="Valor (R$)" />
+						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.valor}" />
+							    
+								<h:outputText value="Reserva" />
+						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.reserva.codigo}" />
+							    
+								<h:outputText value="Cliente" />
+						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.cliente.codigo}" />
+				
+				<br />
+					    <p:commandButton action="#{compra_controller.save}" styleClass="btn btn-primary " value="Salvar" 
+					    update=":comprasForm:comprasTable" 
+					    oncomplete="closeDialogIfSucess(xhr, status, args, compraUpdateDialogWidget, 'compraUpdateDialogId')" />
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{compra_controller.reset}"
+					onclick="compraUpdateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>
