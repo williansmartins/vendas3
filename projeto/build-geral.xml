@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="build-ejb" default="_packaging_generation_">
+<project name="build-geral" default="_packaging_generation_">
 
 	<property name="jboss.home" value="C:/dev/servidores/jboss-5.1.0.GA-jdk6/jboss-5.1.0.GA" />
+	<property name="tomcat.web" value="C:/dev/servidores/Tomcat 6.0" />
+	<property name="build.artifact.war" value="VendaWeb.war" />
 	<property name="jboss.server.config" value="default" />
 	<property name="build.artifact.ejb" value="VendaEJB.jar" />
 
-	<target name="_packaging_generation_" depends="delete, client, delegate, dto, vo, locator, exception, log, util, ejb, deploy" />
+	<target name="_packaging_generation_" depends="delete, client, delegate, dto, vo, locator, exception, log, util, ejb, deploy, web" />
 
 	<target name="delete">
 		<delete dir="${jboss.home}/server/default/tmp" />		
@@ -103,4 +105,39 @@
 		<copy file="VendaException.jar" todir="C:/dev/workspace/cliente-ejb" />
 	</target>
 
+	<target name="web" description="VendaWeb.war">
+		<jar destfile="VendaWeb.war">
+			<zipfileset dir="WebContent/WEB-INF" prefix="WEB-INF">
+				<include name="web.xml" />
+			</zipfileset>
+			<zipfileset dir="WebContent/META-INF" prefix="META-INF">
+				<include name="context.xml" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaEJB-client.jar" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaVO.jar" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaDTO.jar" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaLocator.jar" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaException.jar" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaLog.jar" />
+			</zipfileset>
+			<zipfileset dir="." prefix="WEB-INF/lib">
+				<include name="VendaUtil.jar" />
+			</zipfileset>
+			<zipfileset dir="WebContent/WEB-INF/lib" prefix="WEB-INF/lib" includes="*.jar" />
+			<zipfileset dir="bin" prefix="WEB-INF/classes" includes="br/com/exemplo/vendas/apresentacao/web/*.class, br/com/exemplo/vendas/apresentacao/web/mb/*.class, br/com/exemplo/vendas/apresentacao/delegate/*.class, br/com/exemplo/vendas/apresentacao/service/*.class, br/com/exemplo/vendas/apresentacao/actions/*.class" />
+			<zipfileset dir="docroot" />
+		</jar>
+		<copy file="${build.artifact.war}" todir="${tomcat.web}/webapps" />
+	</target>
 </project>
