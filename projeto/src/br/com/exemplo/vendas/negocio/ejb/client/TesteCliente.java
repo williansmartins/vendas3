@@ -28,7 +28,7 @@ public class TesteCliente {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		ClienteVO vo = new ClienteVO("alberto", "alberto123", "Fiap", "Legal", true, new Date(), new Long(1), "Alberto Cerqueira", "Diadema", 12345678, "Sei la");
+		ClienteVO vo = new ClienteVO("alberto1", "alberto123", "Fiap", "Legal", true, new Date(), new Long(1), "Alberto Cerqueira", "Diadema", 12345678, "Sei la");
 		requestDTO.set("clienteVO", vo);
 		responseDTO = remoteCliente.inserirCliente(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
