@@ -28,7 +28,7 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 		ReservaVO vo = (ReservaVO) requestDTO.get("reservaVO");
 		if(vo != null) {
 			try{
-				Cliente cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(vo.getLoginCliente());
+				Cliente cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(vo.getCliente().getLogin());
 				Reserva reserva = Reserva.create(vo);
 				reserva.setCliente(cliente);
 				if(DaoFactory.getReservaDAO(em).inserir(reserva)) {
@@ -91,8 +91,7 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 			for(int i = 0; i < lista.size(); i++) {
 				Reserva reserva = (Reserva) lista.get(i);
 				ReservaVO reservaVO = ReservaVO.create(reserva);
-				reservaVO.setClienteVO(ClienteVO.create(reserva.getCliente()));
-				reservaVO.setLoginCliente(reserva.getCliente().getLogin());
+				reservaVO.setCliente(ClienteVO.create(reserva.getCliente()));
 				reservaVOs[i] = reservaVO;
 			}
 			responseDTO.set("listaReserva", reservaVOs);
@@ -112,30 +111,11 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 			reservaVO.setAtendente(reserva.getAtendente());
 			reservaVO.setSituacao(reserva.getSituacao());
 			reservaVO.setValor(reserva.getValor());
-			reservaVO.setClienteVO(ClienteVO.create(reserva.getCliente()));
-			reservaVO.setLoginCliente(reserva.getCliente().getLogin());
+			reservaVO.setCliente(ClienteVO.create(reserva.getCliente()));
 			responseDTO.set("getReserva", reservaVO);
 		}catch(Exception e){
 			responseDTO.set("getReserva", null);
 		}
 		return responseDTO;
 	}
-/*
-	public ServiceDTO alterarReserva(ServiceDTO requestDTO) throws LayerException {
-		ServiceDTO responseDTO = new ServiceDTO();
-		ReservaVO vo = (ReservaVO) requestDTO.get("produtoVO");
-		if (vo != null) {
-			Reserva produto = new Reserva();
-			produto.setCodigo(vo.getCodigo());
-			produto.setDescricao(vo.getDescricao());
-			produto.setPreco(vo.getPreco());
-			produto.setEstoque(vo.getEstoque());
-			if(DaoFactory.getReservaDAO(em).alterar(produto)) {
-				responseDTO.set("resposta", new Boolean(true));
-			}else{
-				responseDTO.set("resposta", new Boolean(false));
-			}
-		}
-		return responseDTO;
-	}*/
 }

@@ -1,12 +1,14 @@
 package br.com.exemplo.vendas.apresentacao.service ;
 
-import java.util.Arrays ;
-import java.util.List ;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 
-import br.com.exemplo.vendas.apresentacao.delegate.BusinessDelegate ;
-import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO ;
-import br.com.exemplo.vendas.util.dto.ServiceDTO ;
-import br.com.exemplo.vendas.util.exception.LayerException ;
+import br.com.exemplo.vendas.apresentacao.delegate.BusinessDelegate;
+import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
+import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
+import br.com.exemplo.vendas.util.dto.ServiceDTO;
+import br.com.exemplo.vendas.util.exception.LayerException;
 
 public class Service {
 	
@@ -63,5 +65,14 @@ public class Service {
 		responseDTO = BusinessDelegate.getInstance().excluirUsuario(requestDTO);
 		Boolean sucesso = (Boolean)responseDTO.get("resposta");
 		return sucesso;
+	}
+	
+	//Metodo para webservices.
+	public CompraVO[] localizarComprasPorValorAbaixoDe500() throws LayerException {
+		ServiceDTO requestDTO = new ServiceDTO();
+		ServiceDTO responseDTO = new ServiceDTO();
+		requestDTO.set("comprasPorValorAbaixoDe500", new BigDecimal(500));
+		responseDTO = BusinessDelegate.getInstance().localizarComprasPorValorAbaixoDe500(requestDTO);
+		return (CompraVO[]) responseDTO.get("compraVOs");
 	}
 }

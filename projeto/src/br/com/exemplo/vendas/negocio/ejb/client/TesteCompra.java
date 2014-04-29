@@ -97,8 +97,8 @@ public class TesteCompra {
 		CompraInterface remoteCompra = (CompraInterface) ctx.lookup("CompraBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
-		
-		responseDTO = remoteCompra.localizarComprasPorValorAbaixoDe(requestDTO, new BigDecimal(500));
+		requestDTO.set("comprasPorValorAbaixoDe500", new BigDecimal(500));
+		responseDTO = remoteCompra.localizarComprasPorValorAbaixoDe(requestDTO);
 		CompraVO[] compraVOs = (CompraVO[]) responseDTO.get("comprasPorValorAbaixoDe");
 		if(compraVOs != null){
 			for(int i = 0; i < compraVOs.length; i++){

@@ -19,7 +19,7 @@ public class LocalizarClientes {
 
 	@WebMethod
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ClienteVO[] localizarComprasPorValorAbaixoDe500() throws NamingException, RemoteException, LayerException {
+	public ClienteVO[] localizarClientesComComprasRealizadas() throws NamingException, RemoteException, LayerException {
 		Hashtable prop = new Hashtable();
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");

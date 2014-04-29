@@ -30,8 +30,8 @@ public class CompraBean implements CompraRemote, CompraLocal {
 		CompraVO vo = (CompraVO) requestDTO.get("compraVO");
 		if(vo != null) {
 			try{
-				Cliente cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(vo.getLoginCliente());
-				Reserva reserva = DaoFactory.getReservaDAO(em).localizarPorCodigo(vo.getCodigoReserva());
+				Cliente cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(vo.getCliente().getLogin());
+				Reserva reserva = DaoFactory.getReservaDAO(em).localizarPorCodigo(vo.getReserva().getCodigo());
 				Compra compra = Compra.create(vo);
 				compra.setCliente(cliente);
 				compra.setReserva(reserva);
@@ -120,12 +120,12 @@ public class CompraBean implements CompraRemote, CompraLocal {
 			for(int i = 0; i < lista.size(); i++){
 				Compra compra = (Compra) lista.get(i);
 				CompraVO compraVO = CompraVO.create(compra);
-				compraVO.setCodigoReserva(compra.getReserva().getCodigo());
 				ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
-				compraVO.setReservaVO(reservaVO);
-				compraVO.setLoginCliente(compra.getCliente().getLogin());
+				reservaVO.setCodigo(compra.getReserva().getCodigo());
+				compraVO.setReserva(reservaVO);
 				ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
-				compraVO.setClienteVO(clienteVO);
+				clienteVO.setLogin(compra.getCliente().getLogin());
+				compraVO.setCliente(clienteVO);
 				compras[i] = compraVO;
 			}
 			responseDTO.set("listaCompra", compras);
@@ -140,12 +140,12 @@ public class CompraBean implements CompraRemote, CompraLocal {
 		try{
 			Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(numero);
 			CompraVO compraVO = CompraVO.create(compra);
-			compraVO.setCodigoReserva(compra.getReserva().getCodigo());
 			ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
-			compraVO.setReservaVO(reservaVO);
-			compraVO.setLoginCliente(compra.getCliente().getLogin());
+			reservaVO.setCodigo(compra.getReserva().getCodigo());
+			compraVO.setReserva(reservaVO);
 			ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
-			compraVO.setClienteVO(clienteVO);
+			clienteVO.setLogin(compra.getCliente().getLogin());
+			compraVO.setCliente(clienteVO);
 			responseDTO.set("getCompra", compraVO);
 		}catch(Exception e){
 			responseDTO.set("getCompra", null);
@@ -153,7 +153,8 @@ public class CompraBean implements CompraRemote, CompraLocal {
 		return responseDTO;
 	}
 	
-	public ServiceDTO localizarComprasPorValorAbaixoDe(ServiceDTO requestDTO, BigDecimal valor) throws LayerException, RemoteException {
+	public ServiceDTO localizarComprasPorValorAbaixoDe(ServiceDTO requestDTO) throws LayerException, RemoteException {
+		BigDecimal valor = (BigDecimal) requestDTO.get("comprasPorValorAbaixoDe500");
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
 			List<Compra> compras = DaoFactory.getCompraDAO(em).localizarPorValorAbaixoDe(valor);
@@ -162,20 +163,20 @@ public class CompraBean implements CompraRemote, CompraLocal {
 				for(int i = 0; i < compras.size(); i++) {
 					Compra compra = (Compra) compras.get(i);
 					CompraVO compraVO = CompraVO.create(compra);
-					compraVO.setCodigoReserva(compra.getReserva().getCodigo());
 					ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
-					compraVO.setReservaVO(reservaVO);
-					compraVO.setLoginCliente(compra.getCliente().getLogin());
+					reservaVO.setCodigo(compra.getReserva().getCodigo());
+					compraVO.setReserva(reservaVO);
 					ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
-					compraVO.setClienteVO(clienteVO);
+					clienteVO.setLogin(compra.getCliente().getLogin());
+					compraVO.setCliente(clienteVO);
 					compraVOs[i] = compraVO;
 				}
-				responseDTO.set("comprasPorValorAbaixoDe", compraVOs);
+				responseDTO.set("compraVOs", compraVOs);
 			}else{
-				responseDTO.set("comprasPorValorAbaixoDe", new CompraVO[0]);
+				responseDTO.set("compraVOs", new CompraVO[0]);
 			}
 		}catch(Exception e){
-			responseDTO.set("comprasPorValorAbaixoDe", new CompraVO[0]);
+			responseDTO.set("compraVOs", new CompraVO[0]);
 		}
 		return responseDTO;
 	}

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package br.com.exemplo.vendas.apresentacao.delegate;
 
 import java.util.ArrayList;
@@ -13,10 +10,6 @@ import br.com.exemplo.vendas.negocio.model.vo.ClienteVO;
 import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
 import br.com.exemplo.vendas.negocio.model.vo.ReservaVO;
 
-/**
- * @author Alex
- *
- */
 public class GerenciadorCompra {
 
 	private Map<Long, Compra> compras;
@@ -124,5 +117,4 @@ public class GerenciadorCompra {
 	private List<Compra> listar() {
 		return new ArrayList<Compra>(getCompras().values());
 	}
-	
 }
