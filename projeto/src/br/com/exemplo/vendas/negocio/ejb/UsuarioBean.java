@@ -22,7 +22,8 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 	EntityManager em ;
 
 	public ServiceDTO inserirUsuario(ServiceDTO requestDTO) throws LayerException {
-		UsuarioVO vo = (UsuarioVO) requestDTO.get("usuarioVO");
+		System.out.println("opa");
+	    UsuarioVO vo = (UsuarioVO) requestDTO.get("usuarioVO");
 		if(vo != null) {
 			Usuario usuario = Usuario.create(vo);
 			if(DaoFactory.getUsuarioDAO(em).inserir(usuario)){
