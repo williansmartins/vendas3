@@ -2,7 +2,9 @@ package br.com.exemplo.vendas.apresentacao.delegate ;
 
 import java.rmi.RemoteException;
 
+import br.com.exemplo.vendas.negocio.interfaces.ClienteInterface;
 import br.com.exemplo.vendas.negocio.interfaces.CompraInterface;
+import br.com.exemplo.vendas.negocio.interfaces.ProdutoInterface;
 import br.com.exemplo.vendas.negocio.interfaces.RecebeRequisicaoInterface;
 import br.com.exemplo.vendas.negocio.interfaces.UsuarioInterface;
 import br.com.exemplo.vendas.util.dto.ServiceDTO;
@@ -108,6 +110,30 @@ public class BusinessDelegate {
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
 			responseDTO = ((CompraInterface)serviceLocator.getService("CompraBean/remote")).localizarComprasPorValorAbaixoDe(requestDTO);
+		}catch(RemoteException remoteException){
+			throw SysExceptionFactory.getException(remoteException);
+		}catch(ServiceLocatorException serviceLocatorException){
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO localizarClientesComComprasRealizadas(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			responseDTO = ((ClienteInterface)serviceLocator.getService("ClienteBean/remote")).localizarClientesPorCompra(requestDTO);
+		}catch(RemoteException remoteException){
+			throw SysExceptionFactory.getException(remoteException);
+		}catch(ServiceLocatorException serviceLocatorException){
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			responseDTO = ((ProdutoInterface)serviceLocator.getService("ProdutoBean/remote")).localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(requestDTO);
 		}catch(RemoteException remoteException){
 			throw SysExceptionFactory.getException(remoteException);
 		}catch(ServiceLocatorException serviceLocatorException){

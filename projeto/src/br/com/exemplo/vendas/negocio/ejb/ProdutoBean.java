@@ -121,7 +121,9 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 	}
 
 	@Override
-	public ServiceDTO localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(ServiceDTO requestDTO, BigDecimal preco, Integer quantidadeEstoque) throws LayerException, RemoteException {
+	public ServiceDTO localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(ServiceDTO requestDTO) throws LayerException, RemoteException {
+		BigDecimal preco = (BigDecimal) requestDTO.get("preco");
+		Integer quantidadeEstoque = (Integer) requestDTO.get("quantidadeEstoque");
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
 			List<Produto> produtos = DaoFactory.getProdutoDAO(em).localizarPorQuantidadeAcimaDeEPrecoAbaixoDe(preco, quantidadeEstoque);

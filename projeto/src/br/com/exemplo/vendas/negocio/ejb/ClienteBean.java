@@ -120,12 +120,12 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 					ClienteVO clienteVO = ClienteVO.create(cliente);
 					clienteVOs[i] = clienteVO;
 				}
-				return new ServiceDTO("resposta", clienteVOs);
+				return new ServiceDTO("clientesPorCompraRealizadas", clienteVOs);
 			}else{
-				return new ServiceDTO("resposta", new ClienteVO[0]);
+				return new ServiceDTO("clientesPorCompraRealizadas", new ClienteVO[0]);
 			}
 		}catch(Exception e){
-			return new ServiceDTO("resposta", new ClienteVO[0]);
+			return new ServiceDTO("clientesPorCompraRealizadas", new ClienteVO[0]);
 		}
 	}
 }

@@ -30,7 +30,7 @@ public class LocalizarClientes {
 
 		requestDTO.set("loginCliente", "alberto");
 		responseDTO = remoteCliente.localizarClientesPorCompra(requestDTO);
-		ClienteVO[] clienteVOs = (ClienteVO[]) responseDTO.get("clientesPorCompra");
+		ClienteVO[] clienteVOs = (ClienteVO[]) responseDTO.get("clientesPorCompraRealizadas");
 		if(clienteVOs != null){
 			for(int i = 0; i < clienteVOs.length; i++){
 				ClienteVO clienteVO = (ClienteVO) clienteVOs[i];
