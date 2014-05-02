@@ -35,6 +35,7 @@ public class UsuarioDAO extends GenericDAO<Usuario> {
 	    return true;
 	} catch ( Exception e )
 	{
+	    System.out.println("Erro ao inserir: " + e.getMessage());
 	    if ( debugInfo )
 	    {
 		e.printStackTrace();

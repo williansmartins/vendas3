@@ -28,7 +28,7 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 			-->
         </properties> 
     </persistence-unit>
-	<persistence-unit name="VendasJunit" transaction-type="RESOURCE_LOCAL">
+	<persistence-unit name="VendasJunit">
 		<properties>
 		    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 		    <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" /> <!-- driver do banco que ira usar -->
@@ -45,5 +45,5 @@ http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 			<property name="hibernate.c3p0.max_size" value="20" /> 
 
 		</properties>
-	</persistence-unit>
+	</persistence-unit>    
 </persistence>

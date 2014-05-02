@@ -23,7 +23,7 @@ public class UsuarioMB implements Serializable
     private List<UsuarioVO> lista;
     Service service;
     Boolean sucesso;
-    Boolean editando;
+    boolean editando = false;
 
     public UsuarioMB()
     {
@@ -50,6 +50,7 @@ public class UsuarioMB implements Serializable
     public void redirecionarIncAlt( )
     {
 	vo = new UsuarioVO();
+	vo.setUltimoAcesso( new Date() );
 	editando = false;
 	new Redirecionador().redirecionar( "inserir-usuario.xhtml" );
     }
