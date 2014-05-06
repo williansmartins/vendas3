@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from LocalizarProdutosService WSDL service -->
+
+  <service name="LocalizarProdutos" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webservices.client.ejb.negocio.vendas.exemplo.com.br"/>
+      <parameter name="wsdlServiceElement" value="LocalizarProdutosService"/>
+      <parameter name="schemaQualified" value="http://xml.apache.org/xml-soap,http://webservices.client.ejb.negocio.vendas.exemplo.com.br,http://exception.util.vendas.exemplo.com.br,http://vo.model.negocio.vendas.exemplo.com.br"/>
+      <parameter name="wsdlServicePort" value="LocalizarProdutos"/>
+      <parameter name="className" value="br.com.exemplo.vendas.negocio.ejb.client.webservices.LocalizarProdutos"/>
+      <parameter name="wsdlPortType" value="LocalizarProdutos"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:retNS="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:rtns="http://vo.model.negocio.vendas.exemplo.com.br" name="localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000" qname="operNS:localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000" returnQName="retNS:localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000Return" returnType="rtns:ProdutoVO" soapAction="">
+        <fault xmlns:fns="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:tns="http://exception.util.vendas.exemplo.com.br" name="LayerException" qname="fns:fault" class="br.com.exemplo.vendas.util.exception.LayerException" type="tns:LayerException"/>
+      </operation>
+      <parameter name="allowedMethods" value="localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000"/>
+
+      <typeMapping xmlns:ns="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" qname="ns:&gt;localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000" type="java:br.com.exemplo.vendas.negocio.ejb.client.webservices.LocalizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://vo.model.negocio.vendas.exemplo.com.br" qname="ns:ProdutoVO" type="java:br.com.exemplo.vendas.negocio.model.vo.ProdutoVO" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:cmp-ns="http://vo.model.negocio.vendas.exemplo.com.br" qname="ns:&gt;localizarProdutosPorQuantidadeAcimaDe2UnidadesEPrecoAbaixoDe1000Response" type="java:br.com.exemplo.vendas.negocio.model.vo.ProdutoVO[]" innerType="cmp-ns:ProdutoVO" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://exception.util.vendas.exemplo.com.br" qname="ns:MsgExceptionList" type="java:br.com.exemplo.vendas.util.exception.MsgExceptionList" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+      <arrayMapping xmlns:ns="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_anyType" type="java:java.lang.Object[]" innerType="cmp-ns:anyType" encodingStyle=""/>
+      <typeMapping xmlns:ns="http://exception.util.vendas.exemplo.com.br" qname="ns:LayerException" type="java:br.com.exemplo.vendas.util.exception.LayerException" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
