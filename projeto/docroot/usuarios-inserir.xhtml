@@ -9,28 +9,24 @@
 <h:body>
 	<p:dialog widgetVar="usuarioCreateDialogWidget"
 		id="usuarioCreateDialogId" height="175" width="300" modal="true"
-		closable="true" draggable="true" resizable="false" hideEffect="blind" showEffect="fade" header="#{usuario_mb.vo.login}">
+		closable="true" draggable="true" resizable="false" hideEffect="blind" showEffect="fade" header="#{usuario_controller.vo.login}">
 		<h:form id="usuarioCreateDialogForm" prependId="false">
 			<h:panelGrid columns="2">
 						    <div class="labels">
 						        <label for="code">Login</label>
-								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.login}" />
+								<h:inputText type="text" class="form-control" value="#{usuario_controller.vo.login}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Senha</label>
-								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.senha}" />
-						    </div>
-						    <div class="labels">
-						        <label for="code">Grupo</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.grupo}" />
+								<h:inputText type="text" class="form-control" value="#{usuario_controller.vo.senha}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Perfil</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.perfil}" />
+						        <h:inputText type="text" class="form-control" value="#{usuario_controller.vo.perfil}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Bloqueado</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.bloqueado}" />
+						        <h:inputText type="text" class="form-control" value="#{usuario_controller.vo.bloqueado}" />
 						    </div>
 				
 				<br />

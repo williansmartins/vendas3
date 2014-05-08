@@ -14,19 +14,22 @@
 		<h:form id="compraUpdateDialogForm" prependId="false">
 			<h:panelGrid columns="2">
 						    	<h:outputText value="Data" />
-								<p:calendar  styleClass="form-control" value="#{compra_controller.vo.data}" pattern="dd/MM/yyyy" />
+								<p:calendar  value="#{compra_controller.vo.data}" pattern="dd/MM/yyyy" />
 
 						    	<h:outputText value="Situação" />
-								<h:inputText styleClass="form-control" value="#{compra_controller.vo.situacao}" />
+								<p:selectOneMenu  value="#{compra_controller.vo.situacao}" editable="true" >
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+            						<f:selectItems value="#{compra_controller.situacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}"/>
+								</p:selectOneMenu>
 						    
 								<h:outputText value="Valor (R$)" />
 						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.valor}" />
 							    
-								<h:outputText value="Reserva" />
-						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.reserva.codigo}" />
-							    
-								<h:outputText value="Cliente" />
-						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.cliente.codigo}" />
+								<h:outputText value="Usuário" />
+						        <p:selectOneMenu   value="#{compra_controller.vo.cliente}" editable="true" >
+									<f:selectItem itemLabel="Selecione" itemValue="" />
+            						<f:selectItems value="#{compra_controller.usuarios}" var="usuario" itemLabel="#{usuario.login}" itemValue="#{usuario}"/>
+								</p:selectOneMenu>
 				
 				<br />
 					    <p:commandButton action="#{compra_controller.save}" styleClass="btn btn-primary " value="Salvar" 

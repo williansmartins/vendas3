@@ -8,30 +8,31 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<p:dialog widgetVar="compraCreateDialogWidget"
-		id="compraCreateDialogId" height="175" width="300" modal="true"
+		id="compraCreateDialogId" height="275" width="425" modal="true"
 		closable="true" draggable="true" resizable="false" hideEffect="blind" showEffect="fade" header="Cadastro de Compra">
 		<h:form id="compraCreateDialogForm" prependId="false">
 			<h:panelGrid columns="2">
 						    	<h:outputText value="Data" />
-								<p:calendar  value="#{compra_controller.vo.data}" pattern="dd/MM/yyyy" />
+								<p:calendar id="insData" value="#{compra_controller.vo.data}" pattern="dd/MM/yyyy" />
 
 						    	<h:outputText value="Situação" />
-								<p:selectOneMenu  value="#{compra_controller.vo.situacao}" editable="true" >
-									<f:selectItem itemLabel="Selecione" itemValue="" />
+								<p:selectOneRadio  id="insSituacao" value="#{compra_controller.vo.situacao}">
             						<f:selectItems value="#{compra_controller.situacoes}" var="situacao" itemLabel="#{situacao.descricao}" itemValue="#{situacao}"/>
-								</p:selectOneMenu>
+								</p:selectOneRadio>
 						    
 								<h:outputText value="Valor (R$)" />
-						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.valor}" />
+						        <h:inputText id="insValor" styleClass="form-control" value="#{compra_controller.vo.valor}" />
 							    
-								<h:outputText value="Cliente" />
-						        <h:inputText styleClass="form-control" value="#{compra_controller.vo.cliente}" />
+								<h:outputText value="Usuário" />
+						        <p:selectOneListbox  id="insUsuario" styleClass="form-control"  value="#{compra_controller.vo.cliente}">
+            						<f:selectItems value="#{compra_controller.usuarios}" var="usuario" itemLabel="#{usuario.login}" itemValue="#{usuario}"/>
+								</p:selectOneListbox>
 				
 				<br />
 			</h:panelGrid>
 			    <p:commandButton action="#{compra_controller.save}" icon="ui-icon-plus" styleClass="btn btn-primary " value="Salvar" 
 					    update=":comprasForm:comprasTable" 
-					    oncomplete="closeDialogIfSucess(xhr, status, args, compraCreateDialogWidget, 'compraCreateDialogId')" />
+					    oncomplete="compraCreateDialogWidget.hide()" />
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{compra_controller.reset}"
 					onclick="compraCreateDialogWidget.hide();" type="button" />
 		</h:form>
