@@ -105,7 +105,6 @@ public class Cliente extends Usuario {
 		Cliente cliente = new Cliente();
 		cliente.setLogin(clienteVO.getLogin());
 		cliente.setSenha(clienteVO.getSenha());
-		cliente.setGrupo(clienteVO.getGrupo());
 		cliente.setPerfil(clienteVO.getPerfil());
 		cliente.setBloqueado(clienteVO.getBloqueado());
 		cliente.setUltimoAcesso(clienteVO.getUltimoAcesso());
@@ -115,5 +114,19 @@ public class Cliente extends Usuario {
 		cliente.setTelefone(clienteVO.getTelefone());
 		cliente.setSituacao(clienteVO.getSituacao());
 		return cliente;
+	}
+	public static ClienteVO create(Cliente cliente) {
+		ClienteVO clienteVO = new ClienteVO();
+		clienteVO.setLogin(cliente.getLogin());
+		clienteVO.setSenha(cliente.getSenha());
+		clienteVO.setPerfil(cliente.getPerfil());
+		clienteVO.setBloqueado(cliente.getBloqueado());
+		clienteVO.setUltimoAcesso(cliente.getUltimoAcesso());
+		clienteVO.setCodigo(cliente.getCodigo());
+		clienteVO.setNome(cliente.getNome());
+		clienteVO.setEndereco(cliente.getEndereco());
+		clienteVO.setTelefone(cliente.getTelefone());
+		clienteVO.setSituacao(cliente.getSituacao());
+		return clienteVO;
 	}
 }
