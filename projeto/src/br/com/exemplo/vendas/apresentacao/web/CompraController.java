@@ -2,82 +2,89 @@ package br.com.exemplo.vendas.apresentacao.web;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.exemplo.vendas.apresentacao.delegate.BusinessDelegate;
+import br.com.exemplo.vendas.negocio.model.vo.ClienteVO;
 import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
-import br.com.exemplo.vendas.util.Redirecionador;
-import br.com.exemplo.vendas.util.dto.ServiceDTO;
+import br.com.exemplo.vendas.negocio.model.vo.ProdutoVO;
+import br.com.exemplo.vendas.negocio.model.vo.Situacao;
+import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
 import br.com.exemplo.vendas.util.exception.LayerException;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "compra_controller")
 @SessionScoped
-public class CompraController implements Serializable {
+public class CompraController extends AbstractController
+									implements Serializable {
 
 	private CompraVO vo;
 	private List<CompraVO> lista;
-
-	public CompraController() throws LayerException {
+	private List<UsuarioVO> usuarios;
+	private List<ProdutoVO> produtos;
+	private List<Situacao> situacoes;
+	
+	public CompraController() {
 		vo = new CompraVO();
 		System.out.println("Controller do Compra");
 	}
 
-	public void insertView() throws Exception {
-		new Redirecionador().redirecionar("compra-inserir.xhtml");
+	public void insertView() {
+		irPara("compra-inserir.xhtml");
 	}
 
-	public String save() throws Exception {
+	public void save() {
 		System.out.println("Salvando");
-		/*Hashtable prop = new Hashtable();
-		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY,
-				"org.jnp.interfaces.NamingContextFactory");
-		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
-
-		Context ctx = new InitialContext(prop);
-
-		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx
-				.lookup("UsuarioBean/remote");
-
-		ServiceLocator serviceLocator = ServiceLocatorFactory
-				.getServiceLocator("serviceLocator");*/
-		ServiceDTO requestDTO = new ServiceDTO();
-		ServiceDTO responseDTO = new ServiceDTO();
-
-		requestDTO.set("compraVO", vo);
-		
-		BusinessDelegate bd = BusinessDelegate.getInstance();
-		responseDTO = bd.inserirCompra(requestDTO);
-		//responseDTO = remoteUsuario.inserirUsuario(requestDTO);
-		Boolean sucesso = (Boolean) responseDTO.get("resposta");
-
-		vo = new CompraVO();
-		System.out.println("Inseriu? " + sucesso);
-		return listAll();
+		try{
+			Boolean sucesso = getServico().inserirCompra(vo); 
+			if(sucesso){
+				vo = new CompraVO();
+				System.out.println("Inseriu? " + sucesso);
+				closeDialog();
+				displayInfoMessageToUser("Sucesso!");
+				listAll();
+			} else {
+				keepDialogOpen();
+				displayErrorMessageToUser("Ops, we could not complete the current operation. Try again later");
+			}
+			
+		}catch (Exception e){
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, we could not complete the current operation. Try again later.\n Detalhes do Erro: "+e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
-	public String listAll() throws LayerException {
+	public void listAll() {
 		vo = new CompraVO();
 		lista = getLista();
-		//new Redirecionador().redirecionar("produtos-lista.xhtml");
-		return "";
+		irPara("produtos-lista.xhtml");
 	}
 
-	public String remove() throws LayerException {
-		// dao.delete( entity.getId() );
-		System.out.println("removendo");
-		return listAll();
+	public void remove(){
+		try {
+			System.out.println("removendo");
+			getServico().excluirCompra(vo);
+			listAll();
+		} catch (LayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// GETTERS AND SETTERS
 
-	public List<CompraVO> getLista() throws LayerException {
-		lista = new ArrayList<CompraVO>();
-		BusinessDelegate bd = BusinessDelegate.getInstance();
-		lista = (List<CompraVO>) bd.selectionarTodasCompras(null).get("listaCompra");
+	public List<CompraVO> getLista(){
+		try {
+			lista = new ArrayList<CompraVO>();
+			lista = (List<CompraVO>) getServico().listarCompras();
+		} catch (LayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return lista;
 	}
 
@@ -93,6 +100,63 @@ public class CompraController implements Serializable {
 		this.lista = lista;
 	}
 	
+	/**
+	 * @return the clientes
+	 */
+	public final List<UsuarioVO> getUsuarios() {
+		try {
+			this.usuarios = getServico().listarUsuarios();
+		} catch (LayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return usuarios;
+	}
+
+	/**
+	 * @param clientes the clientes to set
+	 */
+	public final void setUsuarios(List<UsuarioVO> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	/**
+	 * @return the produtos
+	 */
+	public final List<ProdutoVO> getProdutos() {
+		try {
+			this.produtos = getServico().listarProdutos();
+		} catch (LayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return produtos;
+	}
+
+	/**
+	 * @param produtos the produtos to set
+	 */
+	public final void setProdutos(List<ProdutoVO> produtos) {
+		this.produtos = produtos;
+	}
+
+	/**
+	 * @return the situacoes
+	 */
+	public List<Situacao> getSituacoes() {
+		if(this.situacoes == null){
+			this.situacoes = Arrays.asList(Situacao.values());
+		}
+		return situacoes;
+	}
+
+	/**
+	 * @param situacoes the situacoes to set
+	 */
+	public final void setSituacoes(List<Situacao> situacoes) {
+		this.situacoes = situacoes;
+	}
+
 	public void reset(){
 		this.vo = new CompraVO();
 	}

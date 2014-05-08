@@ -7,10 +7,9 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import br.com.exemplo.vendas.apresentacao.delegate.BusinessDelegate;
+import br.com.exemplo.vendas.apresentacao.service.Service;
 import br.com.exemplo.vendas.negocio.model.vo.ProdutoVO;
 import br.com.exemplo.vendas.util.Redirecionador;
-import br.com.exemplo.vendas.util.dto.ServiceDTO;
 import br.com.exemplo.vendas.util.exception.LayerException;
 
 @SuppressWarnings("serial")
@@ -21,6 +20,7 @@ public class ProdutoController extends AbstractController
 
 	private ProdutoVO vo;
 	private List<ProdutoVO> lista;
+	
 
 	public ProdutoController() throws LayerException {
 		vo = new ProdutoVO();
@@ -28,41 +28,30 @@ public class ProdutoController extends AbstractController
 	}
 
 	public void insertView() throws Exception {
-		new Redirecionador().redirecionar("produtos-inserir.xhtml");
+		irPara("produtos-inserir.xhtml");
 	}
 
-	public String save() throws Exception {
+	public String save() throws LayerException {
 		System.out.println("Salvando");
 		try{
-			/*Hashtable prop = new Hashtable();
-		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY,
-				"org.jnp.interfaces.NamingContextFactory");
-		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
-
-		Context ctx = new InitialContext(prop);
-
-		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx
-				.lookup("UsuarioBean/remote");
-
-		ServiceLocator serviceLocator = ServiceLocatorFactory
-				.getServiceLocator("serviceLocator");*/
-			ServiceDTO requestDTO = new ServiceDTO();
-			ServiceDTO responseDTO = new ServiceDTO();
-
-			requestDTO.set("produtoVO", vo);
-
-			BusinessDelegate bd = BusinessDelegate.getInstance();
-			responseDTO = bd.inserirProduto(requestDTO);
-			//responseDTO = remoteUsuario.inserirUsuario(requestDTO);
-			Boolean sucesso = (Boolean) responseDTO.get("resposta");
-
-			vo = new ProdutoVO();
-			System.out.println("Inseriu? " + sucesso);
-			closeDialog();
-			displayInfoMessageToUser("Sucesso!");
+			if(getServico().inserirProduto(vo)){
+				vo = new ProdutoVO();
+				System.out.println("Inseriu? Sim");
+				closeDialog();
+				displayInfoMessageToUser("Inseriu com Sucesso!");
+			} else if (getServico().alterarProduto(vo)){
+				vo = new ProdutoVO();
+				System.out.println("Alterou? Sim");
+				closeDialog();
+				displayInfoMessageToUser("Alterou com Sucesso!");
+			} else {
+				keepDialogOpen();
+				displayErrorMessageToUser("Ops, we could not complete the current operation. Try again later");
+			}
+			
 		}catch (Exception e){
 			keepDialogOpen();
-			displayErrorMessageToUser("Ops, we could not complete the current operation. Try again later");
+			displayErrorMessageToUser("Ops, we could not complete the current operation. Try again later.\n Detalhes do Erro: "+e.getMessage());
 			e.printStackTrace();
 		}
 		return listAll();
@@ -71,12 +60,13 @@ public class ProdutoController extends AbstractController
 	public String listAll() throws LayerException {
 		vo = new ProdutoVO();
 		lista = getLista();
-		//new Redirecionador().redirecionar("produtos-lista.xhtml");
+		Redirecionador.redirecionar("produtos-lista.xhtml");
 		return "";
 	}
 
-	public String remove() throws LayerException {
+	public String excluir() throws LayerException {
 		// dao.delete( entity.getId() );
+		getServico().excluirProduto(vo);
 		System.out.println("removendo");
 		return listAll();
 	}
@@ -85,8 +75,7 @@ public class ProdutoController extends AbstractController
 
 	public List<ProdutoVO> getLista() throws LayerException {
 		lista = new ArrayList<ProdutoVO>();
-		BusinessDelegate bd = BusinessDelegate.getInstance();
-		lista = (List<ProdutoVO>) bd.selectionarTodosProdutos(null).get("listaProduto");
+		lista = (List<ProdutoVO>) getServico().listarProdutos();
 		return lista;
 	}
 

@@ -6,11 +6,14 @@ import javax.faces.context.FacesContext;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.ColumnResizeEvent;
 
+import br.com.exemplo.vendas.apresentacao.service.Service;
 import br.com.exemplo.vendas.util.JSFMessageUtil;
+import br.com.exemplo.vendas.util.Redirecionador;
 
 
 public class AbstractController {
 	private static final String KEEP_DIALOG_OPENED = "KEEP_DIALOG_OPENED";
+	private Service servico;
 
 	public AbstractController() {
 		super();
@@ -42,5 +45,19 @@ public class AbstractController {
 	
 	protected RequestContext getRequestContext(){
 		return RequestContext.getCurrentInstance();
+	}
+	
+	public void irPara(String url){
+		Redirecionador.redirecionar(url);
+	}
+	
+	/**
+	 * @return the service
+	 */
+	public final Service getServico() {
+		if (this.servico == null) {
+			this.servico = new Service();
+		}
+		return servico;
 	}
 }
