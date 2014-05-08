@@ -3,8 +3,6 @@ package br.com.exemplo.vendas.negocio.model.vo;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-import br.com.exemplo.vendas.negocio.entity.Produto;
-
 public class ProdutoVO implements Serializable {
 	
 	private static final long serialVersionUID = 3717585905983816406L;
@@ -58,13 +56,5 @@ public class ProdutoVO implements Serializable {
 	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
 		this.quantidadeEstoque = quantidadeEstoque;
 	}
-	public static ProdutoVO create(Produto produto) {
-		ProdutoVO produtoVO = new ProdutoVO();
-		produtoVO.setCodigo(produto.getCodigo());
-		produtoVO.setDescricao(produto.getDescricao());
-		produtoVO.setPreco(produto.getPreco());
-		produtoVO.setEstoque(produto.getEstoque());
-		produtoVO.setQuantidadeEstoque(produto.getQuantidadeEstoque());
-		return produtoVO;
-	}
+
 }

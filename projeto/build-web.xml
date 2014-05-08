@@ -18,6 +18,7 @@
 		<delete dir="${jboss.home}/server/default/tmp" />		
 		<delete dir="${tomcat.web}/webapps/VendaWeb" />
 		<delete file="${tomcat.web}/webapps/VendaWeb.war" />
+		<delete file="${tomcat.web}/conf/Catalina/localhost/VendaWeb.xml" />
 		
 		<delete file="VendaDelegate.jar" />
 		<delete file="VendaDTO.jar" />

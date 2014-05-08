@@ -102,4 +102,14 @@ public class Produto implements Serializable {
 		produto.setQuantidadeEstoque(produtoVO.getQuantidadeEstoque());
 		return produto;
 	}
+	
+	public static ProdutoVO create(Produto produto) {
+		ProdutoVO produtoVO = new ProdutoVO();
+		produtoVO.setCodigo(produto.getCodigo());
+		produtoVO.setDescricao(produto.getDescricao());
+		produtoVO.setPreco(produto.getPreco());
+		produtoVO.setEstoque(produto.getEstoque());
+		produtoVO.setQuantidadeEstoque(produto.getQuantidadeEstoque());
+		return produtoVO;
+	}	
 }
