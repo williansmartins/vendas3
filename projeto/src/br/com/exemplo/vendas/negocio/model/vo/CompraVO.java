@@ -1,11 +1,12 @@
 package br.com.exemplo.vendas.negocio.model.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 import br.com.exemplo.vendas.negocio.entity.Compra;
 
-public class CompraVO {
+public class CompraVO implements Serializable {
 
 	private Long numero;
 	private Date data;
@@ -67,12 +68,5 @@ public class CompraVO {
 		this.cliente = cliente;
 	}
 
-	public static CompraVO create(Compra compra) {
-		CompraVO compraVO = new CompraVO();
-		compraVO.setNumero(compra.getNumero());
-		compraVO.setData(compra.getData());
-		compraVO.setSituacao(compra.getSituacao());
-		compraVO.setValor(compra.getValor());
-		return compraVO;
-	}
+	
 }

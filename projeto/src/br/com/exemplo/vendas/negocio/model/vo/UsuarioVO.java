@@ -9,22 +9,21 @@ public class UsuarioVO implements Serializable {
 	private static final long serialVersionUID = -8151335332868453514L;
 	private String login;
 	private String senha;
-	private String grupo;
 	private String perfil;
+	private String grupo;
 	private Boolean bloqueado;
 	private Date ultimoAcesso;
 
 	@Override
 	public String toString() {
-		return this.login + ":" + this.senha + ":" + this.grupo + ":" + this.perfil + ":" + this.bloqueado + ":" + this.ultimoAcesso;
+		return this.login + ":" + this.senha + ":" + this.perfil + ":" + this.bloqueado + ":" + this.ultimoAcesso;
 	}
 
 	public UsuarioVO() {}
 	
-	public UsuarioVO(String login, String senha, String grupo, String perfil, Boolean bloqueado, Date ultimoAcesso) {
+	public UsuarioVO(String login, String senha, String perfil, Boolean bloqueado, Date ultimoAcesso) {
 		this.login = login;
 		this.senha = senha;
-		this.grupo = grupo;
 		this.perfil = perfil;
 		this.bloqueado = bloqueado;
 		this.ultimoAcesso = ultimoAcesso;
@@ -36,14 +35,6 @@ public class UsuarioVO implements Serializable {
 
 	public void setBloqueado(Boolean bloqueado) {
 		this.bloqueado = bloqueado;
-	}
-
-	public String getGrupo() {
-		return grupo;
-	}
-
-	public void setGrupo(String grupo) {
-		this.grupo = grupo;
 	}
 
 	public String getLogin() {
@@ -60,6 +51,20 @@ public class UsuarioVO implements Serializable {
 
 	public void setPerfil(String perfil) {
 		this.perfil = perfil;
+	}
+
+	/**
+	 * @return the grupo
+	 */
+	public final String getGrupo() {
+		return grupo;
+	}
+
+	/**
+	 * @param grupo the grupo to set
+	 */
+	public final void setGrupo(String grupo) {
+		this.grupo = grupo;
 	}
 
 	public String getSenha() {
