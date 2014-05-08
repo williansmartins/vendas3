@@ -60,7 +60,7 @@ public class ProdutoController extends AbstractController
 	public String listAll() throws LayerException {
 		vo = new ProdutoVO();
 		lista = getLista();
-		Redirecionador.redirecionar("produtos-lista.xhtml");
+		irPara("produtos-lista.xhtml");
 		return "";
 	}
 
