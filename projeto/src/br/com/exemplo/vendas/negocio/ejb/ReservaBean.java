@@ -91,7 +91,7 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 			for(int i = 0; i < lista.size(); i++) {
 				Reserva reserva = (Reserva) lista.get(i);
 				ReservaVO reservaVO = ReservaVO.create(reserva);
-				reservaVO.setCliente(ClienteVO.create(reserva.getCliente()));
+				reservaVO.setCliente(Cliente.create(reserva.getCliente()));
 				reservaVOs[i] = reservaVO;
 			}
 			responseDTO.set("listaReserva", reservaVOs);
@@ -111,7 +111,7 @@ public class ReservaBean implements ReservaRemote, ReservaLocal {
 			reservaVO.setAtendente(reserva.getAtendente());
 			reservaVO.setSituacao(reserva.getSituacao());
 			reservaVO.setValor(reserva.getValor());
-			reservaVO.setCliente(ClienteVO.create(reserva.getCliente()));
+			reservaVO.setCliente(Cliente.create(reserva.getCliente()));
 			responseDTO.set("getReserva", reservaVO);
 		}catch(Exception e){
 			responseDTO.set("getReserva", null);

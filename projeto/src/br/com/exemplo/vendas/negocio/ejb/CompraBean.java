@@ -119,11 +119,11 @@ public class CompraBean implements CompraRemote, CompraLocal {
 			CompraVO[] compras = new CompraVO[lista.size()];
 			for(int i = 0; i < lista.size(); i++){
 				Compra compra = (Compra) lista.get(i);
-				CompraVO compraVO = CompraVO.create(compra);
+				CompraVO compraVO = Compra.create(compra);
 				ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
 				reservaVO.setCodigo(compra.getReserva().getCodigo());
 				compraVO.setReserva(reservaVO);
-				ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
+				ClienteVO clienteVO = Cliente.create(compra.getCliente());
 				clienteVO.setLogin(compra.getCliente().getLogin());
 				compraVO.setCliente(clienteVO);
 				compras[i] = compraVO;
@@ -135,15 +135,16 @@ public class CompraBean implements CompraRemote, CompraLocal {
 		return responseDTO ;
 	}
 
-	public ServiceDTO getCompra(ServiceDTO requestDTO, Long numero) throws LayerException {
+	public ServiceDTO getCompra(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
-			Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(numero);
-			CompraVO compraVO = CompraVO.create(compra);
+			CompraVO vo = (CompraVO) requestDTO.get("compraVO");
+			Compra compra = DaoFactory.getCompraDAO(em).localizarPorNumero(vo.getNumero());
+			CompraVO compraVO = Compra.create(compra);
 			ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
 			reservaVO.setCodigo(compra.getReserva().getCodigo());
 			compraVO.setReserva(reservaVO);
-			ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
+			ClienteVO clienteVO = Cliente.create(compra.getCliente());
 			clienteVO.setLogin(compra.getCliente().getLogin());
 			compraVO.setCliente(clienteVO);
 			responseDTO.set("getCompra", compraVO);
@@ -162,11 +163,11 @@ public class CompraBean implements CompraRemote, CompraLocal {
 				CompraVO[] compraVOs = new CompraVO[compras.size()];
 				for(int i = 0; i < compras.size(); i++) {
 					Compra compra = (Compra) compras.get(i);
-					CompraVO compraVO = CompraVO.create(compra);
+					CompraVO compraVO = Compra.create(compra);
 					ReservaVO reservaVO = ReservaVO.create(compra.getReserva());
 					reservaVO.setCodigo(compra.getReserva().getCodigo());
 					compraVO.setReserva(reservaVO);
-					ClienteVO clienteVO = ClienteVO.create(compra.getCliente());
+					ClienteVO clienteVO = Cliente.create(compra.getCliente());
 					clienteVO.setLogin(compra.getCliente().getLogin());
 					compraVO.setCliente(clienteVO);
 					compraVOs[i] = compraVO;
