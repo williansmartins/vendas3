@@ -72,7 +72,6 @@ public class GerenciadorUsuario {
 		for(Usuario p: listar()){
 			UsuarioVO vo = new UsuarioVO();
 			vo.setBloqueado(p.getBloqueado());
-			vo.setGrupo(p.getGrupo());
 			vo.setLogin(p.getLogin());
 			vo.setPerfil(p.getPerfil());
 			vo.setSenha(p.getSenha());

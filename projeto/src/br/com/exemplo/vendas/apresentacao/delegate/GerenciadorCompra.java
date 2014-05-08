@@ -76,7 +76,6 @@ public class GerenciadorCompra {
 			clienteVO.setBloqueado(c.getCliente().getBloqueado());
 			clienteVO.setCodigo(c.getCliente().getCodigo());
 			clienteVO.setEndereco(c.getCliente().getEndereco());
-			clienteVO.setGrupo(c.getCliente().getGrupo());
 			clienteVO.setLogin(c.getCliente().getLogin());
 			clienteVO.setNome(c.getCliente().getNome());
 			clienteVO.setPerfil(c.getCliente().getPerfil());
@@ -93,7 +92,6 @@ public class GerenciadorCompra {
 			clienteDaReserva.setBloqueado(c.getReserva().getCliente().getBloqueado());
 			clienteDaReserva.setCodigo(c.getReserva().getCliente().getCodigo());
 			clienteDaReserva.setEndereco(c.getReserva().getCliente().getEndereco());
-			clienteDaReserva.setGrupo(c.getReserva().getCliente().getGrupo());
 			clienteDaReserva.setLogin(c.getReserva().getCliente().getLogin());
 			clienteDaReserva.setNome(c.getReserva().getCliente().getNome());
 			clienteDaReserva.setPerfil(c.getReserva().getCliente().getPerfil());

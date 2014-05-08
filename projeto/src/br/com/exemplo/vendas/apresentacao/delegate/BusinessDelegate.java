@@ -15,7 +15,7 @@ import br.com.exemplo.vendas.util.locator.ServiceLocatorException;
 import br.com.exemplo.vendas.util.locator.ServiceLocatorFactory;
 
 public class BusinessDelegate {
-	
+
 	private static BusinessDelegate instance = null;
 	private ServiceLocator serviceLocator;
 
@@ -81,26 +81,169 @@ public class BusinessDelegate {
 		}
 		return responseDTO;
 	}
-	
-	public ServiceDTO buscarUsuario(ServiceDTO requestDTO) throws LayerException {
-	    ServiceDTO responseDTO = new ServiceDTO();
-	    try{
-		responseDTO = ((UsuarioInterface)serviceLocator.getService("UsuarioBean/remote")).localizarPorLogin( requestDTO, "");
-	    }catch(RemoteException remoteException){
-		throw SysExceptionFactory.getException(remoteException);
-	    }catch(ServiceLocatorException serviceLocatorException){
-		throw SysExceptionFactory.getException(serviceLocatorException);
-	    }
-	    return responseDTO ;
-	}
 
-	public ServiceDTO inserirQueue(ServiceDTO requestDTO) throws LayerException {
+	public ServiceDTO listarClientes(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
-			responseDTO = ((RecebeRequisicaoInterface)serviceLocator.getService("RecebeRequisicaoBean/remote")).inserirFila(requestDTO);
+			responseDTO = ((ClienteInterface)serviceLocator.getService("ClienteBean/remote")).selecionarTodosClientes(requestDTO);
 		}catch(RemoteException remoteException){
 			throw SysExceptionFactory.getException(remoteException);
 		}catch(ServiceLocatorException serviceLocatorException){
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+	
+	public ServiceDTO buscarUsuario(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			responseDTO = ((UsuarioInterface)serviceLocator.getService("UsuarioBean/remote")).localizarPorLogin( requestDTO, "");
+		}catch(RemoteException remoteException){
+			throw SysExceptionFactory.getException(remoteException);
+		}catch(ServiceLocatorException serviceLocatorException){
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO ;
+	}
+
+
+
+	public ServiceDTO inserirProduto(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).inserirProduto(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO excluirProduto(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).excluirProduto(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO alterarProduto(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).alterarProduto(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO selectionarTodosProdutos(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).selecionarTodosProdutos(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+
+		return responseDTO;
+	}
+
+	public ServiceDTO getProduto(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			responseDTO = ((ProdutoInterface)serviceLocator.getService("UsuarioBean/remote")).getProduto(requestDTO);
+		}catch(RemoteException remoteException){
+			throw SysExceptionFactory.getException(remoteException);
+		}catch(ServiceLocatorException serviceLocatorException){
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO ;
+	}
+
+	public ServiceDTO inserirCompra(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).inserirProduto(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO excluirCompra(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).excluirProduto(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO excluirCompraPorNumero(ServiceDTO requestDTO) throws LayerException, RemoteException{
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((CompraInterface) serviceLocator.getService("CompraBean/remote")).excluirCompraPorNumero(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+
+		return responseDTO;
+	}
+
+	public ServiceDTO alterarCompra(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((ProdutoInterface) serviceLocator.getService("ProdutoBean/remote")).alterarProduto(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO getCompra(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((CompraInterface) serviceLocator.getService("CompraBean/remote")).getCompra(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
+	public ServiceDTO selectionarTodasCompras(ServiceDTO requestDTO)
+			throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try {
+			responseDTO = ((CompraInterface) serviceLocator.getService("CompraBean/remote")).selecionarTodosCompras(requestDTO);
+		} catch (RemoteException remoteException) {
+			throw SysExceptionFactory.getException(remoteException);
+		} catch (ServiceLocatorException serviceLocatorException) {
 			throw SysExceptionFactory.getException(serviceLocatorException);
 		}
 		return responseDTO;
@@ -141,7 +284,19 @@ public class BusinessDelegate {
 		}
 		return responseDTO;
 	}
-	
+
+	public ServiceDTO inserirQueue(ServiceDTO requestDTO) throws LayerException {
+		ServiceDTO responseDTO = new ServiceDTO();
+		try{
+			responseDTO = ((RecebeRequisicaoInterface)serviceLocator.getService("RecebeRequisicaoBean/remote")).inserirFila(requestDTO);
+		}catch(RemoteException remoteException){
+			throw SysExceptionFactory.getException(remoteException);
+		}catch(ServiceLocatorException serviceLocatorException){
+			throw SysExceptionFactory.getException(serviceLocatorException);
+		}
+		return responseDTO;
+	}
+
 	private void setServiceLocator() throws Exception {
 		this.serviceLocator = ServiceLocatorFactory.getServiceLocator("serviceLocator");
 	}

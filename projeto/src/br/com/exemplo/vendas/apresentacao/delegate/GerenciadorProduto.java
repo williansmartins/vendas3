@@ -75,7 +75,7 @@ public class GerenciadorProduto {
 			ProdutoVO vo = new ProdutoVO();
 			vo.setCodigo(p.getCodigo());
 			vo.setDescricao(p.getDescricao());
-			vo.setEstoque(p.getEstoque());
+			vo.setQuantidadeEstoque(p.getQuantidadeEstoque());
 			vo.setPreco(p.getPreco());
 			lista.add(vo);
 		}
