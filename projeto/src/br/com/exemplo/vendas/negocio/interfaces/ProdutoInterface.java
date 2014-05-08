@@ -12,6 +12,6 @@ public interface ProdutoInterface {
 	public ServiceDTO excluirProduto(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO excluirProdutoPorCodigo(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO selecionarTodosProdutos(ServiceDTO requestDTO) throws LayerException, RemoteException;
-	public ServiceDTO getProduto(ServiceDTO requestDTO, Long codigo) throws LayerException, RemoteException;
+	public ServiceDTO getProduto(ServiceDTO requestDTO) throws LayerException, RemoteException;
 	public ServiceDTO localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(ServiceDTO requestDTO) throws LayerException, RemoteException;
 }
