@@ -55,7 +55,7 @@ public class TesteCompra {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteCompra.getCompra(requestDTO, new Long(1));
+		responseDTO = remoteCompra.getCompra(requestDTO);
 		CompraVO compraVO = (CompraVO) responseDTO.get("getCompra");
 		System.out.println(compraVO);
 	}
