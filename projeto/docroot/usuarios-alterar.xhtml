@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="usuarioUpdateDialogWidget"
+		id="usuarioUpdateDialogId" height="175" width="250" modal="true"
+		closable="true" draggable="true" resizable="false" hideEffect="blind" 
+		showEffect="fade" header="#{usuario_mb.vo.login}">
+		<h:form id="usuarioUpdateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+						    <div class="labels">
+						        <label for="code">Login</label>
+								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.login}" />
+						    </div>
+						    <div class="labels">
+						        <label for="code">Senha</label>
+								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.senha}" />
+						    </div>
+						    <div class="labels">
+						        <label for="code">Perfil</label>
+						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.perfil}" />
+						    </div>
+						    <div class="labels">
+						        <label for="code">Bloqueado</label>
+						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.bloqueado}" />
+						    </div>
+				
+				<br />
+					    <p:commandButton action="#{usuario_controller.save}" styleClass="btn btn-primary " value="Salvar" 
+					    update=":usuariosForm:usuariosTable" 
+					    oncomplete="usuarioUpdateDialogWidget.hide()" />
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{usuario_controller.reset}"
+					onclick="usuarioUpdateDialogWidget.hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

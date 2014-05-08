@@ -97,7 +97,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 			ProdutoVO[] produtos = new ProdutoVO[lista.size()];
 			for(int i = 0; i < lista.size(); i++){
 				Produto produto = (Produto) lista.get(i);
-				ProdutoVO produtoVO = ProdutoVO.create(produto);
+				ProdutoVO produtoVO = Produto.create(produto);
 				produtos[i] = produtoVO;
 			}
 			responseDTO.set("listaProduto", produtos);
@@ -107,11 +107,12 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 		return responseDTO;
 	}
 
-	public ServiceDTO getProduto(ServiceDTO requestDTO, Long codigo) throws LayerException {
+	public ServiceDTO getProduto(ServiceDTO requestDTO) throws LayerException {
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
-			Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(codigo);
-			ProdutoVO produtoVO = ProdutoVO.create(produto);
+			ProdutoVO vo = (ProdutoVO) requestDTO.get("produtoVO");
+			Produto produto = DaoFactory.getProdutoDAO(em).localizarPorCodigo(vo.getCodigo());
+			ProdutoVO produtoVO = Produto.create(produto);
 			responseDTO.set("getProduto", produtoVO);
 		}catch(Exception e){
 			e.printStackTrace();
@@ -121,7 +122,9 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 	}
 
 	@Override
-	public ServiceDTO localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(ServiceDTO requestDTO, BigDecimal preco, Integer quantidadeEstoque) throws LayerException, RemoteException {
+	public ServiceDTO localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(ServiceDTO requestDTO) throws LayerException, RemoteException {
+		BigDecimal preco = (BigDecimal) requestDTO.get("preco");
+		Integer quantidadeEstoque = (Integer) requestDTO.get("quantidadeEstoque");
 		ServiceDTO responseDTO = new ServiceDTO();
 		try{
 			List<Produto> produtos = DaoFactory.getProdutoDAO(em).localizarPorQuantidadeAcimaDeEPrecoAbaixoDe(preco, quantidadeEstoque);
@@ -129,7 +132,7 @@ public class ProdutoBean implements ProdutoRemote, ProdutoLocal {
 				ProdutoVO[] produtoVOs = new ProdutoVO[produtos.size()];
 				for(int i = 0; i < produtos.size(); i++){
 					Produto produto = (Produto) produtos.get(i);
-					ProdutoVO produtoVO = ProdutoVO.create(produto);
+					ProdutoVO produtoVO = Produto.create(produto);
 					produtoVOs[i] = produtoVO;
 				}
 				responseDTO.set("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe", produtoVOs);

@@ -14,16 +14,16 @@
 		<h:form id="produtoDetailDialogForm" prependId="false">
 			<h:panelGrid columns="2">
 						        <h:outputText value="Código" />
-								<h:inputText styleClass="form-control" value="#{produto_controller.vo.codigo}" />
+								<h:outputText value="#{produto_controller.vo.codigo}" />
 
 						    	<h:outputText value="Descrição" />
-								<h:inputText styleClass="form-control" value="#{produto_controller.vo.descricao}" />
+								<h:outputText value="#{produto_controller.vo.descricao}" />
 						    
 								<h:outputText value="Preço (R$)" />
-						        <h:inputText styleClass="form-control" value="#{produto_controller.vo.preco}" />
+						        <h:outputText value="#{produto_controller.vo.preco}" />
 							    
 								<h:outputText value="Estoque" />
-						        <h:inputText styleClass="form-control" value="#{produto_controller.vo.estoque}" />
+						        <h:outputText value="#{produto_controller.vo.quantidadeEstoque}" />
 				
 				<br />
 				<p:commandButton value="Fechar" icon="ui-icon-cancel" actionListener="#{produto_controller.reset}"

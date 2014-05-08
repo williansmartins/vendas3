@@ -18,7 +18,7 @@
 				<br />
 				<p:commandButton action="#{produto_controller.excluir}" styleClass="btn btn-primary " value="Excluir" 
 					    update=":produtosForm:produtosTable" icon="ui-icon-trash" 
-					    oncomplete="closeDialogIfSucess(xhr, status, args, produtoDeleteDialogWidget, 'produtoDeleteDialogId')" />
+					    oncomplete="produtoDeleteDialogWidget.hide()" />
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{produto_controller.reset}"
 					onclick="produtoDeleteDialogWidget.hide();" type="button" />
 		</h:form>

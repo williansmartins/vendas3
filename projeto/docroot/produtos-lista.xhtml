@@ -26,9 +26,9 @@
 				    			</p:column>
 				    			<p:column>
 				    				<f:facet name="header">Estoque</f:facet>
-				    				<h:outputText value="#{obj.estoque}"/>
+				    				<h:outputText value="#{obj.quantidadeEstoque}"/>
 				    			</p:column>
- 				    			<!-- <p:column>
+ 				    			<p:column>
 				    				<p:commandButton styleClass="btn btn-success" icon="ui-icon-pencil"  value="Editar"  onclick="produtoUpdateDialogWidget.show();" update=":produtoUpdateDialogForm" >
 				    					<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{obj}" />
 				    				</p:commandButton>
@@ -36,14 +36,14 @@
 				    				<p:spacer width="10px" />
 				    				
 				    				<p:commandButton styleClass="btn btn-danger" value="Remover" icon="ui-icon-trash" update=":produtoDeleteDialogForm" onclick="produtoDeleteDialogWidget.show();" >
-										<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{produto}" />
+										<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{obj}" />
 									</p:commandButton>
 
 									<p:commandButton value="#{bundle.detail}" icon="ui-icon-contact" onclick="produtoDetailDialogWidget.show();" update=":produtoDetailDialogForm" styleClass="btn btn-danger" >
-										<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{produto}" />
+										<f:setPropertyActionListener target="#{produto_controller.vo}" value="#{obj}" />
 									</p:commandButton> 
 
-				    			</p:column> -->
+				    			</p:column>
 				 
 				 
 				    		</p:dataTable>

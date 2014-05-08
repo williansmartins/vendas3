@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:intf="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns:tns1="http://vo.model.negocio.vendas.exemplo.com.br" xmlns:tns2="http://exception.util.vendas.exemplo.com.br" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webservices.client.ejb.negocio.vendas.exemplo.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://vo.model.negocio.vendas.exemplo.com.br"/>
+   <import namespace="http://exception.util.vendas.exemplo.com.br"/>
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <element name="localizarClientesComComprasRealizadas">
+    <complexType/>
+   </element>
+   <element name="localizarClientesComComprasRealizadasResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="localizarClientesComComprasRealizadasReturn" type="tns1:ClienteVO"/>
+     </sequence>
+    </complexType>
+   </element>
+   <complexType name="ArrayOf_xsd_anyType">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+   <element name="fault" type="tns2:LayerException"/>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://vo.model.negocio.vendas.exemplo.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://exception.util.vendas.exemplo.com.br"/>
+   <import namespace="http://webservices.client.ejb.negocio.vendas.exemplo.com.br"/>
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <complexType name="UsuarioVO">
+    <sequence>
+     <element name="bloqueado" nillable="true" type="xsd:boolean"/>
+     <element name="grupo" nillable="true" type="xsd:string"/>
+     <element name="login" nillable="true" type="xsd:string"/>
+     <element name="perfil" nillable="true" type="xsd:string"/>
+     <element name="senha" nillable="true" type="xsd:string"/>
+     <element name="ultimoAcesso" nillable="true" type="xsd:dateTime"/>
+    </sequence>
+   </complexType>
+   <complexType name="ClienteVO">
+    <complexContent>
+     <extension base="tns1:UsuarioVO">
+      <sequence>
+       <element name="codigo" nillable="true" type="xsd:long"/>
+       <element name="endereco" nillable="true" type="xsd:string"/>
+       <element name="nome" nillable="true" type="xsd:string"/>
+       <element name="situacao" nillable="true" type="xsd:string"/>
+       <element name="telefone" nillable="true" type="xsd:int"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://xml.apache.org/xml-soap" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://vo.model.negocio.vendas.exemplo.com.br"/>
+   <import namespace="http://exception.util.vendas.exemplo.com.br"/>
+   <import namespace="http://webservices.client.ejb.negocio.vendas.exemplo.com.br"/>
+   <complexType name="Vector">
+    <sequence>
+     <element maxOccurs="unbounded" minOccurs="0" name="item" type="xsd:anyType"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://exception.util.vendas.exemplo.com.br" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://vo.model.negocio.vendas.exemplo.com.br"/>
+   <import namespace="http://webservices.client.ejb.negocio.vendas.exemplo.com.br"/>
+   <import namespace="http://xml.apache.org/xml-soap"/>
+   <complexType name="MsgExceptionList">
+    <sequence>
+     <element name="msgException" nillable="true" type="impl:ArrayOf_xsd_anyType"/>
+    </sequence>
+   </complexType>
+   <complexType abstract="true" name="LayerException">
+    <sequence>
+     <element name="msgExceptionList" nillable="true" type="tns2:MsgExceptionList"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="LayerException">
+
+      <wsdl:part element="impl:fault" name="fault">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="localizarClientesComComprasRealizadasRequest">
+
+      <wsdl:part element="impl:localizarClientesComComprasRealizadas" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="localizarClientesComComprasRealizadasResponse">
+
+      <wsdl:part element="impl:localizarClientesComComprasRealizadasResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LocalizarClientes">
+
+      <wsdl:operation name="localizarClientesComComprasRealizadas">
+
+         <wsdl:input message="impl:localizarClientesComComprasRealizadasRequest" name="localizarClientesComComprasRealizadasRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:localizarClientesComComprasRealizadasResponse" name="localizarClientesComComprasRealizadasResponse">
+
+       </wsdl:output>
+
+         <wsdl:fault message="impl:LayerException" name="LayerException">
+
+       </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LocalizarClientesSoapBinding" type="impl:LocalizarClientes">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="localizarClientesComComprasRealizadas">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="localizarClientesComComprasRealizadasRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="localizarClientesComComprasRealizadasResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+         <wsdl:fault name="LayerException">
+
+            <wsdlsoap:fault name="LayerException" use="literal"/>
+
+         </wsdl:fault>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LocalizarClientesService">
+
+      <wsdl:port binding="impl:LocalizarClientesSoapBinding" name="LocalizarClientes">
+
+         <wsdlsoap:address location="http://localhost:9090/Vendas_3_0/services/LocalizarClientes"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

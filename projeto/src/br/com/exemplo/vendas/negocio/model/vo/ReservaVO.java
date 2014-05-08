@@ -1,11 +1,12 @@
 package br.com.exemplo.vendas.negocio.model.vo;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 import br.com.exemplo.vendas.negocio.entity.Reserva;
 
-public class ReservaVO {
+public class ReservaVO implements Serializable{
 
 	private Long codigo;
 	private Date data;

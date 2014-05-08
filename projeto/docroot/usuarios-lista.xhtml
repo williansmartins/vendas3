@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" 
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="templates/template.xhtml">
+		<ui:define name="palco">
+			<h:form id="usuariosForm">
+					<font style="font-family: sans-serif; font-size: x-large;"><b>	Cadastro de Usuarios </b></font>
+	    			<p:dataTable id="usuariosTable" value="#{usuario_controller.lista}" 
+	    						var="obj" styleClass="table table-striped tabela" headerClass="order-table-header" 
+	    						rowClasses="order-table-odd-row,order-table-even-row" emptyMessage="Sem Registros" >
+				    			<p:column>
+				    				<f:facet name="header">Login</f:facet>
+				    				<h:outputText value="#{obj.login}" />
+				    			</p:column>
+				    			<p:column>
+				    				<f:facet name="header">Perfil</f:facet>
+				    				<h:outputText value="#{obj.perfil}"/>
+				    			</p:column>
+				    			<p:column>
+				    				<f:facet name="header">Bloqueado</f:facet>
+				    				<h:outputText value="#{obj.bloqueado}"/>
+				    			</p:column>
+				    			<p:column>
+				    				<f:facet name="header">Último Acesso</f:facet>
+				    				<h:outputText value="#{obj.ultimoAcesso}"/>
+				    			</p:column>
+ 				    			<p:column>
+				    				<p:commandButton styleClass="btn btn-success" icon="ui-icon-pencil"  value="Editar"  onclick="usuarioUpdateDialogWidget.show();" update=":usuarioUpdateDialogForm" >
+				    					<f:setPropertyActionListener target="#{usuario_controller.vo}" value="#{obj}" />
+				    				</p:commandButton>
+				    				
+				    				<p:spacer width="10px" />
+				    				
+				    				<p:commandButton styleClass="btn btn-danger" value="Remover" icon="ui-icon-trash" update=":usuarioDeleteDialogForm" onclick="usuarioDeleteDialogWidget.show();" >
+										<f:setPropertyActionListener target="#{usuario_controller.vo}" value="#{obj}" />
+									</p:commandButton>
+
+									<p:commandButton value="#{bundle.detail}" icon="ui-icon-contact" onclick="usuarioDetailDialogWidget.show();" update=":usuarioDetailDialogForm" styleClass="btn btn-danger" >
+										<f:setPropertyActionListener target="#{usuario_controller.vo}" value="#{obj}" />
+									</p:commandButton> 
+
+				    			</p:column>
+				 
+				 
+				    		</p:dataTable>
+							<p:commandButton value="Inserir" icon="ui-icon-plus" update=":usuarioCreateDialogForm"
+								actionListener="#{usuario_controller.reset}" onclick="usuarioCreateDialogWidget.show();"  style="float: left;" />
+					
+						
+	    				&nbsp;
+	    				 <h:commandButton styleClass="btn btn-primary" value="Início" action="#{geral_controller.home}" />
+					</h:form>							
+				
+			<ui:include src="/usuarios-inserir.xhtml" />
+			<ui:include src="/usuarios-detalhes.xhtml" />
+			<ui:include src="/usuarios-excluir.xhtml" />
+			<ui:include src="/usuarios-alterar.xhtml" />
+ 			</ui:define>
+ 			<!-- <ui:define name="rodape" />  -->
+    	</ui:composition>
+    </h:body>
+</html>

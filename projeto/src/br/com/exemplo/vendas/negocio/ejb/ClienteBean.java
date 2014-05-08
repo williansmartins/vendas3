@@ -86,7 +86,7 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 			ClienteVO[] clienteVOs = new ClienteVO[clientes.size()];
 			for(int i = 0; i < clientes.size(); i++){
 				Cliente cliente = (Cliente) clientes.get(i);
-				ClienteVO clienteVO = ClienteVO.create(cliente);
+				ClienteVO clienteVO = Cliente.create(cliente);
 				clienteVOs[i] = clienteVO;
 			}
 			return new ServiceDTO("resposta", clienteVOs);
@@ -99,7 +99,7 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 		try{
 			Cliente cliente = DaoFactory.getClienteDAO(em).localizarPorLogin(login);
 			if(cliente != null) {
-				ClienteVO clienteVO = ClienteVO.create(cliente);
+				ClienteVO clienteVO = Cliente.create(cliente);
 				return new ServiceDTO("resposta", clienteVO);
 			}else{
 				return new ServiceDTO("resposta", null);
@@ -117,15 +117,15 @@ public class ClienteBean implements ClienteRemote, ClienteLocal {
 				ClienteVO[] clienteVOs = new ClienteVO[clientes.size()];
 				for(int i = 0; i < clientes.size(); i++){
 					Cliente cliente = (Cliente) clientes.get(i);
-					ClienteVO clienteVO = ClienteVO.create(cliente);
+					ClienteVO clienteVO = Cliente.create(cliente);
 					clienteVOs[i] = clienteVO;
 				}
-				return new ServiceDTO("resposta", clienteVOs);
+				return new ServiceDTO("clientesPorCompraRealizadas", clienteVOs);
 			}else{
-				return new ServiceDTO("resposta", new ClienteVO[0]);
+				return new ServiceDTO("clientesPorCompraRealizadas", new ClienteVO[0]);
 			}
 		}catch(Exception e){
-			return new ServiceDTO("resposta", new ClienteVO[0]);
+			return new ServiceDTO("clientesPorCompraRealizadas", new ClienteVO[0]);
 		}
 	}
 }

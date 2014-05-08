@@ -8,7 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:body>
 	<p:dialog widgetVar="produtoCreateDialogWidget"
-		id="produtoCreateDialogId" height="175" width="300" modal="true"
+		id="produtoCreateDialogId" height="175" width="325" modal="true"
 		closable="true" draggable="true" resizable="false" hideEffect="blind" showEffect="fade" header="#{produto_controller.vo.descricao}">
 		<h:form id="produtoCreateDialogForm" prependId="false">
 			<h:panelGrid columns="2">
@@ -19,13 +19,12 @@
 						        <h:inputText styleClass="form-control" value="#{produto_controller.vo.preco}" />
 							    
 								<h:outputText value="Estoque" />
-						        <h:inputText styleClass="form-control" value="#{produto_controller.vo.estoque}" />
-				
+								<p:spinner value="#{produto_controller.vo.quantidadeEstoque}"/>
 				<br />
 			</h:panelGrid>
 			    <p:commandButton action="#{produto_controller.save}" icon="ui-icon-plus" styleClass="btn btn-primary " value="Salvar" 
 					    update=":produtosForm:produtosTable" 
-					    oncomplete="closeDialogIfSucess(xhr, status, args, produtoCreateDialogWidget, 'produtoCreateDialogId')" />
+					    oncomplete="produtoCreateDialogWidget.hide()" />
 				<p:commandButton value="Cancelar" icon="ui-icon-cancel" actionListener="#{produto_controller.reset}"
 					onclick="produtoCreateDialogWidget.hide();" type="button" />
 		</h:form>

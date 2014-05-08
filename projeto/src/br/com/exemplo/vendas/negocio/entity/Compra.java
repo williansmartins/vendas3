@@ -125,4 +125,12 @@ public class Compra implements Serializable {
 		compra.setValor(compraVO.getValor());
 		return compra;
 	}
+	public static CompraVO create(Compra compra) {
+		CompraVO compraVO = new CompraVO();
+		compraVO.setNumero(compra.getNumero());
+		compraVO.setData(compra.getData());
+		compraVO.setSituacao(compra.getSituacao());
+		compraVO.setValor(compra.getValor());
+		return compraVO;
+	}
 }
