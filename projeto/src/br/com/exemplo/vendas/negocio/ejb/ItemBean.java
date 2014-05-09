@@ -153,9 +153,9 @@ public class ItemBean implements ItemRemote, ItemLocal {
 				itemVO.setCodigoReserva(item.getReserva().getCodigo());
 				ReservaVO reservaVO = ReservaVO.create(item.getReserva());
 				itemVO.setReservaVO(reservaVO);
-				CompraVO compraVO = CompraVO.create(item.getCompra());
+				CompraVO compraVO = Compra.create(item.getCompra());
 				itemVO.setCompraVO(compraVO);
-				ProdutoVO produtoVO = ProdutoVO.create(item.getProduto());
+				ProdutoVO produtoVO = Produto.create(item.getProduto());
 				itemVO.setProdutoVO(produtoVO);
 				items[i] = itemVO;
 			}
@@ -172,9 +172,9 @@ public class ItemBean implements ItemRemote, ItemLocal {
 			itemVO.setCodigoReserva(item.getReserva().getCodigo());
 			ReservaVO reservaVO = ReservaVO.create(item.getReserva());
 			itemVO.setReservaVO(reservaVO);
-			CompraVO compraVO = CompraVO.create(item.getCompra());
+			CompraVO compraVO = Compra.create(item.getCompra());
 			itemVO.setCompraVO(compraVO);
-			ProdutoVO produtoVO = ProdutoVO.create(item.getProduto());
+			ProdutoVO produtoVO = Produto.create(item.getProduto());
 			itemVO.setProdutoVO(produtoVO);
 			return new ServiceDTO("listaItem", itemVO);
 		}catch(Exception e){

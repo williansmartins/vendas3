@@ -21,7 +21,7 @@ import br.com.exemplo.vendas.negocio.dao.DaoFactory;
 import br.com.exemplo.vendas.negocio.entity.Usuario;
 import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
 
-public class UsuarioTest
+public class UsuarioDAOTest
 {
     protected static EntityManagerFactory emf;
     protected static EntityManager em;

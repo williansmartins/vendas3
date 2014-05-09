@@ -38,7 +38,7 @@ public class AbstractController {
 	}
 	
 	public void onResize(ColumnResizeEvent event) {  
-        FacesMessage msg = new FacesMessage("Column " + event.getColumn().getClientId() + " resized", "W:" + event.getWidth() + ", H:" + event.getHeight());  
+        FacesMessage msg = new FacesMessage("Column " + event.getColumn().getClientId( FacesContext.getCurrentInstance() ) + " resized", "W:" + event.getWidth() + ", H:" + event.getHeight());  
   
         FacesContext.getCurrentInstance().addMessage(null, msg);  
     } 
