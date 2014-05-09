@@ -1,22 +1,20 @@
-package br.com.exemplo.vendas.negocio.ejb.client;
+package br.com.exemplo.vendas.negocio.ejb.test;
 
-import java.util.Date;
+import java.math.BigDecimal;
 import java.util.Hashtable;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import br.com.exemplo.vendas.negocio.interfaces.UsuarioInterface;
-import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
+import br.com.exemplo.vendas.negocio.interfaces.ItemInterface;
+import br.com.exemplo.vendas.negocio.model.vo.ItemVO;
 import br.com.exemplo.vendas.util.dto.ServiceDTO;
 
-public class TesterUsuario {
+public class TesteItem {
 
 	/**
-	 * Inserir Usuario.java
-	 * TBL_USUARIO
-	 * 
-	 * 1
+	 * Inserir Item.java
+	 * TBL_ITEM
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main1(String[] args) throws Exception {
@@ -24,13 +22,13 @@ public class TesterUsuario {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx.lookup("UsuarioBean/remote");
+		ItemInterface remoteItem = (ItemInterface) ctx.lookup("ItemBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		UsuarioVO vo = new UsuarioVO("marcao1", "senha1111", "grupo1111", "perfil1111", true, new Date());
-		requestDTO.set("usuarioVO", vo);
-		responseDTO = remoteUsuario.inserirUsuario(requestDTO);
+		ItemVO vo = new ItemVO(1000, new BigDecimal(100), "aberto",  new Long(1), new Long(1), new Long(2));
+		requestDTO.set("itemVO", vo);
+		responseDTO = remoteItem.inserirItem(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
 			System.out.println("Grava\u00e7\u00e3o realizada com sucesso.");
@@ -40,10 +38,7 @@ public class TesterUsuario {
 	}
 	
 	/**
-	 * Excluir Usuario.java
-	 * TBL_USUARIO
-	 * 
-	 * 2
+	 * Buscar Item.java por numero
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void main2(String[] args) throws Exception {
@@ -51,44 +46,35 @@ public class TesterUsuario {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx.lookup("UsuarioBean/remote");
+		ItemInterface remoteItem = (ItemInterface) ctx.lookup("ItemBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
-
-		requestDTO.set("loginUsuario", "marcao1");
-		responseDTO = remoteUsuario.excluirUsuarioPorLogin(requestDTO);
-		Boolean sucesso = (Boolean) responseDTO.get("resposta");
-		if(sucesso){
-			System.out.println("Exclus\u00e3o realizada com sucesso.");
-		}else{
-			System.out.println("N\u00e3o foi possivel efetuar a exclus\u00e3o.");
-		}
+		
+		responseDTO = remoteItem.getItem(requestDTO, new Long(1), new Long(1), new Long(2));
+		ItemVO itemVO = (ItemVO) responseDTO.get("getItem");
+		System.out.println(itemVO);
 	}
 	
 	/**
-	 * Alterar Usuario.java
-	 * TBL_USUARIO
-	 * 
-	 * 3
+	 * Listas todos Item.java
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static void main(String[] args) throws Exception {
+	public static void main3(String[] args) throws Exception {
 		Hashtable prop = new Hashtable();
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		UsuarioInterface remoteUsuario = (UsuarioInterface) ctx.lookup("UsuarioBean/remote");
+		ItemInterface remoteItem = (ItemInterface) ctx.lookup("ItemBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
-
-		UsuarioVO vo = new UsuarioVO("marcao1", "senha2222", "grupo2222", "perfil2222", true, new Date());
-		requestDTO.set("usuarioVO", vo);
-		responseDTO = remoteUsuario.alterarUsuario(requestDTO);
-		Boolean sucesso = (Boolean) responseDTO.get("resposta");
-		if(sucesso){
-			System.out.println("Altera\u00e7\u00e3o realizada com sucesso.");
-		}else{
-			System.out.println("N\u00e3o foi possivel efetuar a altera\u00e7\u00e3o.");
+		
+		responseDTO = remoteItem.selecionarTodosItens(requestDTO);
+		ItemVO[] lista = (ItemVO[]) responseDTO.get("listaItem");
+		if(lista != null){
+			for(int i = 0; i < lista.length; i++){
+				ItemVO itemVO = (ItemVO) lista[i];
+				System.out.println(itemVO);
+			}
 		}
 	}
 }

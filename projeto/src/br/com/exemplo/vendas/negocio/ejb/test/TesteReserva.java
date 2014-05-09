@@ -1,4 +1,4 @@
-package br.com.exemplo.vendas.negocio.ejb.client;
+package br.com.exemplo.vendas.negocio.ejb.test;
 
 import java.math.BigDecimal;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package br.com.exemplo.vendas.tests;
+package br.com.exemplo.vendas.negocio.ejb.test;
 
 import java.rmi.RemoteException;
 import java.util.Date;

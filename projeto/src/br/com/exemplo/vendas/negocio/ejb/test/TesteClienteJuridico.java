@@ -1,4 +1,4 @@
-package br.com.exemplo.vendas.negocio.ejb.client;
+package br.com.exemplo.vendas.negocio.ejb.test;
 
 import java.util.Date;
 import java.util.Hashtable;
@@ -6,15 +6,15 @@ import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-import br.com.exemplo.vendas.negocio.interfaces.ClienteFisicoInterface;
-import br.com.exemplo.vendas.negocio.model.vo.ClienteFisicoVO;
+import br.com.exemplo.vendas.negocio.interfaces.ClienteJuridicoInterface;
+import br.com.exemplo.vendas.negocio.model.vo.ClienteJuridicoVO;
 import br.com.exemplo.vendas.util.dto.ServiceDTO;
 
-public class TesteClienteFisico {
+public class TesteClienteJuridico {
 
 	/**
-	 * Inserir ClienteFisico.java
-	 * TBL_CLIENTE_FISICO
+	 * Inserir ClienteJuridico.java
+	 * TBL_CLIENTE_JURIDICO
 	 * 
 	 * 1
 	 */
@@ -24,13 +24,13 @@ public class TesteClienteFisico {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ClienteFisicoInterface remoteClienteFisico = (ClienteFisicoInterface) ctx.lookup("ClienteFisicoBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		ClienteFisicoVO vo = new ClienteFisicoVO("albertofisico", "alberto123", "Fiap", "Legal", true, new Date(), new Long(1), "Alberto Cerqueira", "Diadema", 12345678, "Sei la", "123123133213", "31231313123");
-		requestDTO.set("clienteFisicoVO", vo);
-		responseDTO = remoteClienteFisico.inserirClienteFisico(requestDTO);
+		ClienteJuridicoVO vo = new ClienteJuridicoVO("albertojuridico", "alberto123", "Fiap", "Legal", true, new Date(), new Long(1), "Alberto Cerqueira", "Diadema", 12345678, "Sei la", "123123133213", "Rua da Empresa", "002");
+		requestDTO.set("clienteJuridicoVO", vo);
+		responseDTO = remoteClienteJuridico.inserirClienteJuridico(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
 			System.out.println("Grava\u00e7\u00e3o realizada com sucesso.");
@@ -40,7 +40,7 @@ public class TesteClienteFisico {
 	}
 	
 	/**
-	 * Buscar ClienteFisico.java por login
+	 * Buscar ClienteJuridico.java por login
 	 * 
 	 * 2
 	 */
@@ -50,17 +50,17 @@ public class TesteClienteFisico {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ClienteFisicoInterface remoteClienteFisico = (ClienteFisicoInterface) ctx.lookup("ClienteFisicoBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteClienteFisico.getClienteFisico(requestDTO, "alberto");
-		ClienteFisicoVO clienteFisicoVO = (ClienteFisicoVO) responseDTO.get("getClienteFisico");
-		System.out.println(clienteFisicoVO);
+		responseDTO = remoteClienteJuridico.getClienteJuridico(requestDTO, "alberto");
+		ClienteJuridicoVO clienteJuridicoVO = (ClienteJuridicoVO) responseDTO.get("getClienteJuridico");
+		System.out.println(clienteJuridicoVO);
 	}
 	
 	/**
-	 * Listas todos ClienteFisico.java
+	 * Listas todos ClienteJuridico.java
 	 * 
 	 * 3
 	 */
@@ -70,23 +70,23 @@ public class TesteClienteFisico {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ClienteFisicoInterface remoteClienteFisico = (ClienteFisicoInterface) ctx.lookup("ClienteFisicoBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteClienteFisico.selecionarTodosClientesFisicos(requestDTO);
-		ClienteFisicoVO[] lista = (ClienteFisicoVO[]) responseDTO.get("listaClienteFisico");
+		responseDTO = remoteClienteJuridico.selecionarTodosClientesJuridicos(requestDTO);
+		ClienteJuridicoVO[] lista = (ClienteJuridicoVO[]) responseDTO.get("listaClienteJuridico");
 		if(lista != null){
 			for(int i = 0; i < lista.length; i++){
-				ClienteFisicoVO clienteFisicoVO = (ClienteFisicoVO) lista[i];
-				System.out.println(clienteFisicoVO);
+				ClienteJuridicoVO clienteJuridicoVO = (ClienteJuridicoVO) lista[i];
+				System.out.println(clienteJuridicoVO);
 			}
 		}
 	}
 	
 	/**
-	 * Excluir ClienteFisico.java
-	 * TBL_CLIENTE_FISICO
+	 * Excluir ClienteJuridico.java
+	 * TBL_CLIENTE_JURIDICO
 	 * 
 	 * 4
 	 */
@@ -96,12 +96,12 @@ public class TesteClienteFisico {
 		prop.put(InitialContext.INITIAL_CONTEXT_FACTORY, "org.jnp.interfaces.NamingContextFactory");
 		prop.put(InitialContext.PROVIDER_URL, "jnp://localhost:1099");
 		Context ctx = new InitialContext(prop);
-		ClienteFisicoInterface remoteClienteFisico = (ClienteFisicoInterface) ctx.lookup("ClienteFisicoBean/remote");
+		ClienteJuridicoInterface remoteClienteJuridico = (ClienteJuridicoInterface) ctx.lookup("ClienteJuridicoBean/remote");
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 
-		requestDTO.set("loginClienteFisico", "alberto");
-		responseDTO = remoteClienteFisico.excluirClienteFisicoPorLogin(requestDTO);
+		requestDTO.set("loginClienteJuridico", "alberto");
+		responseDTO = remoteClienteJuridico.excluirClienteJuridicoPorLogin(requestDTO);
 		Boolean sucesso = (Boolean) responseDTO.get("resposta");
 		if(sucesso){
 			System.out.println("Exclus\u00e3o realizada com sucesso.");

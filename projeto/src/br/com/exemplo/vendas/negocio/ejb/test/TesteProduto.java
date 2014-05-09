@@ -1,4 +1,4 @@
-package br.com.exemplo.vendas.negocio.ejb.client;
+package br.com.exemplo.vendas.negocio.ejb.test;
 
 import java.math.BigDecimal;
 import java.util.Hashtable;
@@ -189,7 +189,7 @@ public class TesteProduto {
 		ServiceDTO requestDTO = new ServiceDTO();
 		ServiceDTO responseDTO = new ServiceDTO();
 		
-		responseDTO = remoteProduto.localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(requestDTO, new BigDecimal(1000), 2);
+		responseDTO = remoteProduto.localizarProdutosPorQuantidadeAcimaDeEPrecoAbaixoDe(requestDTO);
 		ProdutoVO[] produtoVOs = (ProdutoVO[]) responseDTO.get("produtosPorQuantidadeAcimaDeEPrecoAbaixoDe");
 		if(produtoVOs != null){
 			for(int i = 0; i < produtoVOs.length; i++){

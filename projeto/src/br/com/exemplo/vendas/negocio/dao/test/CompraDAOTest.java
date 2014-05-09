@@ -1,4 +1,4 @@
-package br.com.exemplo.vendas.tests;
+package br.com.exemplo.vendas.negocio.dao.test;
 
 import static org.junit.Assert.fail;
 
