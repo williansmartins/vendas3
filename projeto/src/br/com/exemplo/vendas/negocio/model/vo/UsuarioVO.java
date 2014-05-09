@@ -16,15 +16,16 @@ public class UsuarioVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return this.login + ":" + this.senha + ":" + this.perfil + ":" + this.bloqueado + ":" + this.ultimoAcesso;
+		return this.login + ":" + this.senha + ":" + this.grupo + ":" + this.perfil + ":" + this.bloqueado + ":" + this.ultimoAcesso;
 	}
 
 	public UsuarioVO() {}
 	
-	public UsuarioVO(String login, String senha, String perfil, Boolean bloqueado, Date ultimoAcesso) {
+	public UsuarioVO(String login, String senha, String grupo, String perfil, Boolean bloqueado, Date ultimoAcesso) {
 		this.login = login;
 		this.senha = senha;
 		this.perfil = perfil;
+		this.grupo = grupo;
 		this.bloqueado = bloqueado;
 		this.ultimoAcesso = ultimoAcesso;
 	}

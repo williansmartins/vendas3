@@ -33,7 +33,7 @@ public class UsuarioTest
     @Test
     public void inserirELocalizarUsuario( )
     {
-	UsuarioVO vo = new UsuarioVO( "Willians1", "senha", "perfil", true, new Date() );
+	UsuarioVO vo = new UsuarioVO( "Willians1", "senha", "grupo", "perfil", true, new Date() );
 	Usuario usuario1 = Usuario.create( vo );
 
 	try
@@ -61,7 +61,7 @@ public class UsuarioTest
     @Test
     public void inserirEExcluirUsuario( )
     {
-	UsuarioVO vo = new UsuarioVO( "Willians2", "senha", "perfil", true, new Date() );
+	UsuarioVO vo = new UsuarioVO( "Willians2", "senha", "grupo", "perfil", true, new Date() );
 	Usuario usuario2 = Usuario.create( vo );
 
 	try
@@ -82,8 +82,8 @@ public class UsuarioTest
     @Test
     public void inserirElistarTodosUsuariosInseridos( )
     {
-	UsuarioVO vo3 = new UsuarioVO( "Willians3", "senha", "perfil", true, new Date() );
-	UsuarioVO vo4 = new UsuarioVO( "Willians4", "senha", "perfil", true, new Date() );
+	UsuarioVO vo3 = new UsuarioVO( "Willians3", "senha", "grupo", "perfil", true, new Date() );
+	UsuarioVO vo4 = new UsuarioVO( "Willians4", "senha", "grupo", "perfil", true, new Date() );
 	Usuario usuario3 = Usuario.create( vo3 );
 	Usuario usuario4 = Usuario.create( vo4 );
 	try

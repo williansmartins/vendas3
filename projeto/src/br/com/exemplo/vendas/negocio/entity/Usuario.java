@@ -30,7 +30,7 @@ public class Usuario implements Serializable {
 	@Column(name="bloqueado", nullable=false)
 	private Boolean bloqueado;
 	
-	@Column(name="grupo", nullable=false)
+	@Column(name="grupo", nullable=true)
 	private String grupo;
 	
 	@Column(name="perfil", nullable=false)
