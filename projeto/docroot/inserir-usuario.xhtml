@@ -13,31 +13,34 @@
  			<ui:define name="palco">
 				<h1 class="centro">Inserir Usuários</h1>
 				<div class="conteudo">
-					<h:form >
-						<div class="tabela"> 
+					<h:form id="form">
+						<div class="tabela row"> 
 						    <div class="labels">
 						        <label for="code">Login</label>
-								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.login}" />
+								<h:inputText type="text" id="login" class="form-control" value="#{usuario_mb.vo.login}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Senha</label>
-								<h:inputText type="text" class="form-control" value="#{usuario_mb.vo.senha}" />
+								<h:inputText type="text" id="senha" class="form-control" value="#{usuario_mb.vo.senha}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Grupo</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.grupo}" />
+						        <h:inputText type="text" id="grupo" class="form-control" value="#{usuario_mb.vo.grupo}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Perfil</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.perfil}" />
+						        <h:inputText type="text" id="perfil" class="form-control" value="#{usuario_mb.vo.perfil}" />
 						    </div>
 						    <div class="labels">
 						        <label for="code">Bloqueado</label>
-						        <h:inputText type="text" class="form-control" value="#{usuario_mb.vo.bloqueado}" />
+						        <h:selectOneRadio id="bloqueado" class="" value="#{usuario_mb.vo.bloqueado}">
+						        	<f:selectItem itemLabel="Sim" itemValue="true" />
+						        	<f:selectItem itemLabel="Não" itemValue="false" />
+						        </h:selectOneRadio>
 						    </div>
 						</div>
 					    <br />
-					    <h:commandButton action="#{usuario_mb.salvar}" class="btn btn-primary " value="Salvar" />
+					    <h:commandButton action="#{usuario_mb.salvar}" class="btn btn-primary " value="Salvar" onclick="postarInserir('Inserção')"/>
 					    <i class="icon-search icon-white"></i>
 					    <h:commandButton action="#{usuario_mb.redirecinoarListagem}" class="btn btn-primary " value="Listar usuarios" />
 					</h:form>							

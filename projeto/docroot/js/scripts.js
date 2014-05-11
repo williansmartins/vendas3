@@ -21,6 +21,7 @@ $(document).ready(function() {
 } );
 
 function confirmacao(id){
+	console.info("confirmacao: " + id);
     $( "#dialog-confirm" ).dialog({
         resizable: false,
         height:140,

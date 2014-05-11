@@ -39,12 +39,16 @@
 				    				#{obj.perfil}
 				    			</h:column>
 				    			<h:column>
+				    				<f:facet name="header">Bloqueado</f:facet>
+				    				#{obj.bloqueado}
+				    			</h:column>
+				    			<h:column>
 				    				<f:facet name="header">Ações</f:facet>
 				    				<h:commandButton styleClass="btn btn-success" value="Editar"  action="#{usuario_mb.editar}">
 				    					<f:setPropertyActionListener target="#{usuario_mb.vo}" value="#{obj}"></f:setPropertyActionListener>
 				    				</h:commandButton>
 				    				 &nbsp;
-				    				<input type="button" class="btn btn-danger" value="Remover" onclick="confirmacao( #{obj.login} )"/>
+				    				<input type="button" class="btn btn-danger" value="Remover" onclick="confirmacao( '#{obj.login}' )"/>
 									<h:commandButton style="display:none" class="objeto_#{obj.login}" styleClass="btn btn-danger" value="Remover" action="#{usuario_mb.remover}">
 				    					<f:setPropertyActionListener target="#{usuario_mb.vo}" value="#{obj}"></f:setPropertyActionListener>
 				    				</h:commandButton>
@@ -57,7 +61,7 @@
 	    				&nbsp;
 	    				<h:commandButton styleClass="btn btn-primary" value="Início" action="#{geral_controller.home}" />	
 	    				<div id="dialog-confirm" title="Aviso de exclusão" style="display:none">
-						  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Deseja realmente remover este item?</p>
+						  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Deseja realmente remover?</p>
 						</div>
 					</h:form>							
 				</div>

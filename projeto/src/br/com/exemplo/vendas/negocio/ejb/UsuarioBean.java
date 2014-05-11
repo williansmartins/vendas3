@@ -119,6 +119,7 @@ public class UsuarioBean implements UsuarioRemote, UsuarioLocal {
 	public static UsuarioVO create(Usuario usuario) {
 		UsuarioVO usuarioVO = new UsuarioVO();
 		usuarioVO.setLogin(usuario.getLogin());
+		usuarioVO.setGrupo(usuario.getGrupo());
 		usuarioVO.setSenha(usuario.getSenha());
 		usuarioVO.setPerfil(usuario.getPerfil());
 		usuarioVO.setBloqueado(usuario.getBloqueado());

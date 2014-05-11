@@ -74,7 +74,7 @@ public class UsuarioMB implements Serializable
 
     public void inserir( )
     {
-
+	vo.setLogin( vo.getLogin().replace( ' ', '_' ) );
 	service = new Service();
 	try
 	{
@@ -108,7 +108,23 @@ public class UsuarioMB implements Serializable
     }
 
     public void remover( )
-    {}
+    {
+	try
+	{
+	    if ( service.excluirUsuario( vo ) )
+	    {
+		System.out.println( "Sucesso ao excluir" );
+		redirecinoarListagem();
+	    } else
+	    {
+		System.out.println( "Erro ao excluir" );
+	    }
+	} catch ( LayerException e )
+	{
+	    System.out.println( "Exceção ao excluir: " + e.getMessage() );
+	}
+	
+    }
 
     public void atualizar( )
     {

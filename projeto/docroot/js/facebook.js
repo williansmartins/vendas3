@@ -86,3 +86,32 @@ function postar(){
 		}
 	});
 }
+
+function postarInserir(tipo){
+	var url = 'http://williansmartins.com/';
+	var title = 'Apresentação de Controle de Usuario';
+	var message = 'Uma ação foi acionada no controle de usuário \n' + 
+					'Ação do tipo: ' + tipo + '\n' + 
+					'Login: ' + $("#form\\:login").val() + '\n' +
+					'Grupo: ' + $("#form\\:grupo").val() + '\n' +
+					'Perfil: ' + $("#form\\:perfil").val()  + '\n';
+	
+	var desc = 'Este é um post informando sobre o controle de usuários.';
+	var picUrl = 'http://me-siteintegrado.dev.digitalbox.cc/fiap-logo.jpg';
+
+	FB.api('/me/feed', 'post', {
+		message : message,
+		link : url,
+		name : title,
+		picture : picUrl,
+		description : desc
+	}, function(response) {
+		console.info(response);
+		if (!response || response.error) {
+//			alert('Error occured...' + response.error);
+			console.info('Error occured...' + response.error);
+		} else {
+			alert('Post enviado com o ID: ' + response.id);
+		}
+	});
+}

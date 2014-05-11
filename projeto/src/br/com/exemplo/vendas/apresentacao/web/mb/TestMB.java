@@ -16,14 +16,14 @@ import br.com.exemplo.vendas.util.exception.LayerException;
 @SuppressWarnings("serial")
 @ManagedBean(name = "teste_mb")
 @SessionScoped
-public class MBTest implements Serializable
+public class TestMB implements Serializable
 {
 
     Service service;
     Boolean sucesso;
     UsuarioVO vo;
 
-    public MBTest()
+    public TestMB()
     {
 	vo = gerarVO();
 	service = new Service();

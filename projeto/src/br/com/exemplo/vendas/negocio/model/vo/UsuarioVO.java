@@ -54,20 +54,6 @@ public class UsuarioVO implements Serializable {
 		this.perfil = perfil;
 	}
 
-	/**
-	 * @return the grupo
-	 */
-	public final String getGrupo() {
-		return grupo;
-	}
-
-	/**
-	 * @param grupo the grupo to set
-	 */
-	public final void setGrupo(String grupo) {
-		this.grupo = grupo;
-	}
-
 	public String getSenha() {
 		return senha;
 	}
@@ -82,6 +68,16 @@ public class UsuarioVO implements Serializable {
 
 	public void setUltimoAcesso(Date ultimoAcesso) {
 		this.ultimoAcesso = ultimoAcesso;
+	}
+
+	public String getGrupo( )
+	{
+	    return grupo;
+	}
+
+	public void setGrupo( String grupo )
+	{
+	    this.grupo = grupo;
 	}
 
 }

@@ -167,7 +167,10 @@ h1.centro{
 	position: absolute;
 }
 .labels{
-	height: 60px;
+	height: 49px;
+}
+.rigth{
+	float: right;
 }
 
 .alert-danger {
@@ -176,27 +179,7 @@ h1.centro{
 	left: 0;
 }
 
+.form-control{
+	height: 24px;
+}
 /*-----------------------------------------------------------------------*/
-.assento .labels{
-	height: 39px;
-}
-.assento label{
-	line-height: 32px;
-	margin-right: 7px;
-}
-.assento.conteudo{
-	width: 460px;
-}
-.assento .combos{
-	width: 40%;
-	margin-right: 5px;
-}
-.btn-reservar{
-	width: 130px;
-}
-
-.entrar-novamente{
-	width: 240px;
-	display: block;
-	margin: 0 auto;
-}
