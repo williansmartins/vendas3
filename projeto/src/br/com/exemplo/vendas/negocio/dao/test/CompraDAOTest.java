@@ -1,7 +1,5 @@
 package br.com.exemplo.vendas.negocio.dao.test;
 
-import static org.junit.Assert.fail;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +18,7 @@ import org.junit.Test;
 
 import br.com.exemplo.vendas.negocio.dao.DaoFactory;
 import br.com.exemplo.vendas.negocio.entity.Compra;
-import br.com.exemplo.vendas.negocio.entity.Usuario;
 import br.com.exemplo.vendas.negocio.model.vo.CompraVO;
-import br.com.exemplo.vendas.negocio.model.vo.UsuarioVO;
 
 public class CompraDAOTest
 {
@@ -30,22 +26,23 @@ public class CompraDAOTest
     protected static EntityManager em;
     Boolean sucesso1;
     Boolean sucesso2;
-    Compra compraBuscada;
+    Compra compraBuscado;
     Compra entity;
-    List<Usuario> lista;
+    List<Compra> lista;
     CompraVO vo;
 
     @Test
     public void inserirELocalizarCompra( )
     {
-	vo = new CompraVO(new Long(5), new Date(), "aberto", new BigDecimal(1), new Long(1), "alberto");
-	entity = entity.create( vo );
+	vo = new CompraVO(new Long(6), new Date(), "A", new BigDecimal(1), new Long(1), "alberto");
+	entity = Compra.create( vo );
 	
 	try
 	{
 	    sucesso1 = DaoFactory.getCompraDAO( em ).inserir( entity );
+	    entity = DaoFactory.getCompraDAO(em).localizar(entity.getNumero());
 	    Assert.assertTrue( sucesso1 );
-
+	    Assert.assertFalse(entity == null);
 	} catch ( Exception e )
 	{
 	    e.printStackTrace();
@@ -59,6 +56,55 @@ public class CompraDAOTest
 	sucesso2 = false;
     }
 
+    
+
+	@Test
+	public void inserirEExcluirCompra() {
+		CompraVO vo = new CompraVO(new Long(1), new Date(), "A", new BigDecimal(50.00), 1L, "cliente");
+		Compra o2 = Compra.create(vo);
+
+		try {
+			sucesso1 = DaoFactory.getCompraDAO(em).inserir(o2);
+			sucesso2 = DaoFactory.getCompraDAO(em).excluir(o2);
+			compraBuscado = DaoFactory.getCompraDAO(em).localizar(o2.getNumero());
+		} catch (Exception e) {
+		}
+
+		Assert.assertTrue(sucesso1);
+		Assert.assertTrue(sucesso2);
+		Assert.assertTrue(compraBuscado == null);
+
+	}
+
+	@Test
+	public void inserirElistarTodosComprasInseridos() {
+		CompraVO vo3 = new CompraVO(new Long(2), new Date(), "A", new BigDecimal(50.00), 2L, "cliente2");
+		CompraVO vo4 = new CompraVO(new Long(3), new Date(), "A", new BigDecimal(50.00), 3L, "cliente3");
+		Compra o3 = Compra.create(vo3);
+		Compra o4 = Compra.create(vo4);
+		try {
+			sucesso1 = DaoFactory.getCompraDAO(em).inserir(o3);
+			sucesso2 = DaoFactory.getCompraDAO(em).inserir(o4);
+
+			lista = DaoFactory.getCompraDAO(em).listar();
+			for (Compra compra : lista) {
+				System.out.println(compra);
+			}
+
+			Assert.assertTrue(sucesso1);
+			Assert.assertTrue(sucesso2);
+			Assert.assertTrue(lista.size() >= 2);
+
+			o3 = DaoFactory.getCompraDAO(em).localizarPorNumero(vo3.getNumero());
+			o4 = DaoFactory.getCompraDAO(em).localizarPorNumero(vo4.getNumero());
+
+			sucesso1 = DaoFactory.getCompraDAO(em).excluir(o3);
+			sucesso2 = DaoFactory.getCompraDAO(em).excluir(o4);
+
+		} catch (Exception e) {
+		}
+
+	}
 
     /* ABAIXO FICAM OS MÉTODOS QUE GERENCIAM AS TRANSAÇÕES */
 
