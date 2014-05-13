@@ -34,6 +34,7 @@ public class ProdutoController extends AbstractController
 	public String save() throws LayerException {
 		System.out.println("Salvando");
 		try{
+			vo.setEstoque("1");
 			if(getServico().inserirProduto(vo)){
 				vo = new ProdutoVO();
 				System.out.println("Inseriu? Sim");
